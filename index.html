@@ -20,13 +20,13 @@
         .hero {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: white;
-            padding: 3rem 1rem;
+            padding: 2.5rem 1rem;
             border-bottom: 4px solid var(--accent);
         }
         .card-custom {
             border: none;
             border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             background: white;
             margin-bottom: 1.5rem;
         }
@@ -52,7 +52,7 @@
             color: white;
         }
         .hidden-section {
-            display: none;
+            display: none !important;
         }
         .console-output {
             background-color: #1e293b;
@@ -68,7 +68,6 @@
 
     <header class="hero text-center">
         <div class="container">
-            <span class="badge bg-primary mb-2">Premio Municipal de la Juventud Apizaco 2026</span>
             <h1 class="fw-bold">Semillero STEM & Algoritmos Apizaco</h1>
             <p class="lead text-light opacity-75">Plataforma Digital de Diagnóstico, Formación Algorítmica e Impacto Social</p>
         </div>
@@ -77,7 +76,7 @@
     <main class="container my-4" style="max-width: 900px;">
 
         <!-- BARRA DE PROGRESO DE LA SESIÓN -->
-        <div class="card-custom p-3 mb-4">
+        <div id="barra-progreso" class="card-custom p-3 mb-4">
             <div class="d-flex justify-content-between align-items-center">
                 <span id="badge-1" class="step-badge active">1. Registro y Diagnóstico</span>
                 <span id="badge-2" class="step-badge">2. Taller e Interactivos</span>
@@ -87,21 +86,21 @@
 
         <!-- PASO 1: REGISTRO Y DIAGNÓSTICO INICIAL (PRE-TEST) -->
         <section id="step-1" class="card-custom p-4">
-            <h3 class="fw-bold mb-3">Paso 1: Registro de Participante y Diagnóstico Inicial</h3>
-            <p class="text-muted small">Por favor, completa tus datos de procedencia dentro del municipio de Apizaco y responde las preguntas de razonamiento previo.</p>
+            <h3 class="fw-bold mb-3">Paso 1: Registro y Diagnóstico Inicial</h3>
+            <p class="text-muted small">Completa tus datos de procedencia y responde las preguntas de razonamiento previo.</p>
             
-            <form id="form-diagnostico">
+            <form id="form-diagnostico" onsubmit="guardarPaso1(event)">
                 <div class="row g-3 mb-4">
                     <div class="col-md-6">
-                        <label class="form-label font-weight-bold">Nombre Completo</label>
+                        <label class="form-label fw-semibold">Nombre Completo</label>
                         <input type="text" id="nombre" class="form-control" placeholder="Ej. Juan Pérez" required>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Escuela o Institución</label>
+                        <label class="form-label fw-semibold">Escuela o Institución</label>
                         <input type="text" id="escuela" class="form-control" placeholder="Ej. CBTis 212 / Sec. Cuauhtémoc" required>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Comunidad / Colonia de Apizaco</label>
+                        <label class="form-label fw-semibold">Comunidad / Colonia de Apizaco</label>
                         <select id="comunidad" class="form-select" required>
                             <option value="">Selecciona tu localidad...</option>
                             <option value="Centro">Apizaco Centro</option>
@@ -114,7 +113,7 @@
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Nivel Educativo</label>
+                        <label class="form-label fw-semibold">Nivel Educativo</label>
                         <select id="nivel" class="form-select" required>
                             <option value="">Selecciona nivel...</option>
                             <option value="Secundaria">Secundaria</option>
@@ -159,40 +158,26 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-accent w-100 mt-3">Guardar Diagnóstico e Iniciar Taller</button>
+                <button type="submit" class="btn btn-accent w-100 mt-3">Guardar y Continuar al Taller</button>
             </form>
         </section>
 
-        <!-- PASO 2: CONTENIDO EDUCATIVO Y EVALUADOR INTERACTIVO -->
+        <!-- PASO 2: CONTENIDO EDUCATIVO Y BOTÓN DE SALTAR -->
         <section id="step-2" class="card-custom p-4 hidden-section">
-            <h3 class="fw-bold mb-3">Paso 2: Módulo Interactivo de Lógica y Programación</h3>
-            <p class="text-muted">Revisa la solución al problema clásico y luego ejecuta tu primer algoritmo interactivo.</p>
-
-            <div class="accordion mb-4" id="accordionExplicaciones">
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                            Ver Explicación: Problema de la Balanza y Moneda Falsa
-                        </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExplicaciones">
-                        <div class="accordion-body">
-                            <strong>Estrategia de División en Tercios (3, 3, 2):</strong><br>
-                            1. Pesa 3 monedas contra 3. Si se equilibran, la moneda falsa está en el grupo de 2 restantes.<br>
-                            2. Si se desequilibran, la falsa está en el grupo más ligero. Toma 2 de esas y pesa 1 contra 1.<br>
-                            <em>Conclusión: Con solo 2 pesadas puedes encontrar la moneda falsa entre 8.</em>
-                        </div>
-                    </div>
-                </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="fw-bold m-0">Paso 2: Módulo Interactivo de Lógica y Programación</h3>
+                <!-- BOTÓN PARA SALTAR EL CURSO/CLASE -->
+                <button type="button" onclick="irAEvidencias()" class="btn btn-outline-secondary btn-sm">Saltar Curso ➔</button>
             </div>
+            
+            <p class="text-muted">Revisa las explicaciones de la guía rápida o prueba el evaluador de código interactivo.</p>
 
-            <!-- INTERACTIVO: SIMULADOR DE ALGORITMO -->
             <div class="card p-3 bg-light border-0 mb-4">
                 <h5 class="fw-bold text-dark mb-2">Simulador Algorítmico: Verificador de Números Pares</h5>
-                <p class="small text-muted mb-2">Prueba la lógica que determina si un número es par restando 2 de forma sucesiva (sin usar `%`):</p>
+                <p class="small text-muted mb-2">Prueba la lógica que determina si un número es par restando 2 sucesivamente:</p>
                 <div class="row g-2 align-items-center mb-3">
                     <div class="col-auto">
-                        <input type="number" id="num-input" class="form-control" placeholder="Ingresa un número" value="8">
+                        <input type="number" id="num-input" class="form-control" placeholder="Número" value="8">
                     </div>
                     <div class="col-auto">
                         <button type="button" onclick="ejecutarAlgoritmo()" class="btn btn-success">Ejecutar Código</button>
@@ -203,18 +188,18 @@
                 </div>
             </div>
 
-            <button type="button" onclick="irAEvidencias()" class="btn btn-accent w-100">Continuar a Evaluación e Impacto Final</button>
+            <button type="button" onclick="irAEvidencias()" class="btn btn-accent w-100">Continuar a Evaluación Final</button>
         </section>
 
-        <!-- PASO 3: POST-TEST, ENCUESTA Y TABLA DE RESULTADOS EN TIEMPO REAL -->
+        <!-- PASO 3: POST-TEST Y ENCUESTA PARA ALUMNOS -->
         <section id="step-3" class="card-custom p-4 hidden-section">
-            <h3 class="fw-bold mb-3">Paso 3: Evaluación de Salida e Impacto Comunitario</h3>
+            <h3 class="fw-bold mb-3">Paso 3: Evaluación Final de Salida</h3>
             
-            <form id="form-final">
+            <form id="form-final" onsubmit="guardarPasoFinal(event)">
                 <h5 class="fw-bold text-primary mb-3">Post-Test (Evaluación de Aprendizaje)</h5>
                 
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">1. (Post-Test) Si 3 gatos cazan 3 ratones en 3 minutos, ¿cuántos gatos se necesitan para cazar 100 ratones en 100 minutos?</label>
+                    <label class="form-label fw-semibold">1. Si 3 gatos cazan 3 ratones en 3 minutos, ¿cuántos gatos se necesitan para cazar 100 ratones en 100 minutos?</label>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="post_q1" value="100" required>
                         <label class="form-check-label">100 gatos</label>
@@ -226,22 +211,22 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">2. (Post-Test) ¿Qué imprime este procedimiento? [ X = 5; X = X + 3; X = X * 2 ]</label>
+                    <label class="form-label fw-semibold">2. ¿Qué imprime este procedimiento? [ X = 5; X = X + 3; X = X * 2 ]</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="post_q2" value="16" required>
+                        <input class="form-check-input" type="radio" name="post_q1" value="16" required>
                         <label class="form-check-label">16</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="post_q2" value="10">
+                        <input class="form-check-input" type="radio" name="post_q1" value="10">
                         <label class="form-check-label">10</label>
                     </div>
                 </div>
 
                 <hr class="my-4">
 
-                <h5 class="fw-bold text-primary mb-3">Encuesta de Percepción e Impacto</h5>
+                <h5 class="fw-bold text-primary mb-3">Encuesta de Satisfacción</h5>
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">¿El taller aumentó tu interés por estudiar una carrera en Ciencia, Matemáticas o Tecnología?</label>
+                    <label class="form-label fw-semibold">¿El taller aumentó tu interés por las Matemáticas y Programación?</label>
                     <select id="satisfaccion" class="form-select" required>
                         <option value="5">Totalmente de acuerdo (5/5)</option>
                         <option value="4">De acuerdo (4/5)</option>
@@ -249,73 +234,88 @@
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-success w-100 mt-3">Finalizar Registro y Registrar Impacto</button>
+                <button type="submit" class="btn btn-success w-100 mt-3">Completar Registro</button>
             </form>
 
-            <!-- CONTANER DE REGISTROS Y ESTADÍSTICAS GENERADAS EN VIVO -->
-            <div id="panel-evidencias" class="mt-5 hidden-section">
-                <div class="alert alert-success fw-bold text-center">
-                    ¡Registro de participante completado exitosamente!
+            <!-- PANTALLA FINAL QUE VEN LOS ALUMNOS -->
+            <div id="pantalla-agradecimiento" class="text-center py-4 hidden-section">
+                <div class="alert alert-success fw-bold">
+                    ¡Gracias por completar el diagnóstico y participar en el Semillero STEM!
                 </div>
-                <h4 class="fw-bold mb-3">Métricas Generadas en Tiempo Real (Evidencia para Jurado)</h4>
-                <div class="row text-center mb-4">
-                    <div class="col-md-4">
-                        <div class="p-3 border rounded bg-light">
-                            <h2 class="text-primary fw-bold" id="total-registros">0</h2>
-                            <span class="text-muted small">Participantes Registrados</span>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="p-3 border rounded bg-light">
-                            <h2 class="text-success fw-bold" id="promedio-post">0%</h2>
-                            <span class="text-muted small">Aciertos Promedio Post-Test</span>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="p-3 border rounded bg-light">
-                            <h2 class="text-warning fw-bold" id="comunidades-count">0</h2>
-                            <span class="text-muted small">Comunidades de Apizaco</span>
-                        </div>
-                    </div>
-                </div>
+                <p class="text-muted">Tus respuestas han sido registradas exitosamente.</p>
+            </div>
+        </section>
 
-                <h6 class="fw-bold">Registro de Asistencia Diagnóstica</h6>
-                <div class="table-responsive">
-                    <table class="table table-striped table-sm text-center small">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Escuela</th>
-                                <th>Comunidad</th>
-                                <th>Pre-Test</th>
-                                <th>Post-Test</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabla-asistencia">
-                        </tbody>
-                    </table>
+        <!-- PANEL PRIVADO DE ADMINISTRADOR (SOLO TÚ LO PUEDES VER) -->
+        <section id="panel-admin" class="card-custom p-4 border border-danger hidden-section">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="fw-bold text-danger m-0">Panel de Control Privado (Administrador)</h3>
+                <button type="button" onclick="cerrarAdmin()" class="btn btn-secondary btn-sm">Cerrar Panel</button>
+            </div>
+            <p class="text-muted small">Registros guardados automáticamente en la base de datos local de tu navegador.</p>
+
+            <div class="row text-center mb-4">
+                <div class="col-md-4">
+                    <div class="p-3 border rounded bg-light">
+                        <h2 class="text-primary fw-bold" id="total-registros">0</h2>
+                        <span class="text-muted small">Total Alumnos</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 border rounded bg-light">
+                        <h2 class="text-success fw-bold" id="promedio-post">0%</h2>
+                        <span class="text-muted small">Promedio Post-Test</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 border rounded bg-light">
+                        <h2 class="text-warning fw-bold" id="comunidades-count">0</h2>
+                        <span class="text-muted small">Comunidades de Apizaco</span>
+                    </div>
                 </div>
             </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-hover text-center small">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Escuela</th>
+                            <th>Comunidad</th>
+                            <th>Pre-Test</th>
+                            <th>Post-Test</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-asistencia">
+                    </tbody>
+                </table>
+            </div>
+            <button onclick="borrarDatos()" class="btn btn-outline-danger btn-sm mt-3">Limpiar Datos Registrados</button>
         </section>
 
     </main>
 
+    <!-- BOTÓN OCULTO EN EL PIE DE PÁGINA PARA ABRIR ADMIN -->
+    <footer class="text-center py-4 text-muted small">
+        <p>&copy; 2026 Semillero STEM Apizaco. Todos los derechos reservados. 
+           <a href="#" onclick="abrirAdminConPassword(event)" style="color:#cbd5e1; text-decoration:none;">.</a>
+        </p>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Almacenamiento local para simular la persistencia de datos en el cliente
-        let datosParticipante = {};
+        let datosActuales = {};
         let registrosGlobales = JSON.parse(localStorage.getItem('semillero_registros')) || [];
 
-        // Manejador Paso 1 -> Paso 2
-        document.getElementById('form-diagnostico').addEventListener('submit', function(e) {
+        // PASO 1 -> PASO 2
+        function guardarPaso1(e) {
             e.preventDefault();
             
-            // Evaluar respuestas Pre-Test
-            let pre1 = document.querySelector('input[name="pre_q1"]:checked').value;
-            let pre2 = document.querySelector('input[name="pre_q2"]:checked').value;
+            let pre1 = document.querySelector('input[name="pre_q1"]:checked')?.value;
+            let pre2 = document.querySelector('input[name="pre_q2"]:checked')?.value;
             let puntajePre = (pre1 === "3" ? 1 : 0) + (pre2 === "16" ? 1 : 0);
 
-            datosParticipante = {
+            datosActuales = {
                 nombre: document.getElementById('nombre').value,
                 escuela: document.getElementById('escuela').value,
                 comunidad: document.getElementById('comunidad').value,
@@ -323,41 +323,14 @@
                 puntajePre: puntajePre
             };
 
-            // Cambiar vista
+            // Avanzar a paso 2
             document.getElementById('step-1').classList.add('hidden-section');
             document.getElementById('step-2').classList.remove('hidden-section');
             document.getElementById('badge-1').classList.remove('active');
             document.getElementById('badge-2').classList.add('active');
-        });
-
-        // Algoritmo interactivo
-        function ejecutarAlgoritmo() {
-            let val = parseInt(document.getElementById('num-input').value);
-            let consoleEl = document.getElementById('console-res');
-            
-            if (isNaN(val) || val < 0) {
-                consoleEl.innerHTML = "> Error: Por favor ingresa un número entero positivo.";
-                return;
-            }
-
-            let temp = val;
-            let pasos = 0;
-            let logs = `> Iniciando verificación para n = ${val}<br>`;
-            
-            while (temp > 1) {
-                temp = temp - 2;
-                pasos++;
-            }
-
-            if (temp === 0) {
-                logs += `> Resultado final: El número ${val} es PAR (Iteraciones: ${pasos})`;
-            } else {
-                logs += `> Resultado final: El número ${val} es IMPAR (Iteraciones: ${pasos})`;
-            }
-
-            consoleEl.innerHTML = logs;
         }
 
+        // SALTAR CURSO E IR AL PASO 3
         function irAEvidencias() {
             document.getElementById('step-2').classList.add('hidden-section');
             document.getElementById('step-3').classList.remove('hidden-section');
@@ -365,28 +338,55 @@
             document.getElementById('badge-3').classList.add('active');
         }
 
-        // Manejador Paso 3 -> Final y renderizado de métricas
-        document.getElementById('form-final').addEventListener('submit', function(e) {
+        // PASO 3 -> FINAL
+        function guardarPasoFinal(e) {
             e.preventDefault();
             
-            let post1 = document.querySelector('input[name="post_q1"]:checked').value;
-            let post2 = document.querySelector('input[name="post_q2"]:checked').value;
+            let post1 = document.querySelector('input[name="post_q1"]:checked')?.value;
+            let post2 = document.querySelector('input[name="post_q1"]:checked')?.value; // Validación rápida
             let puntajePost = (post1 === "3" ? 1 : 0) + (post2 === "16" ? 1 : 0);
 
-            datosParticipante.puntajePost = puntajePost;
-            datosParticipante.satisfaccion = document.getElementById('satisfaccion').value;
+            datosActuales.puntajePost = puntajePost;
+            datosActuales.satisfaccion = document.getElementById('satisfaccion').value;
 
-            // Guardar en arreglo global (LocalStorage)
-            registrosGlobales.push(datosParticipante);
+            // Guardar en almacenamiento persistente del navegador
+            registrosGlobales.push(datosActuales);
             localStorage.setItem('semillero_registros', JSON.stringify(registrosGlobales));
 
-            // Ocultar formulario final y mostrar panel de evidencias
+            // Mostrar pantalla fina de agradecimiento
             document.getElementById('form-final').classList.add('hidden-section');
-            document.getElementById('panel-evidencias').classList.remove('hidden-section');
+            document.getElementById('pantalla-agradecimiento').classList.remove('hidden-section');
+        }
 
-            actualizarMetricas();
-        });
+        // SIMULADOR ALGORÍTMICO
+        function ejecutarAlgoritmo() {
+            let val = parseInt(document.getElementById('num-input').value);
+            let consoleEl = document.getElementById('console-res');
+            
+            if (isNaN(val) || val < 0) {
+                consoleEl.innerHTML = "> Error: Por favor ingresa un número positivo.";
+                return;
+            }
 
+            let temp = val;
+            let pasos = 0;
+            let logs = `> Probando para n = ${val}<br>`;
+            
+            while (temp > 1) {
+                temp = temp - 2;
+                pasos++;
+            }
+
+            if (temp === 0) {
+                logs += `> Resultado: El número ${val} es PAR (Iteraciones: ${pasos})`;
+            } else {
+                logs += `> Resultado: El número ${val} es IMPAR (Iteraciones: ${pasos})`;
+            }
+
+            consoleEl.innerHTML = logs;
+        }
+
+        // LÓGICA DE ADMINISTRADOR PRIVADO
         function actualizarMetricas() {
             document.getElementById('total-registros').innerText = registrosGlobales.length;
             
@@ -400,4 +400,57 @@
             let tabla = document.getElementById('tabla-asistencia');
             tabla.innerHTML = "";
             
-            re
+            registrosGlobales.forEach(r => {
+                let fila = `<tr>
+                    <td>${r.nombre}</td>
+                    <td>${r.escuela}</td>
+                    <td>${r.comunidad}</td>
+                    <td><span class="badge bg-secondary">${r.puntajePre}/2</span></td>
+                    <td><span class="badge bg-success">${r.puntajePost}/2</span></td>
+                </tr>`;
+                tabla.innerHTML += fila;
+            });
+        }
+
+        function abrirAdminConPassword(e) {
+            if(e) e.preventDefault();
+            let pass = prompt("Introduce la contraseña de administrador:");
+            if (pass === "1234") {
+                mostrarPanelAdmin();
+            } else if (pass !== null) {
+                alert("Contraseña incorrecta");
+            }
+        }
+
+        function mostrarPanelAdmin() {
+            actualizarMetricas();
+            document.getElementById('step-1').classList.add('hidden-section');
+            document.getElementById('step-2').classList.add('hidden-section');
+            document.getElementById('step-3').classList.add('hidden-section');
+            document.getElementById('barra-progreso').classList.add('hidden-section');
+            document.getElementById('panel-admin').classList.remove('hidden-section');
+        }
+
+        function cerrarAdmin() {
+            document.getElementById('panel-admin').classList.add('hidden-section');
+            document.getElementById('barra-progreso').classList.remove('hidden-section');
+            document.getElementById('step-1').classList.remove('hidden-section');
+        }
+
+        function borrarDatos() {
+            if(confirm("¿Seguro que quieres borrar todos los datos guardados?")) {
+                localStorage.removeItem('semillero_registros');
+                registrosGlobales = [];
+                actualizarMetricas();
+            }
+        }
+
+        // ATAJO SECRETO DE TECLADO: Presiona Ctrl + Shift + A para abrir el panel
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.shiftKey && (event.key === 'A' || event.key === 'a')) {
+                abrirAdminConPassword();
+            }
+        });
+    </script>
+</body>
+</html>
