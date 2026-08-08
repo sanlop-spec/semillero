@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semillero STEM & Algoritmos Apizaco</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --bg: #f8fafc;
+        }
+        body {
+            background-color: var(--bg);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: #334155;
+        }
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 3rem 1rem;
+            border-bottom: 4px solid var(--accent);
+        }
+        .card-custom {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            background: white;
+            margin-bottom: 1.5rem;
+        }
+        .btn-accent {
+            background-color: var(--accent);
+            color: white;
+            font-weight: 600;
+        }
+        .btn-accent:hover {
+            background-color: var(--accent-hover);
+            color: white;
+        }
+        .step-badge {
+            background-color: #e2e8f0;
+            color: #475569;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+        }
+        .step-badge.active {
+            background-color: var(--accent);
+            color: white;
+        }
+        .hidden-section {
+            display: none;
+        }
+        .console-output {
+            background-color: #1e293b;
+            color: #38bdf8;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 1rem;
+            border-radius: 8px;
+            min-height: 80px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero text-center">
+        <div class="container">
+            <span class="badge bg-primary mb-2">Premio Municipal de la Juventud Apizaco 2026</span>
+            <h1 class="fw-bold">Semillero STEM & Algoritmos Apizaco</h1>
+            <p class="lead text-light opacity-75">Plataforma Digital de Diagnóstico, Formación Algorítmica e Impacto Social</p>
+        </div>
+    </header>
+
+    <main class="container my-4" style="max-width: 900px;">
+
+        <!-- BARRA DE PROGRESO DE LA SESIÓN -->
+        <div class="card-custom p-3 mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <span id="badge-1" class="step-badge active">1. Registro y Diagnóstico</span>
+                <span id="badge-2" class="step-badge">2. Taller e Interactivos</span>
+                <span id="badge-3" class="step-badge">3. Evaluación Final</span>
+            </div>
+        </div>
+
+        <!-- PASO 1: REGISTRO Y DIAGNÓSTICO INICIAL (PRE-TEST) -->
+        <section id="step-1" class="card-custom p-4">
+            <h3 class="fw-bold mb-3">Paso 1: Registro de Participante y Diagnóstico Inicial</h3>
+            <p class="text-muted small">Por favor, completa tus datos de procedencia dentro del municipio de Apizaco y responde las preguntas de razonamiento previo.</p>
+            
+            <form id="form-diagnostico">
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label font-weight-bold">Nombre Completo</label>
+                        <input type="text" id="nombre" class="form-control" placeholder="Ej. Juan Pérez" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Escuela o Institución</label>
+                        <input type="text" id="escuela" class="form-control" placeholder="Ej. CBTis 212 / Sec. Cuauhtémoc" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Comunidad / Colonia de Apizaco</label>
+                        <select id="comunidad" class="form-select" required>
+                            <option value="">Selecciona tu localidad...</option>
+                            <option value="Centro">Apizaco Centro</option>
+                            <option value="Santa Anita Huiloac">Santa Anita Huiloac</option>
+                            <option value="Cerrito de Guadalupe">Cerrito de Guadalupe</option>
+                            <option value="San Luis Apizaquito">San Luis Apizaquito</option>
+                            <option value="Santa María Texcalac">Santa María Texcalac</option>
+                            <option value="San Bartolomé Matlalohcan">San Bartolomé Matlalohcan</option>
+                            <option value="Otra">Otra zona de Apizaco</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Nivel Educativo</label>
+                        <select id="nivel" class="form-select" required>
+                            <option value="">Selecciona nivel...</option>
+                            <option value="Secundaria">Secundaria</option>
+                            <option value="Preparatoria">Preparatoria / Bachillerato</option>
+                        </select>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <h5 class="fw-bold text-primary mb-3">Evaluación Diagnóstica Inicial (Pre-Test)</h5>
+                
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">1. Si 3 gatos cazan 3 ratones en 3 minutos, ¿cuántos gatos se necesitan para cazar 100 ratones en 100 minutos?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="pre_q1" value="100" required>
+                        <label class="form-check-label">100 gatos</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="pre_q1" value="3">
+                        <label class="form-check-label">3 gatos</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="pre_q1" value="33">
+                        <label class="form-check-label">33 gatos</label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">2. ¿Qué imprime este procedimiento secuencial? [ X = 5; X = X + 3; X = X * 2 ]</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="pre_q2" value="16" required>
+                        <label class="form-check-label">16</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="pre_q2" value="10">
+                        <label class="form-check-label">10</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="pre_q2" value="13">
+                        <label class="form-check-label">13</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-accent w-100 mt-3">Guardar Diagnóstico e Iniciar Taller</button>
+            </form>
+        </section>
+
+        <!-- PASO 2: CONTENIDO EDUCATIVO Y EVALUADOR INTERACTIVO -->
+        <section id="step-2" class="card-custom p-4 hidden-section">
+            <h3 class="fw-bold mb-3">Paso 2: Módulo Interactivo de Lógica y Programación</h3>
+            <p class="text-muted">Revisa la solución al problema clásico y luego ejecuta tu primer algoritmo interactivo.</p>
+
+            <div class="accordion mb-4" id="accordionExplicaciones">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                            Ver Explicación: Problema de la Balanza y Moneda Falsa
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExplicaciones">
+                        <div class="accordion-body">
+                            <strong>Estrategia de División en Tercios (3, 3, 2):</strong><br>
+                            1. Pesa 3 monedas contra 3. Si se equilibran, la moneda falsa está en el grupo de 2 restantes.<br>
+                            2. Si se desequilibran, la falsa está en el grupo más ligero. Toma 2 de esas y pesa 1 contra 1.<br>
+                            <em>Conclusión: Con solo 2 pesadas puedes encontrar la moneda falsa entre 8.</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INTERACTIVO: SIMULADOR DE ALGORITMO -->
+            <div class="card p-3 bg-light border-0 mb-4">
+                <h5 class="fw-bold text-dark mb-2">Simulador Algorítmico: Verificador de Números Pares</h5>
+                <p class="small text-muted mb-2">Prueba la lógica que determina si un número es par restando 2 de forma sucesiva (sin usar `%`):</p>
+                <div class="row g-2 align-items-center mb-3">
+                    <div class="col-auto">
+                        <input type="number" id="num-input" class="form-control" placeholder="Ingresa un número" value="8">
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" onclick="ejecutarAlgoritmo()" class="btn btn-success">Ejecutar Código</button>
+                    </div>
+                </div>
+                <div class="console-output" id="console-res">
+                    > Esperando entrada...
+                </div>
+            </div>
+
+            <button type="button" onclick="irAEvidencias()" class="btn btn-accent w-100">Continuar a Evaluación e Impacto Final</button>
+        </section>
+
+        <!-- PASO 3: POST-TEST, ENCUESTA Y TABLA DE RESULTADOS EN TIEMPO REAL -->
+        <section id="step-3" class="card-custom p-4 hidden-section">
+            <h3 class="fw-bold mb-3">Paso 3: Evaluación de Salida e Impacto Comunitario</h3>
+            
+            <form id="form-final">
+                <h5 class="fw-bold text-primary mb-3">Post-Test (Evaluación de Aprendizaje)</h5>
+                
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">1. (Post-Test) Si 3 gatos cazan 3 ratones en 3 minutos, ¿cuántos gatos se necesitan para cazar 100 ratones en 100 minutos?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="post_q1" value="100" required>
+                        <label class="form-check-label">100 gatos</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="post_q1" value="3">
+                        <label class="form-check-label">3 gatos</label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">2. (Post-Test) ¿Qué imprime este procedimiento? [ X = 5; X = X + 3; X = X * 2 ]</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="post_q2" value="16" required>
+                        <label class="form-check-label">16</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="post_q2" value="10">
+                        <label class="form-check-label">10</label>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <h5 class="fw-bold text-primary mb-3">Encuesta de Percepción e Impacto</h5>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">¿El taller aumentó tu interés por estudiar una carrera en Ciencia, Matemáticas o Tecnología?</label>
+                    <select id="satisfaccion" class="form-select" required>
+                        <option value="5">Totalmente de acuerdo (5/5)</option>
+                        <option value="4">De acuerdo (4/5)</option>
+                        <option value="3">Neutral (3/5)</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100 mt-3">Finalizar Registro y Registrar Impacto</button>
+            </form>
+
+            <!-- CONTANER DE REGISTROS Y ESTADÍSTICAS GENERADAS EN VIVO -->
+            <div id="panel-evidencias" class="mt-5 hidden-section">
+                <div class="alert alert-success fw-bold text-center">
+                    ¡Registro de participante completado exitosamente!
+                </div>
+                <h4 class="fw-bold mb-3">Métricas Generadas en Tiempo Real (Evidencia para Jurado)</h4>
+                <div class="row text-center mb-4">
+                    <div class="col-md-4">
+                        <div class="p-3 border rounded bg-light">
+                            <h2 class="text-primary fw-bold" id="total-registros">0</h2>
+                            <span class="text-muted small">Participantes Registrados</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 border rounded bg-light">
+                            <h2 class="text-success fw-bold" id="promedio-post">0%</h2>
+                            <span class="text-muted small">Aciertos Promedio Post-Test</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 border rounded bg-light">
+                            <h2 class="text-warning fw-bold" id="comunidades-count">0</h2>
+                            <span class="text-muted small">Comunidades de Apizaco</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h6 class="fw-bold">Registro de Asistencia Diagnóstica</h6>
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm text-center small">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Escuela</th>
+                                <th>Comunidad</th>
+                                <th>Pre-Test</th>
+                                <th>Post-Test</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-asistencia">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Almacenamiento local para simular la persistencia de datos en el cliente
+        let datosParticipante = {};
+        let registrosGlobales = JSON.parse(localStorage.getItem('semillero_registros')) || [];
+
+        // Manejador Paso 1 -> Paso 2
+        document.getElementById('form-diagnostico').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Evaluar respuestas Pre-Test
+            let pre1 = document.querySelector('input[name="pre_q1"]:checked').value;
+            let pre2 = document.querySelector('input[name="pre_q2"]:checked').value;
+            let puntajePre = (pre1 === "3" ? 1 : 0) + (pre2 === "16" ? 1 : 0);
+
+            datosParticipante = {
+                nombre: document.getElementById('nombre').value,
+                escuela: document.getElementById('escuela').value,
+                comunidad: document.getElementById('comunidad').value,
+                nivel: document.getElementById('nivel').value,
+                puntajePre: puntajePre
+            };
+
+            // Cambiar vista
+            document.getElementById('step-1').classList.add('hidden-section');
+            document.getElementById('step-2').classList.remove('hidden-section');
+            document.getElementById('badge-1').classList.remove('active');
+            document.getElementById('badge-2').classList.add('active');
+        });
+
+        // Algoritmo interactivo
+        function ejecutarAlgoritmo() {
+            let val = parseInt(document.getElementById('num-input').value);
+            let consoleEl = document.getElementById('console-res');
+            
+            if (isNaN(val) || val < 0) {
+                consoleEl.innerHTML = "> Error: Por favor ingresa un número entero positivo.";
+                return;
+            }
+
+            let temp = val;
+            let pasos = 0;
+            let logs = `> Iniciando verificación para n = ${val}<br>`;
+            
+            while (temp > 1) {
+                temp = temp - 2;
+                pasos++;
+            }
+
+            if (temp === 0) {
+                logs += `> Resultado final: El número ${val} es PAR (Iteraciones: ${pasos})`;
+            } else {
+                logs += `> Resultado final: El número ${val} es IMPAR (Iteraciones: ${pasos})`;
+            }
+
+            consoleEl.innerHTML = logs;
+        }
+
+        function irAEvidencias() {
+            document.getElementById('step-2').classList.add('hidden-section');
+            document.getElementById('step-3').classList.remove('hidden-section');
+            document.getElementById('badge-2').classList.remove('active');
+            document.getElementById('badge-3').classList.add('active');
+        }
+
+        // Manejador Paso 3 -> Final y renderizado de métricas
+        document.getElementById('form-final').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let post1 = document.querySelector('input[name="post_q1"]:checked').value;
+            let post2 = document.querySelector('input[name="post_q2"]:checked').value;
+            let puntajePost = (post1 === "3" ? 1 : 0) + (post2 === "16" ? 1 : 0);
+
+            datosParticipante.puntajePost = puntajePost;
+            datosParticipante.satisfaccion = document.getElementById('satisfaccion').value;
+
+            // Guardar en arreglo global (LocalStorage)
+            registrosGlobales.push(datosParticipante);
+            localStorage.setItem('semillero_registros', JSON.stringify(registrosGlobales));
+
+            // Ocultar formulario final y mostrar panel de evidencias
+            document.getElementById('form-final').classList.add('hidden-section');
+            document.getElementById('panel-evidencias').classList.remove('hidden-section');
+
+            actualizarMetricas();
+        });
+
+        function actualizarMetricas() {
+            document.getElementById('total-registros').innerText = registrosGlobales.length;
+            
+            let totalPost = registrosGlobales.reduce((acc, curr) => acc + curr.puntajePost, 0);
+            let promedio = registrosGlobales.length > 0 ? Math.round((totalPost / (registrosGlobales.length * 2)) * 100) : 0;
+            document.getElementById('promedio-post').innerText = promedio + "%";
+
+            let comunidadesUnicas = new Set(registrosGlobales.map(r => r.comunidad));
+            document.getElementById('comunidades-count').innerText = comunidadesUnicas.size;
+
+            let tabla = document.getElementById('tabla-asistencia');
+            tabla.innerHTML = "";
+            
+            re
