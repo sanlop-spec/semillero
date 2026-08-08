@@ -59,10 +59,19 @@
         }
         .module-box {
             border-left: 4px solid var(--accent);
-            background-color: #f1f5f9;
-            padding: 1.25rem;
+            background-color: #f8fafc;
+            padding: 1.5rem;
             border-radius: 0 8px 8px 0;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .math-expr {
+            font-family: 'Georgia', serif;
+            background: #eef2ff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #1e40af;
+            font-weight: 600;
         }
 
         /* ESTILOS DEL DIPLOMA INTEGRADO */
@@ -113,7 +122,7 @@
         }
         .main-title {
             font-family: 'Cinzel', serif;
-            font-size: 2.4rem;
+            font-size: 2.3rem;
             color: var(--gold-dark);
             font-weight: 800;
             letter-spacing: 3px;
@@ -151,27 +160,12 @@
             line-height: 1.1;
         }
 
-        /* REGLAS PARA IMPRESIÓN / PDF */
         @media print {
-            body * {
-                visibility: hidden;
-            }
-            #area-diploma, #area-diploma * {
-                visibility: visible;
-            }
-            #area-diploma {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-            }
-            .no-print {
-                display: none !important;
-            }
-            @page {
-                size: landscape;
-                margin: 0;
-            }
+            body * { visibility: hidden; }
+            #area-diploma, #area-diploma * { visibility: visible; }
+            #area-diploma { position: absolute; left: 0; top: 0; width: 100%; }
+            .no-print { display: none !important; }
+            @page { size: landscape; margin: 0; }
         }
     </style>
 </head>
@@ -180,26 +174,26 @@
     <header class="hero text-center no-print">
         <div class="container">
             <h1 class="fw-bold">Semillero STEM Apizaco</h1>
-            <p class="lead text-light opacity-75">Programa Adaptativo de Formación Lógico-Matemática</p>
+            <p class="lead text-light opacity-75">Taller Comunitario de Razonamiento Lógico-Matemático</p>
         </div>
     </header>
 
     <main class="container my-4" style="max-width: 900px;">
 
-        <!-- BARRA DE NAVEGACIÓN DE PASOS -->
+        <!-- BARRA DE PROGRESO -->
         <div id="barra-progreso" class="card-custom p-3 mb-4 no-print">
             <div class="d-flex justify-content-between align-items-center">
                 <span id="badge-1" class="step-badge active">1. Registro</span>
                 <span id="badge-2" class="step-badge">2. Pre-Test</span>
-                <span id="badge-3" class="step-badge">3. Curso</span>
-                <span id="badge-4" class="step-badge">4. Post-Test y Diploma</span>
+                <span id="badge-3" class="step-badge">3. Taller Intensivo</span>
+                <span id="badge-4" class="step-badge">4. Evaluacion y Diploma</span>
             </div>
         </div>
 
-        <!-- PASO 1: DATOS Y ELECCIÓN DE NIVEL -->
+        <!-- PASO 1: REGISTRO -->
         <section id="step-1" class="card-custom p-4 no-print">
             <h3 class="fw-bold mb-3">Paso 1: Registro del Estudiante</h3>
-            <p class="text-muted small">Ingresa tus datos. El diagnóstico y contenido se adaptarán a tu nivel académico.</p>
+            <p class="text-muted small">Ingresa tus datos para adaptar la dificultad del taller.</p>
             
             <form id="form-registro" onsubmit="guardarPaso1(event)">
                 <div class="row g-3 mb-4">
@@ -208,11 +202,11 @@
                         <input type="text" id="nombre" class="form-control" placeholder="Ej. Ana Lucía Gómez" required>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label fw-semibold">Escuela o Institución</label>
-                        <input type="text" id="escuela" class="form-control" placeholder="Ej. Primaria Leona Vicario / CBTis 212" required>
+                        <label class="form-label fw-semibold">Escuela de Procedencia</label>
+                        <input type="text" id="escuela" class="form-control" placeholder="Ej. Secundaria Técnica #9 / Bachillerato General" required>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label fw-semibold">Comunidad / Colonia de Apizaco</label>
+                        <label class="form-label fw-semibold">Comunidad / Colonia</label>
                         <select id="comunidad" class="form-select" required>
                             <option value="">Selecciona tu localidad...</option>
                             <option value="Apizaco Centro">Apizaco Centro</option>
@@ -221,11 +215,11 @@
                             <option value="San Luis Apizaquito">San Luis Apizaquito</option>
                             <option value="Santa María Texcalac">Santa María Texcalac</option>
                             <option value="San Bartolomé Matlalohcan">San Bartolomé Matlalohcan</option>
-                            <option value="Otra zona">Otra zona de Apizaco</option>
+                            <option value="Otra zona">Otra zona</option>
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label fw-semibold">Nivel Educativo Actual</label>
+                        <label class="form-label fw-semibold">Nivel Educativo</label>
                         <select id="nivel" class="form-select" required>
                             <option value="">Selecciona tu nivel...</option>
                             <option value="primaria">Primaria (4° a 6°)</option>
@@ -234,275 +228,358 @@
                         </select>
                     </div>
                 </div>
-
-                <button type="submit" class="btn btn-accent w-100">Iniciar Diagnóstico Adaptativo ➔</button>
+                <button type="submit" class="btn btn-accent w-100">Iniciar Evaluación Diagnóstica ➔</button>
             </form>
         </section>
 
-        <!-- PASO 2: PRE-TEST DIAGNÓSTICO COMPLETO -->
+        <!-- PASO 2: PRE-TEST (DIAGNÓSTICO RÁPIDO 5 PREGUNTAS) -->
         <section id="step-2" class="card-custom p-4 hidden-section no-print">
-            <h3 class="fw-bold mb-2">Paso 2: Diagnóstico Inicial (Pre-Test)</h3>
-            <p class="text-muted small mb-4">Responde la evaluación de 5 preguntas para medir tus conocimientos iniciales.</p>
+            <h3 class="fw-bold mb-2">Paso 2: Evaluación Diagnóstica Inicial (Pre-Test)</h3>
+            <p class="text-muted small mb-4">Esta prueba corta mide tu punto de partida antes de revisar los módulos.</p>
 
             <form id="form-pretest" onsubmit="guardarPaso2(event)">
-                
-                <!-- PRE-TEST PRIMARIA -->
                 <div id="pre-primaria" class="hidden-section">
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">1. Un autobús lleva 45 pasajeros. En la primera parada bajan 12 y suben 8. En la segunda bajan 5. ¿Cuántos pasajeros quedan?</label>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_pri_1" value="a" required><label class="form-check-label">36 pasajeros</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_pri_1" value="b"><label class="form-check-label">38 pasajeros</label></div>
+                        <label class="form-label fw-semibold">1. Si un autobús lleva 45 pasajeros y en la primera parada bajan 12 y suben 8, ¿cuántos van ahora?</label>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_pri_1" value="a"><label class="form-check-label">41 pasajeros</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_pri_1" value="b"><label class="form-check-label">39 pasajeros</label></div>
                     </div>
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">2. ¿Cuánto es la suma de 3/4 + 1/2?</label>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_pri_2" value="a" required><label class="form-check-label">4/6</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_pri_2" value="b"><label class="form-check-label">5/4 (o 1 entero 1/4)</label></div>
+                        <label class="form-label fw-semibold">2. ¿Cuánto es 3/4 + 1/2?</label>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_pri_2" value="a"><label class="form-check-label">5/4 (1 entero y 1/4)</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_pri_2" value="b"><label class="form-check-label">4/6</label></div>
                     </div>
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">3. Si un terreno rectangular mide 12 metros de largo y 8 metros de ancho, ¿cuál es su área total?</label>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_pri_3" value="a" required><label class="form-check-label">96 metros cuadrados</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_pri_3" value="b"><label class="form-check-label">40 metros cuadrados</label></div>
+                        <label class="form-label fw-semibold">3. Área de un rectángulo de 12 m de largo por 8 m de ancho:</label>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_pri_3" value="a"><label class="form-check-label">96 m²</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_pri_3" value="b"><label class="form-check-label">40 m²</label></div>
                     </div>
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">4. ¿Cuál es el número que falta en la secuencia: 4, 9, 16, 25, ___?</label>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_pri_4" value="a" required><label class="form-check-label">30</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_pri_4" value="b"><label class="form-check-label">36</label></div>
+                        <label class="form-label fw-semibold">4. Siguiente número en la secuencia: 4, 9, 16, 25, ___</label>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_pri_4" value="a"><label class="form-check-label">36</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_pri_4" value="b"><label class="form-check-label">30</label></div>
                     </div>
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">5. En una tienda venden 3 cuadernos por $45. ¿Cuánto costarían 7 cuadernos?</label>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_pri_5" value="a" required><label class="form-check-label">$105</label></div>
+                        <label class="form-label fw-semibold">5. Si 3 cuadernos cuestan $45, ¿cuánto cuestan 7 cuadernos?</label>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_pri_5" value="a"><label class="form-check-label">$105</label></div>
                         <div class="form-check"><input class="form-check-input" type="radio" name="p_pri_5" value="b"><label class="form-check-label">$90</label></div>
                     </div>
                 </div>
 
-                <!-- PRE-TEST SECUNDARIA -->
                 <div id="pre-secundaria" class="hidden-section">
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">1. Resuelve la ecuación: 3x - 7 = 14. ¿Cuál es el valor de x?</label>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_sec_1" value="a" required><label class="form-check-label">x = 7</label></div>
+                        <label class="form-label fw-semibold">1. Resuelve: 3x - 7 = 14. ¿Cuánto vale x?</label>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_sec_1" value="a"><label class="form-check-label">x = 7</label></div>
                         <div class="form-check"><input class="form-check-input" type="radio" name="p_sec_1" value="b"><label class="form-check-label">x = 5</label></div>
                     </div>
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">2. Si un triángulo rectángulo tiene catetos de 6 cm y 8 cm, ¿cuánto mide su hipotenusa?</label>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_sec_2" value="a" required><label class="form-check-label">10 cm</label></div>
+                        <label class="form-label fw-semibold">2. Triángulo rectángulo con catetos de 6 cm y 8 cm. ¿Hipotenusa?</label>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_sec_2" value="a"><label class="form-check-label">10 cm</label></div>
                         <div class="form-check"><input class="form-check-input" type="radio" name="p_sec_2" value="b"><label class="form-check-label">14 cm</label></div>
                     </div>
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">3. ¿Cuál es el Mínimo Común Múltiplo (MCM) de 12 y 18?</label>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_sec_3" value="a" required><label class="form-check-label">36</label></div>
+                        <label class="form-label fw-semibold">3. Mínimo Común Múltiplo (MCM) de 12 y 18:</label>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_sec_3" value="a"><label class="form-check-label">36</label></div>
                         <div class="form-check"><input class="form-check-input" type="radio" name="p_sec_3" value="b"><label class="form-check-label">72</label></div>
                     </div>
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">4. Simplifica la expresión: 2(a + 3b) - 4a</label>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_sec_4" value="a" required><label class="form-check-label">6b - 2a</label></div>
+                        <label class="form-label fw-semibold">4. Simplifica: 2(a + 3b) - 4a</label>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_sec_4" value="a"><label class="form-check-label">6b - 2a</label></div>
                         <div class="form-check"><input class="form-check-input" type="radio" name="p_sec_4" value="b"><label class="form-check-label">2a + 3b</label></div>
                     </div>
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">5. Un artículo cuesta $200 y tiene un 20% de descuento. ¿Cuál es su precio final?</label>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_sec_5" value="a" required><label class="form-check-label">$160</label></div>
+                        <label class="form-label fw-semibold">5. Un producto de $200 tiene el 20% de descuento. ¿Precio final?</label>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_sec_5" value="a"><label class="form-check-label">$160</label></div>
                         <div class="form-check"><input class="form-check-input" type="radio" name="p_sec_5" value="b"><label class="form-check-label">$180</label></div>
                     </div>
                 </div>
 
-                <!-- PRE-TEST PREPARATORIA -->
                 <div id="pre-preparatoria" class="hidden-section">
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">1. Simplifica la expresión algebráica: (x² - 9) / (x - 3)</label>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_prep_1" value="a" required><label class="form-check-label">x + 3</label></div>
+                        <label class="form-label fw-semibold">1. Simplifica la expresión: (x² - 9) / (x - 3)</label>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_prep_1" value="a"><label class="form-check-label">x + 3</label></div>
                         <div class="form-check"><input class="form-check-input" type="radio" name="p_prep_1" value="b"><label class="form-check-label">x - 3</label></div>
                     </div>
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">2. ¿Cuál es el valor exacto de sen(30°) + cos(60°)?</label>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_prep_2" value="a" required><label class="form-check-label">1</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_prep_2" value="b"><label class="form-check-label">√3/2</label></div>
+                        <label class="form-label fw-semibold">2. Valor numérico de sin(30°) + cos(60°):</label>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_prep_2" value="a"><label class="form-check-label">1.0</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_prep_2" value="b"><label class="form-check-label">0.5</label></div>
                     </div>
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">3. Resuelve para x: log₂(x) = 5</label>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_prep_3" value="a" required><label class="form-check-label">32</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_prep_3" value="b"><label class="form-check-label">25</label></div>
+                        <label class="form-label fw-semibold">3. Resuelve la ecuación logarítmica: log₂(x) = 5</label>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_prep_3" value="a"><label class="form-check-label">x = 32</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_prep_3" value="b"><label class="form-check-label">x = 25</label></div>
                     </div>
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">4. ¿Cuál es la pendiente de la recta perpendicular a y = 2x + 1?</label>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_prep_4" value="a" required><label class="form-check-label">-1/2</label></div>
+                        <label class="form-label fw-semibold">4. Pendiente de la recta perpendicular a y = 2x + 1:</label>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_prep_4" value="a"><label class="form-check-label">-1/2</label></div>
                         <div class="form-check"><input class="form-check-input" type="radio" name="p_prep_4" value="b"><label class="form-check-label">-2</label></div>
                     </div>
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">5. Determina las raíces de la función cuadrática: f(x) = x² - 5x + 6</label>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p_prep_5" value="a" required><label class="form-check-label">x = 2, x = 3</label></div>
+                        <label class="form-label fw-semibold">5. Raíces de la función f(x) = x² - 5x + 6:</label>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p_prep_5" value="a"><label class="form-check-label">x = 2, x = 3</label></div>
                         <div class="form-check"><input class="form-check-input" type="radio" name="p_prep_5" value="b"><label class="form-check-label">x = -2, x = -3</label></div>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-accent w-100 mt-3">Guardar Diagnóstico e Iniciar Curso ➔</button>
+                <button type="submit" class="btn btn-accent w-100 mt-3">Guardar Diagnóstico y Entrar al Taller ➔</button>
             </form>
         </section>
 
-        <!-- PASO 3: CURSO ADAPTATIVO -->
+        <!-- PASO 3: CURSO / TALLER AMPLIO Y FORMATO LIMPIO -->
         <section id="step-3" class="card-custom p-4 hidden-section no-print">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h3 class="fw-bold m-0">Curso de Matemáticas</h3>
-                <button type="button" onclick="irAPostTest()" class="btn btn-outline-secondary btn-sm">Saltar al Post-Test ➔</button>
+                <h3 class="fw-bold m-0">Taller Intensivo de Aprendizaje</h3>
+                <button type="button" onclick="irAPostTest()" class="btn btn-outline-secondary btn-sm">Ir a la Evaluación Final ➔</button>
             </div>
             
+            <!-- CONTENIDO PRIMARIA -->
             <div id="curso-primaria" class="hidden-section">
                 <div class="module-box">
-                    <h5 class="fw-bold text-primary">Módulo 1: Operaciones Fundamentales y Cálculo Mental</h5>
-                    <p>Descomponer números agiliza el cálculo mental. Para $48 + 37$, puedes sumar $48 + 30 = 78$, y luego $78 + 7 = 85$. Para multiplicaciones complejas, usa la distribución: $7 \times 15 = 7 \times (10 + 5) = 70 + 35 = 105$.</p>
+                    <h5 class="fw-bold text-primary mb-2">Módulo 1: Estrategias de Cálculo Mental y Descomposición</h5>
+                    <p>El cálculo mental rápido no consiste en memorizar, sino en descomponer cantidades. Por ejemplo, si deseas sumar <strong>48 + 37</strong>, descompón el segundo número en decenas y unidades: <span class="math-expr">48 + 30 = 78</span> y luego <span class="math-expr">78 + 7 = 85</span>.</p>
+                    <p class="mb-0">Para restar valores complejos como <strong>100 - 43</strong>, restamos primero las decenas: <span class="math-expr">100 - 40 = 60</span> y luego quitamos las unidades sobrantes: <span class="math-expr">60 - 3 = 57</span>.</p>
                 </div>
                 <div class="module-box">
-                    <h5 class="fw-bold text-primary">Módulo 2: Domina las Fracciones y Proporciones</h5>
-                    <p>Para sumar fracciones con distinto denominador como $\frac{1}{2} + \frac{3}{4}$, convertimos a denominador común: $\frac{2}{4} + \frac{3}{4} = \frac{5}{4}$.</p>
+                    <h5 class="fw-bold text-primary mb-2">Módulo 2: Operaciones con Fracciones Homogéneas y Heterogéneas</h5>
+                    <p>Para sumar fracciones con distinto denominador, convertimos las fracciones a equivalentes utilizando el Mínimo Común Denominador. Para calcular <span class="math-expr">3/4 + 1/2</span>, transformamos <span class="math-expr">1/2</span> a cuartos multiplicando numerador y denominador por 2, obteniendo <span class="math-expr">2/4</span>.</p>
+                    <p class="mb-0">Así, la suma resulta: <span class="math-expr">3/4 + 2/4 = 5/4</span>, lo cual equivale a 1 entero y 1/4.</p>
                 </div>
                 <div class="module-box">
-                    <h5 class="fw-bold text-primary">Módulo 3: Perímetros y Áreas Geométricas</h5>
-                    <p>El perímetro mide el contorno y el área la superficie interior. En un rectángulo de $12\text{ m} \times 8\text{ m}$, el área es $12 \times 8 = 96\text{ m}^2$.</p>
+                    <h5 class="fw-bold text-primary mb-2">Módulo 3: Geometría Aplicada, Perímetros y Áreas</h5>
+                    <p>El <strong>perímetro</strong> es la longitud del contorno de una figura geométrica, mientras que el <strong>área</strong> mide la superficie contenida dentro de ella.</p>
+                    <ul>
+                        <li><strong>Rectángulo de 12 m × 8 m:</strong> El área se obtiene multiplicando base por altura: <span class="math-expr">12 × 8 = 96 m²</span>.</li>
+                        <li><strong>Perímetro del rectángulo:</strong> Sumamos todos sus lados: <span class="math-expr">12 + 12 + 8 + 8 = 40 m</span>.</li>
+                    </ul>
+                </div>
+                <div class="module-box">
+                    <h5 class="fw-bold text-primary mb-2">Módulo 4: Regla de Tres Simple y Razones de Proporcionalidad</h5>
+                    <p>Cuando existe una relación directamente proporcional, si una cantidad aumenta, la otra lo hace en la misma proporción. Si sabemos que 3 cuadernos cuestan $45, primero calculamos el valor unitario dividiendo: <span class="math-expr">$45 ÷ 3 = $15 por cuaderno</span>.</p>
+                    <p class="mb-0">Posteriormente, multiplicamos el costo unitario por la cantidad deseada: <span class="math-expr">7 × $15 = $105</span>.</p>
                 </div>
             </div>
 
+            <!-- CONTENIDO SECUNDARIA -->
             <div id="curso-secundaria" class="hidden-section">
                 <div class="module-box">
-                    <h5 class="fw-bold text-primary">Módulo 1: Lenguaje Algorítmico y Ecuaciones</h5>
-                    <p>Para despejar $3x - 7 = 14$: sumamos $7$ a ambos lados ($3x = 21$) y dividimos entre $3$ ($x = 7$).</p>
+                    <h5 class="fw-bold text-primary mb-2">Módulo 1: Lenguaje Algebraico y Despeje de Ecuaciones de Primer Grado</h5>
+                    <p>Una ecuación representa una igualdad en equilibrio. Para despejar la incógnita <em>x</em> en <span class="math-expr">3x - 7 = 14</span>, aplicamos operaciones inversas en ambos miembros:</p>
+                    <ol>
+                        <li>Sumamos 7 a ambos lados: <span class="math-expr">3x = 14 + 7 ➔ 3x = 21</span>.</li>
+                        <li>Dividimos entre 3: <span class="math-expr">x = 21 / 3 ➔ x = 7</span>.</li>
+                    </ol>
                 </div>
                 <div class="module-box">
-                    <h5 class="fw-bold text-primary">Módulo 2: Geometría y Teorema de Pitágoras</h5>
-                    <p>En todo triángulo rectángulo: $a^2 + b^2 = c^2$. Con catetos de $6$ y $8$: $c = \sqrt{6^2 + 8^2} = \sqrt{36 + 64} = \sqrt{100} = 10\text{ cm}$.</p>
+                    <h5 class="fw-bold text-primary mb-2">Módulo 2: Geometría Analítica y Teorema de Pitágoras</h5>
+                    <p>En todo triángulo rectángulo, el cuadrado de la hipotenusa (<em>c</em>) es igual a la suma de los cuadrados de los catetos (<em>a</em> y <em>b</em>): <span class="math-expr">a² + b² = c²</span>.</p>
+                    <p class="mb-0">Dado un triángulo con catetos de 6 cm y 8 cm: <span class="math-expr">c² = 6² + 8² = 36 + 64 = 100</span>. Aplicando raíz cuadrada obtenemos: <span class="math-expr">c = √100 = 10 cm</span>.</p>
                 </div>
                 <div class="module-box">
-                    <h5 class="fw-bold text-primary">Módulo 3: MCM y Razones Porcentuales</h5>
-                    <p>El MCM de $12$ y $18$ es $36$. Para un $20\%$ de descuento sobre $\$200$: $200 \times 0.20 = 40$, por lo que el costo final es $\$160$.</p>
+                    <h5 class="fw-bold text-primary mb-2">Módulo 3: Teoría de Números, MCM y MCD</h5>
+                    <p>El Mínimo Común Múltiplo (MCM) es el menor número positivo que es múltiplo de dos o más números. Para encontrar el MCM de 12 y 18:</p>
+                    <ul>
+                        <li>Múltiplos de 12: 12, 24, <strong>36</strong>, 48, 60...</li>
+                        <li>Múltiplos de 18: 18, <strong>36</strong>, 54, 72...</li>
+                        <li>El menor múltiplo común es <strong>36</strong>.</li>
+                    </ul>
+                </div>
+                <div class="module-box">
+                    <h5 class="fw-bold text-primary mb-2">Módulo 4: Porcentajes y Modelación de Descuentos</h5>
+                    <p>El cálculo de porcentajes implica multiplicar la cantidad base por la tasa decimal. Si un artículo de $200 tiene el 20% de descuento:</p>
+                    <p class="mb-0">Calculamos el monto descontado: <span class="math-expr">200 × 0.20 = $40</span>. El precio final a pagar es: <span class="math-expr">$200 - $40 = $160</span>.</p>
                 </div>
             </div>
 
+            <!-- CONTENIDO PREPARATORIA -->
             <div id="curso-preparatoria" class="hidden-section">
                 <div class="module-box">
-                    <h5 class="fw-bold text-primary">Módulo 1: Factorización Avanzada</h5>
-                    <p>La diferencia de cuadrados: $a^2 - b^2 = (a - b)(a + b)$. Por ello $(x^2 - 9)/(x - 3) = ((x-3)(x+3))/(x-3) = x + 3$.</p>
+                    <h5 class="fw-bold text-primary mb-2">Módulo 1: Factorización de Polinomios y Simplificación</h5>
+                    <p>La diferencia de cuadrados perfectos responde al modelo: <span class="math-expr">a² - b² = (a - b)(a + b)</span>.</p>
+                    <p>Para simplificar la fracción algebráica <span class="math-expr">(x² - 9) / (x - 3)</span>, factorizamos el numerador como <span class="math-expr">(x - 3)(x + 3)</span>. Dividiendo entre <span class="math-expr">(x - 3)</span> cancelamos términos semejantes para obtener el resultado final: <span class="math-expr">x + 3</span>.</p>
                 </div>
                 <div class="module-box">
-                    <h5 class="fw-bold text-primary">Módulo 2: Trigonometría Analítica y Círculo Unitario</h5>
-                    <p>Valores notables: $\text{sen}(30^\circ) = 0.5$, $\text{cos}(60^\circ) = 0.5$. La suma equivale a $1$.</p>
+                    <h5 class="fw-bold text-primary mb-2">Módulo 2: Trigonometría Analítica e Identidades Fundamentales</h5>
+                    <p>Los ángulos notables en el círculo unitario presentan valores exactos:</p>
+                    <ul>
+                        <li><span class="math-expr">sin(30°) = 1/2 = 0.5</span></li>
+                        <li><span class="math-expr">cos(60°) = 1/2 = 0.5</span></li>
+                    </ul>
+                    <p class="mb-0">Al sumar ambas expresiones evaluadas: <span class="math-expr">sin(30°) + cos(60°) = 0.5 + 0.5 = 1.0</span>.</p>
                 </div>
                 <div class="module-box">
-                    <h5 class="fw-bold text-primary">Módulo 3: Funciones y Logaritmos</h5>
-                    <p>Propiedad fundamental de los logaritmos: $\log_b(x) = y \iff b^y = x$. Así, $\log_2(x) = 5 \implies x = 2^5 = 32$.</p>
+                    <h5 class="fw-bold text-primary mb-2">Módulo 3: Funciones Logarítmicas y Exponenciales</h5>
+                    <p>Un logaritmo es la operación inversa a la exponenciación: <span class="math-expr">log_b(x) = y</span> equivale a <span class="math-expr">b^y = x</span>.</p>
+                    <p class="mb-0">Por ende, al resolver <span class="math-expr">log₂(x) = 5</span>, reescribimos la ecuación en forma exponencial como <span class="math-expr">x = 2⁵ = 32</span>.</p>
+                </div>
+                <div class="module-box">
+                    <h5 class="fw-bold text-primary mb-2">Módulo 4: Geometría Analítica y Pendientes Perpendiculares</h5>
+                    <p>Dada una recta con ecuación <span class="math-expr">y = mx + b</span>, su pendiente es <em>m</em>. Dos rectas son perpendiculares si el producto de sus pendientes es igual a -1 (<span class="math-expr">m1 × m2 = -1</span>).</p>
+                    <p class="mb-0">Para la recta <span class="math-expr">y = 2x + 1</span>, la pendiente es <span class="math-expr">m1 = 2</span>. Su pendiente perpendicular será <span class="math-expr">m2 = -1 / 2</span>.</p>
                 </div>
             </div>
 
-            <button type="button" onclick="irAPostTest()" class="btn btn-accent w-100 mt-2">Continuar al Post-Test Final ➔</button>
+            <button type="button" onclick="irAPostTest()" class="btn btn-accent w-100 mt-2">Finalizar Módulos e Ir al Post-Test Final ➔</button>
         </section>
 
-        <!-- PASO 4: POST-TEST Y DIPLOMA -->
+        <!-- PASO 4: POST-TEST LARGO (8 PREGUNTAS DISTINTAS Y MÁS COMPLEJAS) -->
         <section id="step-4" class="card-custom p-4 hidden-section">
             <div class="no-print">
-                <h3 class="fw-bold mb-3">Paso 4: Evaluación Final (Post-Test)</h3>
+                <h3 class="fw-bold mb-2">Paso 4: Evaluación Final de Conocimientos (Post-Test)</h3>
+                <p class="text-muted small mb-4">Responde la evaluación final completa (8 preguntas) para generar tu constancia de participación.</p>
                 
                 <form id="form-posttest" onsubmit="guardarPaso4(event)">
-                    <!-- POST-TEST PRIMARIA -->
+                    
+                    <!-- POST-TEST PRIMARIA (8 PREGUNTAS) -->
                     <div id="post-primaria" class="hidden-section">
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">1. Un autobús lleva 45 pasajeros. En la primera parada bajan 12 y suben 8. En la segunda bajan 5. ¿Cuántos pasajeros quedan?</label>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_1" value="a" required><label class="form-check-label">36 pasajeros</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_1" value="b"><label class="form-check-label">38 pasajeros</label></div>
+                            <label class="form-label fw-semibold">1. Juan compra 3 cajas con 24 lápices cada una. Si regala 18 lápices a sus amigos, ¿cuántos le quedan?</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_1" value="a"><label class="form-check-label">54 lápices</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_1" value="b"><label class="form-check-label">48 lápices</label></div>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">2. ¿Cuánto es la suma de 3/4 + 1/2?</label>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_2" value="a" required><label class="form-check-label">4/6</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_2" value="b"><label class="form-check-label">5/4 (o 1 entero 1/4)</label></div>
+                            <label class="form-label fw-semibold">2. ¿Cuál es el resultado de restar 5/6 - 1/3?</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_2" value="a"><label class="form-check-label">1/2 (o 3/6)</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_2" value="b"><label class="form-check-label">4/3</label></div>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">3. Si un terreno rectangular mide 12 metros de largo y 8 metros de ancho, ¿cuál es su área total?</label>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_3" value="a" required><label class="form-check-label">96 metros cuadrados</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_3" value="b"><label class="form-check-label">40 metros cuadrados</label></div>
+                            <label class="form-label fw-semibold">3. Un parque cuadrado tiene un área de 81 m². ¿Cuál es el perímetro total del parque?</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_3" value="a"><label class="form-check-label">36 metros</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_3" value="b"><label class="form-check-label">18 metros</label></div>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">4. ¿Cuál es el número que falta en la secuencia: 4, 9, 16, 25, ___?</label>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_4" value="a" required><label class="form-check-label">30</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_4" value="b"><label class="form-check-label">36</label></div>
+                            <label class="form-label fw-semibold">4. ¿Cuál es el número que continúa en la serie: 3, 7, 15, 31, ___?</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_4" value="a"><label class="form-check-label">63</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_4" value="b"><label class="form-check-label">45</label></div>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">5. En una tienda venden 3 cuadernos por $45. ¿Cuánto costarían 7 cuadernos?</label>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_5" value="a" required><label class="form-check-label">$105</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_5" value="b"><label class="form-check-label">$90</label></div>
+                            <label class="form-label fw-semibold">5. Un coche recorre 240 km en 3 horas. A esa misma velocidad, ¿cuántos km recorrerá en 5 horas?</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_5" value="a"><label class="form-check-label">400 km</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_5" value="b"><label class="form-check-label">350 km</label></div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">6. ¿Cuál es el resultado de la operación combinada: 12 + 4 × (8 - 3)?</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_6" value="a"><label class="form-check-label">32</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_6" value="b"><label class="form-check-label">80</label></div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">7. Si 2/5 de un grupo de 30 estudiantes prefieren fútbol, ¿cuántos estudiantes no prefieren fútbol?</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_7" value="a"><label class="form-check-label">18 estudiantes</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_7" value="b"><label class="form-check-label">12 estudiantes</label></div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">8. ¿Cuántos minutos hay en 3 horas y media?</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_8" value="a"><label class="form-check-label">210 minutos</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_pri_8" value="b"><label class="form-check-label">180 minutos</label></div>
                         </div>
                     </div>
 
-                    <!-- POST-TEST SECUNDARIA -->
+                    <!-- POST-TEST SECUNDARIA (8 PREGUNTAS) -->
                     <div id="post-secundaria" class="hidden-section">
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">1. Resuelve la ecuación: 3x - 7 = 14. ¿Cuál es el valor de x?</label>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_1" value="a" required><label class="form-check-label">x = 7</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_1" value="b"><label class="form-check-label">x = 5</label></div>
+                            <label class="form-label fw-semibold">1. Resuelve la ecuación: 5x + 8 = 2x + 23</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_1" value="a"><label class="form-check-label">x = 5</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_1" value="b"><label class="form-check-label">x = 3</label></div>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">2. Si un triángulo rectángulo tiene catetos de 6 cm y 8 cm, ¿cuánto mide su hipotenusa?</label>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_2" value="a" required><label class="form-check-label">10 cm</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_2" value="b"><label class="form-check-label">14 cm</label></div>
+                            <label class="form-label fw-semibold">2. En un triángulo rectángulo, la hipotenusa mide 13 cm y un cateto mide 5 cm. ¿Cuánto mide el otro cateto?</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_2" value="a"><label class="form-check-label">12 cm</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_2" value="b"><label class="form-check-label">8 cm</label></div>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">3. ¿Cuál es el Mínimo Común Múltiplo (MCM) de 12 y 18?</label>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_3" value="a" required><label class="form-check-label">36</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_3" value="b"><label class="form-check-label">72</label></div>
+                            <label class="form-label fw-semibold">3. Determina el Máximo Común Divisor (MCD) de 24 y 36:</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_3" value="a"><label class="form-check-label">12</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_3" value="b"><label class="form-check-label">6</label></div>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">4. Simplifica la expresión: 2(a + 3b) - 4a</label>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_4" value="a" required><label class="form-check-label">6b - 2a</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_4" value="b"><label class="form-check-label">2a + 3b</label></div>
+                            <label class="form-label fw-semibold">4. Desarrolla el binomio al cuadrado: (2x - 3)²</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_4" value="a"><label class="form-check-label">4x² - 12x + 9</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_4" value="b"><label class="form-check-label">4x² - 9</label></div>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">5. Un artículo cuesta $200 y tiene un 20% de descuento. ¿Cuál es su precio final?</label>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_5" value="a" required><label class="form-check-label">$160</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_5" value="b"><label class="form-check-label">$180</label></div>
+                            <label class="form-label fw-semibold">5. Un artículo que costaba $500 tiene un aumento del 10% y luego un descuento del 10%. ¿Cuál es su precio final?</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_5" value="a"><label class="form-check-label">$495</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_5" value="b"><label class="form-check-label">$500</label></div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">6. ¿Cuál es la pendiente de la recta que pasa por los puntos (1, 2) y (4, 8)?</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_6" value="a"><label class="form-check-label">m = 2</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_6" value="b"><label class="form-check-label">m = 3</label></div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">7. Si lanzas un dado estándar de 6 caras, ¿cuál es la probabilidad de obtener un número primo?</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_7" value="a"><label class="form-check-label">1/2 (3 de 6)</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_7" value="b"><label class="form-check-label">1/3 (2 de 6)</label></div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">8. Simplifica la expresión con leyes de exponentes: (a³ · a⁴) / a²</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_8" value="a"><label class="form-check-label">a⁵</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_sec_8" value="b"><label class="form-check-label">a⁶</label></div>
                         </div>
                     </div>
 
-                    <!-- POST-TEST PREPARATORIA -->
+                    <!-- POST-TEST PREPARATORIA (8 PREGUNTAS) -->
                     <div id="post-preparatoria" class="hidden-section">
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">1. Simplifica la expresión algebráica: (x² - 9) / (x - 3)</label>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_1" value="a" required><label class="form-check-label">x + 3</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_1" value="b"><label class="form-check-label">x - 3</label></div>
+                            <label class="form-label fw-semibold">1. Factoriza completamente el trinomio: x² - 7x + 12</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_1" value="a"><label class="form-check-label">(x - 3)(x - 4)</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_1" value="b"><label class="form-check-label">(x - 2)(x - 6)</label></div>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">2. ¿Cuál es el valor exacto de sen(30°) + cos(60°)?</label>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_2" value="a" required><label class="form-check-label">1</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_2" value="b"><label class="form-check-label">√3/2</label></div>
+                            <label class="form-label fw-semibold">2. ¿Cuál es el valor exacto de cos²(45°) + sin²(45°)?</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_2" value="a"><label class="form-check-label">1</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_2" value="b"><label class="form-check-label">1/2</label></div>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">3. Resuelve para x: log₂(x) = 5</label>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_3" value="a" required><label class="form-check-label">32</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_3" value="b"><label class="form-check-label">25</label></div>
+                            <label class="form-label fw-semibold">3. Resuelve para x la ecuación exponencial: 3^(x+1) = 81</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_3" value="a"><label class="form-check-label">x = 3</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_3" value="b"><label class="form-check-label">x = 4</label></div>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">4. ¿Cuál es la pendiente de la recta perpendicular a y = 2x + 1?</label>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_4" value="a" required><label class="form-check-label">-1/2</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_4" value="b"><label class="form-check-label">-2</label></div>
+                            <label class="form-label fw-semibold">4. ¿Cuál es la distancia entre los puntos A(2, -3) y B(6, 0) en el plano cartesiano?</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_4" value="a"><label class="form-check-label">5 unidades</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_4" value="b"><label class="form-check-label">7 unidades</label></div>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">5. Determina las raíces de la función cuadrática: f(x) = x² - 5x + 6</label>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_5" value="a" required><label class="form-check-label">x = 2, x = 3</label></div>
-                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_5" value="b"><label class="form-check-label">x = -2, x = -3</label></div>
+                            <label class="form-label fw-semibold">5. Determina el dominio de la función f(x) = √(x - 4):</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_5" value="a"><label class="form-check-label">x ≥ 4</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_5" value="b"><label class="form-check-label">x > 0</label></div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">6. ¿Cuál es la derivada de f(x) = 3x² - 5x + 2 respecto a x?</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_6" value="a"><label class="form-check-label">6x - 5</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_6" value="b"><label class="form-check-label">3x - 5</label></div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">7. Resuelve la desigualdad: 2x - 4 < 10</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_7" value="a"><label class="form-check-label">x < 7</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_7" value="b"><label class="form-check-label">x < 3</label></div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">8. ¿Cuál es la suma de la serie aritmética 2 + 4 + 6 + ... + 20?</label>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_8" value="a"><label class="form-check-label">110</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="post_prep_8" value="b"><label class="form-check-label">100</label></div>
                         </div>
                     </div>
 
                     <hr class="my-4">
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">¿Consideras que este taller te ayudó a comprender mejor las matemáticas?</label>
+                        <label class="form-label fw-semibold">¿Cómo calificarías la utilidad general de este taller comunitario?</label>
                         <select id="satisfaccion" class="form-select" required>
-                            <option value="5">Totalmente de acuerdo (5/5)</option>
-                            <option value="4">De acuerdo (4/5)</option>
-                            <option value="3">Neutral (3/5)</option>
+                            <option value="5">Excelente (5/5)</option>
+                            <option value="4">Bueno (4/5)</option>
+                            <option value="3">Regular (3/5)</option>
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-success w-100 mt-3 fw-bold">Finalizar y Generar Mi Diploma 🎓</button>
+                    <button type="submit" class="btn btn-success w-100 mt-3 fw-bold">Finalizar Evaluación y Generar diploma 🎓</button>
                 </form>
             </div>
 
-            <!-- DIPLOMA GENERADO -->
+            <!-- DIPLOMA GENERADO (SIN INSTITUCIONES Y CON LEYENDA PROTECTORA) -->
             <div id="pantalla-agradecimiento" class="hidden-section">
                 <div class="alert alert-success text-center fw-bold no-print">
-                    ¡Felicidades! Has completado con éxito el programa. Aquí está tu diploma oficial.
+                    ¡Felicidades! Has completado satisfactoriamente el taller. Tu documento ha sido generado.
                 </div>
                 
                 <div class="text-center mb-3 no-print">
@@ -529,33 +606,36 @@
                             <div class="student-name" id="cert-nombre">--</div>
 
                             <p class="small text-secondary my-3 px-4">
-                                Por haber completado satisfactoriamente el taller intensivo de
+                                Por haber completado exitosamente las actividades y evaluaciones del taller intensivo de
                                 <strong id="cert-curso">Razonamiento Lógico-Matemático</strong>,
-                                demostrando disciplina, habilidades analíticas y compromiso académico en la comunidad de Apizaco, Tlaxcala.
+                                fortaleciendo el pensamiento analítico en la comunidad juvenil de Apizaco, Tlaxcala.
                             </p>
 
                             <div class="row align-items-end mt-4">
                                 <div class="col-4 text-center">
-                                    <div style="border-top: 1.5px solid #334155; width: 160px; margin: 0 auto 4px auto;"></div>
+                                    <div style="border-top: 1.5px solid #334155; width: 150px; margin: 0 auto 4px auto;"></div>
                                     <div class="fw-bold small text-dark">Comité Organizador</div>
-                                    <div class="text-muted" style="font-size: 0.7rem;">Semillero STEM</div>
+                                    <div class="text-muted" style="font-size: 0.65rem;">Semillero STEM Apizaco</div>
                                 </div>
                                 <div class="col-4 text-center">
                                     <div class="badge-seal">
-                                        <div class="badge-seal-text">Excelencia<br>STEM<br>2026</div>
+                                        <div class="badge-seal-text">Iniciativa<br>STEM<br>2026</div>
                                     </div>
                                 </div>
                                 <div class="col-4 text-center">
-                                    <div style="border-top: 1.5px solid #334155; width: 160px; margin: 0 auto 4px auto;"></div>
-                                    <div class="fw-bold small text-dark">Coordinación Académica</div>
-                                    <div class="text-muted" style="font-size: 0.7rem;" id="cert-escuela">Institución</div>
+                                    <div style="border-top: 1.5px solid #334155; width: 150px; margin: 0 auto 4px auto;"></div>
+                                    <div class="fw-bold small text-dark">Coordinación de Taller</div>
+                                    <div class="text-muted" style="font-size: 0.65rem;" id="cert-escuela">Participante</div>
                                 </div>
                             </div>
 
-                            <div class="d-flex justify-content-between text-muted mt-4" style="font-size: 0.7rem;">
-                                <span>Lugar: Apizaco, Tlaxcala</span>
+                            <div class="d-flex justify-content-between text-muted mt-3" style="font-size: 0.65rem;">
+                                <span>Apizaco, Tlaxcala</span>
                                 <span>Fecha: <strong id="cert-fecha">--</strong></span>
                                 <span>Folio: <strong id="cert-folio">--</strong></span>
+                            </div>
+                            <div class="text-center text-muted opacity-50 mt-1" style="font-size: 0.55rem;">
+                                Documento de participación emitido por iniciativa juvenil independiente sin validez curricular oficial (RVOE).
                             </div>
                         </div>
                     </div>
@@ -563,10 +643,10 @@
             </div>
         </section>
 
-        <!-- PANEL PRIVADO DE ADMINISTRADOR -->
+        <!-- PANEL DE ADMINISTRADOR -->
         <section id="panel-admin" class="card-custom p-4 border border-danger hidden-section no-print">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h3 class="fw-bold text-danger m-0">Panel Privado (Administrador)</h3>
+                <h3 class="fw-bold text-danger m-0">Panel de Control (Administrador)</h3>
                 <button type="button" onclick="cerrarAdmin()" class="btn btn-secondary btn-sm">Cerrar</button>
             </div>
 
@@ -574,7 +654,7 @@
                 <div class="col-md-4">
                     <div class="p-3 border rounded bg-light">
                         <h2 class="text-primary fw-bold" id="total-registros">0</h2>
-                        <span class="text-muted small">Total Alumnos</span>
+                        <span class="text-muted small">Alumnos Registrados</span>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -586,7 +666,7 @@
                 <div class="col-md-4">
                     <div class="p-3 border rounded bg-light">
                         <h2 class="text-warning fw-bold" id="comunidades-count">0</h2>
-                        <span class="text-muted small">Comunidades</span>
+                        <span class="text-muted small">Comunidades Atendidas</span>
                     </div>
                 </div>
             </div>
@@ -599,8 +679,8 @@
                             <th>Escuela</th>
                             <th>Comunidad</th>
                             <th>Nivel</th>
-                            <th>Diagnóstico (Pre)</th>
-                            <th>Evaluación (Post)</th>
+                            <th>Pre-Test (5 preguntas)</th>
+                            <th>Post-Test (8 preguntas)</th>
                             <th>Calificación Final</th>
                         </tr>
                     </thead>
@@ -638,7 +718,6 @@
             document.getElementById('badge-1').classList.remove('active');
             document.getElementById('badge-2').classList.add('active');
 
-            // Ocultar todos y mostrar el correspondiente al nivel
             document.getElementById('pre-primaria').classList.add('hidden-section');
             document.getElementById('pre-secundaria').classList.add('hidden-section');
             document.getElementById('pre-preparatoria').classList.add('hidden-section');
@@ -646,7 +725,6 @@
             let contenedorPre = document.getElementById(`pre-${nivelSel}`);
             contenedorPre.classList.remove('hidden-section');
 
-            // Habilitar la propiedad 'required' únicamente en los inputs visibles para no bloquear el envío del formulario
             document.querySelectorAll('#step-2 input[type="radio"]').forEach(i => i.removeAttribute('required'));
             contenedorPre.querySelectorAll('input[type="radio"]').forEach(i => i.setAttribute('required', 'true'));
         }
@@ -658,9 +736,9 @@
 
             if (nivel === 'primaria') {
                 if (document.querySelector('input[name="p_pri_1"]:checked')?.value === 'a') scorePre++;
-                if (document.querySelector('input[name="p_pri_2"]:checked')?.value === 'b') scorePre++;
+                if (document.querySelector('input[name="p_pri_2"]:checked')?.value === 'a') scorePre++;
                 if (document.querySelector('input[name="p_pri_3"]:checked')?.value === 'a') scorePre++;
-                if (document.querySelector('input[name="p_pri_4"]:checked')?.value === 'b') scorePre++;
+                if (document.querySelector('input[name="p_pri_4"]:checked')?.value === 'a') scorePre++;
                 if (document.querySelector('input[name="p_pri_5"]:checked')?.value === 'a') scorePre++;
             } else if (nivel === 'secundaria') {
                 if (document.querySelector('input[name="p_sec_1"]:checked')?.value === 'a') scorePre++;
@@ -703,7 +781,6 @@
             let contenedorPost = document.getElementById(`post-${nivel}`);
             contenedorPost.classList.remove('hidden-section');
 
-            // Ajustar propiedad 'required' a los visibles únicamente
             document.querySelectorAll('#step-4 input[type="radio"]').forEach(i => i.removeAttribute('required'));
             contenedorPost.querySelectorAll('input[type="radio"]').forEach(i => i.setAttribute('required', 'true'));
         }
@@ -714,34 +791,27 @@
             let scorePost = 0;
 
             if (nivel === 'primaria') {
-                if (document.querySelector('input[name="post_pri_1"]:checked')?.value === 'a') scorePost++;
-                if (document.querySelector('input[name="post_pri_2"]:checked')?.value === 'b') scorePost++;
-                if (document.querySelector('input[name="post_pri_3"]:checked')?.value === 'a') scorePost++;
-                if (document.querySelector('input[name="post_pri_4"]:checked')?.value === 'b') scorePost++;
-                if (document.querySelector('input[name="post_pri_5"]:checked')?.value === 'a') scorePost++;
+                for(let i=1; i<=8; i++) {
+                    if (document.querySelector(`input[name="post_pri_${i}"]:checked`)?.value === 'a') scorePost++;
+                }
             } else if (nivel === 'secundaria') {
-                if (document.querySelector('input[name="post_sec_1"]:checked')?.value === 'a') scorePost++;
-                if (document.querySelector('input[name="post_sec_2"]:checked')?.value === 'a') scorePost++;
-                if (document.querySelector('input[name="post_sec_3"]:checked')?.value === 'a') scorePost++;
-                if (document.querySelector('input[name="post_sec_4"]:checked')?.value === 'a') scorePost++;
-                if (document.querySelector('input[name="post_sec_5"]:checked')?.value === 'a') scorePost++;
+                for(let i=1; i<=8; i++) {
+                    if (document.querySelector(`input[name="post_sec_${i}"]:checked`)?.value === 'a') scorePost++;
+                }
             } else if (nivel === 'preparatoria') {
-                if (document.querySelector('input[name="post_prep_1"]:checked')?.value === 'a') scorePost++;
-                if (document.querySelector('input[name="post_prep_2"]:checked')?.value === 'a') scorePost++;
-                if (document.querySelector('input[name="post_prep_3"]:checked')?.value === 'a') scorePost++;
-                if (document.querySelector('input[name="post_prep_4"]:checked')?.value === 'a') scorePost++;
-                if (document.querySelector('input[name="post_prep_5"]:checked')?.value === 'a') scorePost++;
+                for(let i=1; i<=8; i++) {
+                    if (document.querySelector(`input[name="post_prep_${i}"]:checked`)?.value === 'a') scorePost++;
+                }
             }
 
             alumnoActual.puntajePost = scorePost;
-            alumnoActual.calificacionPre10 = (alumnoActual.puntajePre * 2).toFixed(1);
-            alumnoActual.calificacionPost10 = (scorePost * 2).toFixed(1);
+            alumnoActual.calificacionPre10 = (alumnoActual.puntajePre * 2).toFixed(1); // 5 preg -> base 10
+            alumnoActual.calificacionPost10 = ((scorePost / 8) * 10).toFixed(1);     // 8 preg -> base 10
             alumnoActual.satisfaccion = document.getElementById('satisfaccion').value;
 
             registrosGlobales.push(alumnoActual);
             localStorage.setItem('semillero_math_registros', JSON.stringify(registrosGlobales));
 
-            // Cargar datos en el diploma
             document.getElementById('cert-nombre').innerText = alumnoActual.nombre;
             document.getElementById('cert-escuela').innerText = alumnoActual.escuela;
             document.getElementById('cert-curso').innerText = `Razonamiento Lógico-Matemático (${nivel.toUpperCase()})`;
@@ -750,7 +820,6 @@
             document.getElementById('cert-fecha').innerText = hoy.toLocaleDateString('es-MX', { day: '2-digit', month: 'long', year: 'numeric' });
             document.getElementById('cert-folio').innerText = 'APZ-' + Math.floor(100000 + Math.random() * 900000);
 
-            // Mostrar el diploma
             document.getElementById('form-posttest').classList.add('hidden-section');
             document.getElementById('pantalla-agradecimiento').classList.remove('hidden-section');
         }
@@ -779,15 +848,15 @@
             tabla.innerHTML = "";
             registrosGlobales.forEach(r => {
                 let calPre = r.calificacionPre10 || (r.puntajePre * 2).toFixed(1);
-                let calPost = r.calificacionPost10 || (r.puntajePost * 2).toFixed(1);
+                let calPost = r.calificacionPost10 || ((r.puntajePost / 8) * 10).toFixed(1);
                 
                 tabla.innerHTML += `<tr>
                     <td class="fw-bold">${r.nombre}</td>
                     <td>${r.escuela}</td>
                     <td>${r.comunidad}</td>
                     <td><span class="badge bg-info text-dark">${r.nivel.toUpperCase()}</span></td>
-                    <td><span class="badge bg-secondary">${r.puntajePre}/5 preguntas (${calPre}/10)</span></td>
-                    <td><span class="badge bg-primary">${r.puntajePost}/5 preguntas (${calPost}/10)</span></td>
+                    <td><span class="badge bg-secondary">${r.puntajePre}/5 p. (${calPre}/10)</span></td>
+                    <td><span class="badge bg-primary">${r.puntajePost}/8 p. (${calPost}/10)</span></td>
                     <td><span class="badge bg-success fs-6">${calPost}</span></td>
                 </tr>`;
             });
