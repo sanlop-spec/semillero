@@ -1,600 +1,342 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taller Interactivo de Matemáticas y Lógica</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #1e3a8a;
-            --secondary-color: #0d9488;
-            --accent-color: #d97706;
-            --bg-light: #f8fafc;
-        }
-
-        body {
-            background-color: var(--bg-light);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #334155;
-            padding-bottom: 50px;
-        }
-
-        .header-banner {
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
-            color: white;
-            padding: 2.5rem 1rem;
-            border-bottom: 4px solid var(--accent-color);
-            position: relative;
-        }
-
-        .admin-trigger-dot {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            color: rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            font-size: 14px;
-            user-select: none;
-        }
-
-        .admin-trigger-dot:hover {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .card-custom {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-            background: white;
-            margin-bottom: 1.5rem;
-        }
-
-        .hidden-section {
-            display: none !important;
-        }
-
-        .topic-number {
-            width: 36px;
-            height: 36px;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1rem;
-            margin-right: 12px;
-        }
-
-        /* ESTILOS DEL RECONOCIMIENTO / DIPLOMA */
-        .diploma-container {
-            background: #ffffff;
-            padding: 35px;
-            border-radius: 6px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            max-width: 850px;
-            margin: 0 auto;
-            position: relative;
-            background-color: #fffdfa;
-        }
-
-        .diploma-border-outer {
-            border: 4px solid #1e293b;
-            padding: 12px;
-            position: relative;
-        }
-
-        .diploma-border-inner {
-            border: 1px solid #cbd5e1;
-            padding: 40px 30px;
-            position: relative;
-            text-align: center;
-        }
-
-        .corner-decoration {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-color: #d97706;
-            border-style: solid;
-        }
-        .top-left { top: 6px; left: 6px; border-width: 3px 0 0 3px; }
-        .top-right { top: 6px; right: 6px; border-width: 3px 3px 0 0; }
-        .bottom-left { bottom: 6px; left: 6px; border-width: 0 0 3px 3px; }
-        .bottom-right { bottom: 6px; right: 6px; border-width: 0 3px 3px 0; }
-
-        .header-title {
-            letter-spacing: 3px;
-            font-weight: 700;
-            color: #475569;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-        }
-
-        .main-title {
-            font-family: 'Georgia', serif;
-            font-weight: 800;
-            color: #b45309;
-            font-size: 2.3rem;
-            letter-spacing: 2px;
-            margin: 12px 0;
-        }
-
-        .student-name {
-            font-family: 'Georgia', serif;
-            font-style: italic;
-            font-size: 2rem;
-            color: #0f172a;
-            border-bottom: 2px solid #cbd5e1;
-            display: inline-block;
-            padding: 0 30px 5px 30px;
-            margin: 20px 0;
-            font-weight: bold;
-        }
-
-        .badge-seal {
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, #f59e0b 0%, #b45309 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            border: 3px dashed #fef3c7;
-            margin: 0 auto;
-        }
-
-        .badge-seal-text {
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            font-weight: bold;
-            text-align: center;
-            line-height: 1.2;
-        }
-
-        /* REGLAS EXCLUSIVAS PARA IMPRESIÓN Y GUARDADO EN PDF */
-        @media print {
-            @page {
-                size: letter portrait;
-                margin: 10mm;
-            }
-            body {
-                background-color: #ffffff !important;
-                padding: 0 !important;
-                margin: 0 !important;
-            }
-            /* Oculta todos los elementos sobrantes de la página */
-            header, .no-print, nav, footer, #paso-registro, #paso-pretest, #paso-temario, #paso-posttest, #panel-admin {
-                display: none !important;
-            }
-            #pantalla-agradecimiento {
-                display: block !important;
-            }
-            .diploma-container {
-                box-shadow: none !important;
-                padding: 0 !important;
-                margin: 0 auto !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                background: #ffffff !important;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plataforma Educativa</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React y ReactDOM -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- jsPDF y html2canvas para la descarga directa de PDF sin abrir la ventana de impresión -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
-<body>
+<body class="bg-slate-100 font-sans text-slate-800 min-h-screen">
 
-    <!-- ENCABEZADO DE LA PLATAFORMA -->
-    <header class="header-banner text-center mb-4">
-        <span class="admin-trigger-dot" onclick="solicitarAccesoAdmin()" title="Acceso Administrador">•</span>
-        <div class="container">
-            <h1 class="fw-bold mb-1"><i class="fa-solid fa-graduation-cap me-2"></i>Taller Interactivo de Lógica y Matemáticas</h1>
-            <p class="mb-0 opacity-75">Evaluación, Formación y Certificación de Competencias</p>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    // --- DATOS DE LOS 15 SUBCURSOS Y SUS PREGUNTAS FINALES EXCLUSIVAS ---
+    const SUBCURSOS_DATA = [
+      { id: 1, titulo: "1. Introducción y Fundamentos", contenido: "Bienvenido al Subcurso 1. En este módulo aprenderás los pilares esenciales y la terminología base para comenzar la formación.", pregFinal: { q: "¿Cuál es el objetivo principal planteado en la introducción del curso?", ops: ["Establecer los pilares y conceptos base", "Diseñar bases de datos avanzadas", "Saltar directamente a la práctica"], ans: 0 } },
+      { id: 2, titulo: "2. Principios Teóricos", contenido: "En el Subcurso 2 exploramos el marco teórico que respalda las metodologías modernas.", pregFinal: { q: "¿Qué sostiene la estructura del marco teórico visto en el Subcurso 2?", ops: ["La improvisación constante", "Los principios de modelado teórico", "El uso de herramientas externas exclusivamente"], ans: 1 } },
+      { id: 3, titulo: "3. Herramientas de Entorno", contenido: "Configuración del entorno de trabajo e instalación de dependencias principales.", pregFinal: { q: "¿Por qué es crucial la configuración inicial del entorno según el Subcurso 3?", ops: ["No es relevante", "Garantiza estabilidad e interoperabilidad", "Solo sirve para fines estéticos"], ans: 1 } },
+      { id: 4, titulo: "4. Metodología y Flujo", contenido: "Análisis de las mejores metodologías paso a paso para organizar tareas de forma óptima.", pregFinal: { q: "¿Cuál es el beneficio de aplicar las metodologías de flujo del Subcurso 4?", ops: ["Incrementar la duplicidad de tareas", "Optimizar la organización de proyectos", "Reducir el enfoque en los resultados"], ans: 1 } },
+      { id: 5, titulo: "5. Diagnóstico de Datos", contenido: "Técnicas iniciales para la recolección e interpretación correcta de datos.", pregFinal: { q: "¿Qué paso antecede a la interpretación según el Subcurso 5?", ops: ["La recolección sistemática de datos", "La entrega final del reporte", "La eliminación de los insumos"], ans: 0 } },
+      { id: 6, titulo: "6. Estrategia de Arquitectura", contenido: "Definición y estructura estratégica para asegurar la escalabilidad.", pregFinal: { q: "¿Cuál es el propósito de la estrategia de arquitectura expuesta en el Subcurso 6?", ops: ["Evitar el uso de estándares", "Garantizar la escalabilidad a largo plazo", "Reemplazar los diagnósticos prevíos"], ans: 1 } },
+      { id: 7, titulo: "7. Aplicación Práctica I", contenido: "Primeros ejercicios prácticos guiados para afianzar el conocimiento teórico.", pregFinal: { q: "¿Qué se busca en la primera fase de aplicación práctica del Subcurso 7?", ops: ["Memorizar conceptos sin aplicar", "Afianzar la teoría mediante ejercicios guiados", "Crear exámenes de prueba"], ans: 1 } },
+      { id: 8, titulo: "8. Aplicación Práctica II", contenido: "Desarrollo de casos prácticos intermedios y resolución de escenarios complejos.", pregFinal: { q: "En la práctica del Subcurso 8, ¿cómo se abordan los escenarios complejos?", ops: ["Ignorando los errores", "Mediante análisis y resolución progresiva", "Reduciendo el tamaño del proyecto"], ans: 1 } },
+      { id: 9, titulo: "9. Optimización de Procesos", contenido: "Técnicas avanzadas para mejorar la velocidad, eficiencia y rendimiento.", pregFinal: { q: "¿Qué métrica prioriza la optimización estudiada en el Subcurso 9?", ops: ["Rendimiento y velocidad de ejecución", "Aumento del código redundante", "Mayor consumo de recursos"], ans: 0 } },
+      { id: 10, titulo: "10. Depuración y Control de Errores", contenido: "Identificación, aislamiento y resolución sistemática de fallos o inconsistencias.", pregFinal: { q: "¿Cuál es el primer paso ante un fallo según el Subcurso 10?", ops: ["Reescribir todo el sistema", "Aislar e identificar la causa raíz del problema", "Desactivar las alertas"], ans: 1 } },
+      { id: 11, titulo: "11. Integración de Componentes", contenido: "Conexión y comunicación fluida entre diferentes módulos o sistemas.", pregFinal: { q: "¿Qué asegura una buena integración de componentes en el Subcurso 11?", ops: ["La independencia total sin comunicación", "La fluidez e intercambio correcto de datos entre módulos", "La duplicación de módulos"], ans: 1 } },
+      { id: 12, titulo: "12. Métricas y Control de Calidad", contenido: "Establecimiento de indicadores de desempeño y estándares de evaluación.", pregFinal: { q: "¿Qué permiten los indicadores de desempeño del Subcurso 12?", ops: ["Evaluar la calidad de forma objetiva", "Aumentar el margen de error", "Omitir la revisión final"], ans: 0 } },
+      { id: 13, titulo: "13. Patrones Avanzados", contenido: "Implementación de modelos avanzados para escenarios de alto nivel.", pregFinal: { q: "¿Cuándo se recomienda aplicar patrones avanzados según el Subcurso 13?", ops: ["En la fase inicial sin requerimientos", "En escenarios de alta complejidad que lo requieran", "Nunca se deben utilizar"], ans: 1 } },
+      { id: 14, titulo: "14. Tendencias e Innovación", contenido: "Revisión de tecnologías emergentes e innovación aplicada.", pregFinal: { q: "¿Cuál es el objetivo de monitorear tendencias en el Subcurso 14?", ops: ["Mantener la solución actualizada e innovadora", "Sustituir bases sólidas por modas", "Abandonar metodologías vigentes"], ans: 0 } },
+      { id: 15, titulo: "15. Cierre y Plan de Acción", contenido: "Consolidación de competencias, conclusiones y hoja de ruta profesional.", pregFinal: { q: "¿Qué se define en el módulo de cierre del Subcurso 15?", ops: ["Reiniciar todo el programa", "Una hoja de ruta y consolidación de competencias", "Un resumen exclusivo del diagnóstico"], ans: 1 } }
+    ];
+
+    // --- PREGUNTAS DEL DIAGNÓSTICO (DIFERENTES A LA EVALUACIÓN FINAL) ---
+    const DIAGNOSTICO_PREGUNTAS = [
+      { q: "1. Diagnóstico Inicial: ¿Cuál es tu experiencia previa en esta área?", ops: ["Principiante completo", "Nivel Intermedio", "Avanzado / Profesional"], ans: 0 },
+      { q: "2. Diagnóstico Inicial: ¿Qué método prefieres para absorber contenidos?", ops: ["Lectura estructurada", "Ejercicios prácticos directos", "Evaluación continua"], ans: 1 },
+      { q: "3. Diagnóstico Inicial: ¿Cuál es tu objetivo principal con este curso?", ops: ["Aprender desde cero", "Reforzar mis competencias", "Obtener el certificado de aprobación"], ans: 2 }
+    ];
+
+    function App() {
+      // Estados de Navegación: 'registro' | 'diagnostico' | 'subcursos' | 'evaluacion' | 'resultado'
+      const [pantalla, setPantalla] = useState('registro');
+      
+      // Usuario
+      const [usuario, setUsuario] = useState({ nombre: '', correo: '' });
+      
+      // Avance de Subcursos
+      const [subcursoActual, setSubcursoActual] = useState(0);
+
+      // Respuestas
+      const [respuestasDiag, setRespuestasDiag] = useState({});
+      const [respuestasFinal, setRespuestasFinal] = useState({});
+      const [puntajeFinal, setPuntajeFinal] = useState(0);
+
+      // Manejadores
+      const handleRegistro = (e) => {
+        e.preventDefault();
+        if (usuario.nombre && usuario.correo) {
+          setPantalla('diagnostico');
+        }
+      };
+
+      const handleDiagnostico = () => {
+        setPantalla('subcursos');
+      };
+
+      const handleSiguienteSubcurso = () => {
+        if (subcursoActual < SUBCURSOS_DATA.length - 1) {
+          setSubcursoActual(subcursoActual + 1);
+        } else {
+          setPantalla('evaluacion');
+        }
+      };
+
+      const handleAnteriorSubcurso = () => {
+        if (subcursoActual > 0) {
+          setSubcursoActual(subcursoActual - 1);
+        }
+      };
+
+      const handleCalcularResultado = () => {
+        let correctas = 0;
+        SUBCURSOS_DATA.forEach((sc, idx) => {
+          if (respuestasFinal[idx] === sc.pregFinal.ans) {
+            correctas++;
+          }
+        });
+        setPuntajeFinal(correctas);
+        setPantalla('resultado');
+      };
+
+      // Función de Descarga PDF nativa optimizada para Laptop y Teléfono
+      const descargarPDF = async () => {
+        const { jsPDF } = window.jspdf;
+        const certificadoElem = document.getElementById('certificado');
+
+        if (!certificadoElem) return;
+
+        // Convierte la vista HTML a un Canvas
+        const canvas = await html2canvas(certificadoElem, { scale: 2 });
+        const imgData = canvas.toDataURL('image/png');
+
+        // Crea el PDF en A4
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+        // Añade la imagen y descarga automáticamente sin abrir diálogo de impresión
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save(`Certificado_${usuario.nombre.replace(/\s+/g, '_')}.pdf`);
+      };
+
+      return (
+        <div class="py-8">
+          
+          {/* HEADER / BARRA DE NAVEGACIÓN */}
+          <header class="bg-white rounded-xl shadow-md p-6 mb-6 flex flex-col md:flex-row justify-between items-center border-b-4 border-indigo-600">
+            <div>
+              <h1 class="text-2xl font-bold text-slate-800">Plataforma de Capacitación</h1>
+              <p class="text-sm text-slate-500">Programa Completo de 15 Módulos</p>
+            </div>
+            {usuario.nombre && (
+              <div class="mt-4 md:mt-0 text-right">
+                <span class="text-xs text-slate-400 block">Estudiante:</span>
+                <span class="font-semibold text-indigo-700">{usuario.nombre}</span>
+              </div>
+            )}
+          </header>
+
+          {/* 1. COMPONENTE: REGISTRO */}
+          {pantalla === 'registro' && (
+            <div class="bg-white p-8 rounded-xl shadow-md max-w-md mx-auto">
+              <h2 class="text-xl font-bold text-slate-800 mb-2">Registro de Estudiante</h2>
+              <p class="text-sm text-slate-600 mb-6">Ingresa tus datos para comenzar el trayecto formativo.</p>
+              <form onSubmit={handleRegistro} class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1">Nombre Completo</label>
+                  <input 
+                    type="text" 
+                    required 
+                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" 
+                    value={usuario.nombre}
+                    onChange={(e) => setUsuario({...usuario, nombre: e.target.value})}
+                    placeholder="Ej. Juan Pérez"
+                  />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1">Correo Electrónico</label>
+                  <input 
+                    type="email" 
+                    required 
+                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" 
+                    value={usuario.correo}
+                    onChange={(e) => setUsuario({...usuario, correo: e.target.value})}
+                    placeholder="ejemplo@correo.com"
+                  />
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-200">
+                  Iniciar Curso
+                </button>
+              </form>
+            </div>
+          )}
+
+          {/* 2. COMPONENTE: DIAGNÓSTICO */}
+          {pantalla === 'diagnostico' && (
+            <div class="bg-white p-8 rounded-xl shadow-md">
+              <h2 class="text-xl font-bold text-slate-800 mb-2">Diagnóstico Inicial</h2>
+              <p class="text-sm text-slate-600 mb-6">Responde a este cuestionario de inicio para personalizar tu experiencia.</p>
+              
+              <div class="space-y-6">
+                {DIAGNOSTICO_PREGUNTAS.map((item, idx) => (
+                  <div key={idx} class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                    <p class="font-medium text-slate-800 mb-3">{item.q}</p>
+                    <div class="space-y-2">
+                      {item.ops.map((op, opIdx) => (
+                        <label key={opIdx} class="flex items-center space-x-3 p-2 bg-white rounded border hover:bg-slate-100 cursor-pointer">
+                          <input 
+                            type="radio" 
+                            name={`diag_${idx}`} 
+                            checked={respuestasDiag[idx] === opIdx}
+                            onChange={() => setRespuestasDiag({...respuestasDiag, [idx]: opIdx})}
+                            class="text-indigo-600"
+                          />
+                          <span class="text-sm text-slate-700">{op}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <button 
+                onClick={handleDiagnostico} 
+                class="mt-6 w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition"
+              >
+                Guardar Diagnóstico y Continuar a los Subcursos
+              </button>
+            </div>
+          )}
+
+          {/* 3. COMPONENTE: 15 SUBCURSOS */}
+          {pantalla === 'subcursos' && (
+            <div class="bg-white p-8 rounded-xl shadow-md">
+              <div class="flex justify-between items-center mb-6 border-b pb-4">
+                <span class="text-xs font-semibold uppercase tracking-wider bg-indigo-100 text-indigo-800 py-1 px-3 rounded-full">
+                  Subcurso {subcursoActual + 1} de {SUBCURSOS_DATA.length}
+                </span>
+                <span class="text-sm text-slate-500">Progreso: {Math.round(((subcursoActual + 1) / 15) * 100)}%</span>
+              </div>
+
+              <h2 class="text-2xl font-bold text-slate-800 mb-4">{SUBCURSOS_DATA[subcursoActual].titulo}</h2>
+              <div class="p-6 bg-slate-50 rounded-lg border border-slate-200 mb-8 min-h-[150px] text-slate-700 leading-relaxed">
+                {SUBCURSOS_DATA[subcursoActual].contenido}
+              </div>
+
+              <div class="flex justify-between items-center pt-4 border-t">
+                <button 
+                  onClick={handleAnteriorSubcurso}
+                  disabled={subcursoActual === 0}
+                  class={`px-5 py-2.5 rounded-lg font-medium border ${subcursoActual === 0 ? 'opacity-50 cursor-not-allowed bg-slate-100' : 'hover:bg-slate-100 bg-white'}`}
+                >
+                  Anterior
+                </button>
+                
+                <button 
+                  onClick={handleSiguienteSubcurso}
+                  class="bg-indigo-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-indigo-700 transition"
+                >
+                  {subcursoActual === SUBCURSOS_DATA.length - 1 ? "Ir a la Evaluación Final (15 Preguntas)" : "Siguiente Subcurso"}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* 4. COMPONENTE: EVALUACIÓN FINAL DE 15 PREGUNTAS (1 POR SUBCURSO) */}
+          {pantalla === 'evaluacion' && (
+            <div class="bg-white p-8 rounded-xl shadow-md">
+              <h2 class="text-2xl font-bold text-slate-800 mb-2">Evaluación Final de Conocimientos</h2>
+              <p class="text-sm text-slate-600 mb-6">
+                A continuación se presentan 15 preguntas (exactamente 1 por cada subcurso completado).
+              </p>
+
+              <div class="space-y-6">
+                {SUBCURSOS_DATA.map((sc, idx) => (
+                  <div key={sc.id} class="p-5 bg-slate-50 rounded-lg border border-slate-200">
+                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Módulo {sc.id}</span>
+                    <p class="font-semibold text-slate-800 mt-1 mb-3">{sc.pregFinal.q}</p>
+                    <div class="space-y-2">
+                      {sc.pregFinal.ops.map((opcion, opIdx) => (
+                        <label key={opIdx} class="flex items-center space-x-3 p-2.5 bg-white rounded-lg border hover:bg-slate-100 cursor-pointer">
+                          <input 
+                            type="radio" 
+                            name={`final_q_${idx}`} 
+                            checked={respuestasFinal[idx] === opIdx}
+                            onChange={() => setRespuestasFinal({...respuestasFinal, [idx]: opIdx})}
+                            class="text-indigo-600"
+                          />
+                          <span class="text-sm text-slate-700">{opcion}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <button 
+                onClick={handleCalcularResultado}
+                class="mt-8 w-full bg-emerald-600 text-white py-3.5 rounded-lg font-bold text-lg hover:bg-emerald-700 transition shadow-lg"
+              >
+                Finalizar y Obtener Resultados
+              </button>
+            </div>
+          )}
+
+          {/* 5. COMPONENTE: RESULTADO Y DESCARGA NATIVA DE PDF */}
+          {pantalla === 'resultado' && (
+            <div class="space-y-6">
+              
+              {/* VISTA DEL CERTIFICADO (AQUÍ SE GENERA EL CANVAS/PDF) */}
+              <div id="certificado" class="bg-white p-10 rounded-2xl shadow-xl border-8 border-indigo-50 text-center max-w-2xl mx-auto">
+                <div class="border-2 border-indigo-600 p-8 rounded-xl">
+                  <span class="text-indigo-600 text-sm font-bold tracking-widest uppercase">Certificado de Aprobación</span>
+                  <h2 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2">¡Felicitaciones!</h2>
+                  <p class="text-slate-600 mb-6">Otorgado a:</p>
+                  
+                  <h3 class="text-2xl font-bold text-indigo-700 underline decoration-indigo-300 mb-6">{usuario.nombre}</h3>
+                  
+                  <p class="text-sm text-slate-600 max-w-md mx-auto mb-6">
+                    Por haber completado satisfactoriamente el programa de 15 subcursos y aprobado la Evaluación Final.
+                  </p>
+
+                  <div class="inline-block bg-slate-100 px-6 py-3 rounded-lg border border-slate-200 mb-6">
+                    <span class="text-xs text-slate-500 block uppercase font-semibold">Calificación Obtenida</span>
+                    <span class="text-2xl font-black text-slate-800">{puntajeFinal} / 15 Aciertos</span>
+                  </div>
+
+                  <div class="text-xs text-slate-400 mt-4">
+                    Fecha de emisión: {new Date().toLocaleDateString('es-ES')}
+                  </div>
+                </div>
+              </div>
+
+              {/* BOTÓN DE DESCARGA DIRECTA */}
+              <div class="text-center max-w-md mx-auto">
+                <button 
+                  onClick={descargarPDF}
+                  class="w-full bg-indigo-600 text-white py-3.5 px-6 rounded-xl font-bold shadow-md hover:bg-indigo-700 transition flex items-center justify-center space-x-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  <span>Descargar Certificado en PDF</span>
+                </button>
+                <p class="text-xs text-slate-500 mt-2">
+                  Guarda el archivo directamente en tu equipo (laptop o teléfono) sin abrir el cuadro de diálogo de impresión.
+                </p>
+              </div>
+
+            </div>
+          )}
+
         </div>
-    </header>
+      );
+    }
 
-    <div class="container">
-
-        <!-- PASO 1: REGISTRO DEL ESTUDIANTE -->
-        <section id="paso-registro" class="card-custom p-4">
-            <h3 class="fw-bold text-primary mb-3"><i class="fa-solid fa-user-pen me-2"></i>Paso 1: Registro de Datos</h3>
-            <form id="form-registro" onsubmit="event.preventDefault(); guardarPaso1();">
-                <div class="mb-3">
-                    <label for="nombre" class="form-label fw-semibold">Nombre Completo:</label>
-                    <input type="text" id="nombre" class="form-control form-control-lg" placeholder="Ej. Emiliano Sánchez" required>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="escuela" class="form-label fw-semibold">Escuela / Institución:</label>
-                        <input type="text" id="escuela" class="form-control" placeholder="Ej. Instituto Fray Pedro" required>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="nivel" class="form-label fw-semibold">Nivel Educativo / Grado:</label>
-                        <select id="nivel" class="form-select" required>
-                            <option value="">Selecciona una opción...</option>
-                            <option value="Secundaria">Secundaria</option>
-                            <option value="Bachillerato / Preparatoria">Bachillerato / Preparatoria</option>
-                            <option value="Universidad">Universidad</option>
-                            <option value="Otro">Otro</option>
-                        </select>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold shadow-sm">
-                    Continuar al Pre-Test <i class="fa-solid fa-arrow-right ms-2"></i>
-                </button>
-            </form>
-        </section>
-
-        <!-- PASO 2: PRE-TEST -->
-        <section id="paso-pretest" class="card-custom p-4 hidden-section">
-            <h3 class="fw-bold text-primary mb-2"><i class="fa-solid fa-clipboard-question me-2"></i>Paso 2: Evaluación Diagnóstica (Pre-Test)</h3>
-            <p class="text-muted mb-4">Responde estas preguntas según tus conocimientos actuales. No te preocupes si no sabes alguna respuesta.</p>
-            
-            <form id="form-pretest" onsubmit="event.preventDefault(); guardarPaso2();">
-                <div class="mb-4">
-                    <label class="fw-semibold d-block mb-2">1. ¿Cuál es el siguiente número en la secuencia lógica: 2, 6, 12, 20, 30, ...?</label>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="pre1" value="A" required id="pre1_a"><label class="form-check-label" for="pre1_a">36</label></div>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="pre1" value="B" id="pre1_b"><label class="form-check-label" for="pre1_b">40</label></div>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="pre1" value="C" id="pre1_c"><label class="form-check-label" for="pre1_c">42</label></div>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="pre1" value="D" id="pre1_d"><label class="form-check-label" for="pre1_d">48</label></div>
-                </div>
-
-                <div class="mb-4">
-                    <label class="fw-semibold d-block mb-2">2. Si 3 gatos cazan 3 ratones en 3 minutos, ¿cuántos gatos se necesitan para cazar 100 ratones en 100 minutos?</label>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="pre2" value="A" required id="pre2_a"><label class="form-check-label" for="pre2_a">100 gatos</label></div>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="pre2" value="B" id="pre2_b"><label class="form-check-label" for="pre2_b">3 gatos</label></div>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="pre2" value="C" id="pre2_c"><label class="form-check-label" for="pre2_c">30 gatos</label></div>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="pre2" value="D" id="pre2_d"><label class="form-check-label" for="pre2_d">1 gato</label></div>
-                </div>
-
-                <div class="mb-4">
-                    <label class="fw-semibold d-block mb-2">3. ¿Cuál es el área de un triángulo con base 10 cm y altura 6 cm?</label>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="pre3" value="A" required id="pre3_a"><label class="form-check-label" for="pre3_a">60 cm²</label></div>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="pre3" value="B" id="pre3_b"><label class="form-check-label" for="pre3_b">30 cm²</label></div>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="pre3" value="C" id="pre3_c"><label class="form-check-label" for="pre3_c">15 cm²</label></div>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="pre3" value="D" id="pre3_d"><label class="form-check-label" for="pre3_d">20 cm²</label></div>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold shadow-sm">
-                    Enviar Pre-Test y Ver Temario <i class="fa-solid fa-arrow-right ms-2"></i>
-                </button>
-            </form>
-        </section>
-
-        <!-- PASO 3: TEMARIO Y CONTENIDOS DEL TALLER -->
-        <section id="paso-temario" class="card-custom p-4 hidden-section">
-            <h3 class="fw-bold text-primary mb-3"><i class="fa-solid fa-book-open me-2"></i>Paso 3: Módulos de Aprendizaje</h3>
-            <p class="text-muted mb-4">Revisa con atención los siguientes conceptos clave presentados en el taller:</p>
-
-            <div class="mb-4 p-3 border rounded bg-light">
-                <h5 class="fw-bold text-dark d-flex align-items-center mb-2">
-                    <span class="topic-number">1</span> Sucesiones y Patrones Numéricos
-                </h5>
-                <p class="mb-1 text-secondary">Las sucesiones cuadráticas siguen la forma <em>n(n + 1)</em>. Por ejemplo: 1×2=2, 2×3=6, 3×4=12, 4×5=20, 5×6=30, 6×7=42.</p>
-            </div>
-
-            <div class="mb-4 p-3 border rounded bg-light">
-                <h5 class="fw-bold text-dark d-flex align-items-center mb-2">
-                    <span class="topic-number">2</span> Razonamiento Proporcional y Razas de Trabajo
-                </h5>
-                <p class="mb-1 text-secondary">Si la tasa de trabajo es constante (1 gato caza 1 ratón en 3 minutos), entonces 3 gatos seguirán cazando ratones a razón de 1 ratón por minuto en total, logrando 100 ratones en 100 minutos.</p>
-            </div>
-
-            <div class="mb-4 p-3 border rounded bg-light">
-                <h5 class="fw-bold text-dark d-flex align-items-center mb-2">
-                    <span class="topic-number">3</span> Geometría Fundamental
-                </h5>
-                <p class="mb-1 text-secondary">El área de cualquier triángulo se calcula mediante la fórmula universal: <strong>Área = (Base × Altura) / 2</strong>. Para base 10 y altura 6: (10 × 6) / 2 = 30 cm².</p>
-            </div>
-
-            <button onclick="irAPostTest()" class="btn btn-success btn-lg w-100 fw-bold shadow-sm mt-2">
-                Ir a la Evaluación Final (Post-Test) <i class="fa-solid fa-clipboard-check ms-2"></i>
-            </button>
-        </section>
-
-        <!-- PASO 4: POST-TEST -->
-        <section id="paso-posttest" class="card-custom p-4 hidden-section">
-            <h3 class="fw-bold text-primary mb-2"><i class="fa-solid fa-square-check me-2"></i>Paso 4: Evaluación de Conocimientos (Post-Test)</h3>
-            <p class="text-muted mb-4">Aplica lo aprendido durante el taller para responder estas preguntas finales.</p>
-
-            <form id="form-posttest" onsubmit="event.preventDefault(); guardarPaso4();">
-                <div class="mb-4">
-                    <label class="fw-semibold d-block mb-2">1. ¿Cuál es el número que sigue en la serie: 2, 6, 12, 20, 30, ...?</label>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="post1" value="A" required id="post1_a"><label class="form-check-label" for="post1_a">36</label></div>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="post1" value="B" id="post1_b"><label class="form-check-label" for="post1_b">40</label></div>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="post1" value="C" id="post1_c"><label class="form-check-label" for="post1_c">42</label></div>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="post1" value="D" id="post1_d"><label class="form-check-label" for="post1_d">48</label></div>
-                </div>
-
-                <div class="mb-4">
-                    <label class="fw-semibold d-block mb-2">2. Si 3 gatos cazan 3 ratones en 3 minutos, ¿cuántos gatos se requieren para cazar 100 ratones en 100 minutos?</label>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="post2" value="A" required id="post2_a"><label class="form-check-label" for="post2_a">100 gatos</label></div>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="post2" value="B" id="post2_b"><label class="form-check-label" for="post2_b">3 gatos</label></div>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="post2" value="C" id="post2_c"><label class="form-check-label" for="post2_c">30 gatos</label></div>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="post2" value="D" id="post2_d"><label class="form-check-label" for="post2_d">1 gato</label></div>
-                </div>
-
-                <div class="mb-4">
-                    <label class="fw-semibold d-block mb-2">3. ¿Cuál es el área de un triángulo de base 10 cm y altura 6 cm?</label>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="post3" value="A" required id="post3_a"><label class="form-check-label" for="post3_a">60 cm²</label></div>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="post3" value="B" id="post3_b"><label class="form-check-label" for="post3_b">30 cm²</label></div>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="post3" value="C" id="post3_c"><label class="form-check-label" for="post3_c">15 cm²</label></div>
-                    <div class="form-check"><input class="form-check-input" type="radio" name="post3" value="D" id="post3_d"><label class="form-check-label" for="post3_d">20 cm²</label></div>
-                </div>
-
-                <div class="mb-4">
-                    <label for="satisfaccion" class="fw-semibold form-label">¿Qué tan satisfecho(a) estás con el taller realizado?</label>
-                    <select id="satisfaccion" class="form-select" required>
-                        <option value="">Selecciona tu nivel de satisfacción...</option>
-                        <option value="Excelente">Excelente</option>
-                        <option value="Muy Bueno">Muy Bueno</option>
-                        <option value="Bueno">Bueno</option>
-                        <option value="Regular">Regular</option>
-                    </select>
-                </div>
-
-                <button id="btn-finalizar" type="submit" class="btn btn-warning btn-lg w-100 fw-bold text-dark shadow-sm">
-                    Finalizar y Generar Reconocimiento <i class="fa-solid fa-award ms-2"></i>
-                </button>
-            </form>
-        </section>
-
-        <!-- PANTALLA DE AGRADECIMIENTO Y DESCARGA DE RECONOCIMIENTO -->
-        <section id="pantalla-agradecimiento" class="hidden-section">
-            <div class="no-print card-custom p-4 text-center mb-4">
-                <div class="text-success display-4 mb-2"><i class="fa-solid fa-circle-check"></i></div>
-                <h2 class="text-success fw-bold">¡Felicidades por completar el taller!</h2>
-                <p class="fs-5 mb-1">Tu evaluación ha sido registrada exitosamente en nuestra base de datos.</p>
-                <p class="small text-muted mb-3">Haz clic en el siguiente botón para guardar o imprimir tu reconocimiento en formato PDF.</p>
-                <button onclick="window.print()" class="btn btn-warning btn-lg fw-bold text-dark shadow-sm px-4">
-                    <i class="fa-solid fa-file-pdf me-2"></i>Guardar Reconocimiento en PDF
-                </button>
-            </div>
-
-            <!-- DIPLOMA / RECONOCIMIENTO -->
-            <div id="area-diploma" class="diploma-container">
-                <div class="diploma-border-outer">
-                    <div class="corner-decoration top-left"></div>
-                    <div class="corner-decoration top-right"></div>
-                    <div class="corner-decoration bottom-left"></div>
-                    <div class="corner-decoration bottom-right"></div>
-                    
-                    <div class="diploma-border-inner">
-                        <div class="header-title mb-1">Constancia de Participación</div>
-                        <div class="main-title">RECONOCIMIENTO</div>
-                        <p class="text-muted small uppercase tracking-wider mb-3">Otorgado con orgullo a:</p>
-                        
-                        <div id="diploma-nombre" class="student-name">Nombre del Alumno</div>
-                        
-                        <p class="mt-3 fs-6 text-secondary px-3">
-                            Por haber concluido satisfactoriamente las actividades académicas y evaluaciones del
-                            <br><strong class="text-dark">"Taller Interactivo de Lógica y Matemáticas"</strong>.
-                        </p>
-
-                        <div class="row align-items-center mt-5 pt-3">
-                            <div class="col-4 text-center">
-                                <div id="diploma-fecha" class="fw-bold text-dark small">09/08/2026</div>
-                                <div class="text-muted border-top border-secondary pt-1 mt-1 small">Fecha de Emisión</div>
-                            </div>
-                            <div class="col-4 text-center">
-                                <div class="badge-seal">
-                                    <div class="badge-seal-text">Excelencia<br>Académica</div>
-                                </div>
-                            </div>
-                            <div class="col-4 text-center">
-                                <div class="fw-bold text-dark small">Comité Organizador</div>
-                                <div class="text-muted border-top border-secondary pt-1 mt-1 small">Firma Autorizada</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- PANEL DE ADMINISTRADOR OCULTO -->
-        <section id="panel-admin" class="card-custom p-4 hidden-section border border-warning">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h3 class="fw-bold text-dark mb-0"><i class="fa-solid fa-user-shield me-2"></i>Panel de Administración</h3>
-                <button onclick="cerrarAdmin()" class="btn btn-sm btn-outline-danger">Cerrar Panel</button>
-            </div>
-            <p class="small text-muted">A continuación se muestran los registros almacenados en la sesión actual:</p>
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped align-middle small">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Nombre</th>
-                            <th>Escuela</th>
-                            <th>Nivel</th>
-                            <th>Pre-Test</th>
-                            <th>Post-Test</th>
-                            <th>Satisfacción</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabla-registros-admin">
-                        <tr>
-                            <td colspan="7" class="text-center text-muted">No hay registros cargados localmente en esta sesión.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-    </div>
-
-    <!-- SCRIPT DE FUNCIONALIDAD COMPLETO -->
-    <script>
-        // URL de tu ejecutable de Google Apps Script
-        const URL_GOOGLE_SCRIPT = "https://script.google.com/macros/s/AKfycbx0q-6u2Sek7pnXBH-vssgZJ2cXS9gArcmazUBTC-DTpXIK0ztxcuQKuTEB2GA_Xmpn/exec";
-
-        // Objeto global para mantener los datos del participante
-        let usuario = {
-            fecha: "",
-            nombre: "",
-            escuela: "",
-            nivel: "",
-            puntajePre: 0,
-            puntajePost: 0,
-            satisfaccion: ""
-        };
-
-        // Almacén local de respaldo para el panel admin
-        let registrosLocales = [];
-
-        // Respuestas correctas del Test (Pre y Post)
-        const respuestasCorrectas = {
-            p1: "C", // 42
-            p2: "B", // 3 gatos
-            p3: "B"  // 30 cm²
-        };
-
-        // PASO 1: Guardar Datos de Registro
-        function guardarPaso1() {
-            usuario.nombre = document.getElementById("nombre").value.trim();
-            usuario.escuela = document.getElementById("escuela").value.trim();
-            usuario.nivel = document.getElementById("nivel").value;
-
-            if (!usuario.nombre || !usuario.escuela || !usuario.nivel) {
-                alert("Por favor completa todos los campos.");
-                return;
-            }
-
-            document.getElementById("paso-registro").classList.add("hidden-section");
-            document.getElementById("paso-pretest").classList.remove("hidden-section");
-            window.scrollTo(0, 0);
-        }
-
-        // PASO 2: Guardar y Calcular Pre-Test
-        function guardarPaso2() {
-            const form = document.getElementById("form-pretest");
-            const r1 = form.elements["pre1"].value;
-            const r2 = form.elements["pre2"].value;
-            const r3 = form.elements["pre3"].value;
-
-            let aciertos = 0;
-            if (r1 === respuestasCorrectas.p1) aciertos++;
-            if (r2 === respuestasCorrectas.p2) aciertos++;
-            if (r3 === respuestasCorrectas.p3) aciertos++;
-
-            usuario.puntajePre = Math.round((aciertos / 3) * 100);
-
-            document.getElementById("paso-pretest").classList.add("hidden-section");
-            document.getElementById("paso-temario").classList.remove("hidden-section");
-            window.scrollTo(0, 0);
-        }
-
-        // Navegación al Post-Test
-        function irAPostTest() {
-            document.getElementById("paso-temario").classList.add("hidden-section");
-            document.getElementById("paso-posttest").classList.remove("hidden-section");
-            window.scrollTo(0, 0);
-        }
-
-        // PASO 4: Guardar y Enviar a Google Sheets
-        function guardarPaso4() {
-            const btnFinalizar = document.getElementById("btn-finalizar");
-            btnFinalizar.disabled = true;
-            btnFinalizar.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i>Guardando datos...';
-
-            const form = document.getElementById("form-posttest");
-            const r1 = form.elements["post1"].value;
-            const r2 = form.elements["post2"].value;
-            const r3 = form.elements["post3"].value;
-
-            let aciertos = 0;
-            if (r1 === respuestasCorrectas.p1) aciertos++;
-            if (r2 === respuestasCorrectas.p2) aciertos++;
-            if (r3 === respuestasCorrectas.p3) aciertos++;
-
-            usuario.puntajePost = Math.round((aciertos / 3) * 100);
-            usuario.satisfaccion = document.getElementById("satisfaccion").value;
-            
-            const hoy = new Date();
-            usuario.fecha = hoy.toLocaleDateString('es-MX') + ' ' + hoy.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
-
-            // Enviar a Google Sheets usando fetch / no-cors
-            const payload = {
-                fecha: usuario.fecha,
-                nombre: usuario.nombre,
-                escuela: usuario.escuela,
-                nivel: usuario.nivel,
-                puntajePre: usuario.puntajePre + "%",
-                puntajePost: usuario.puntajePost + "%",
-                satisfaccion: usuario.satisfaccion
-            };
-
-            fetch(URL_GOOGLE_SCRIPT, {
-                method: "POST",
-                mode: "no-cors",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(payload)
-            }).then(() => {
-                mostrarAgradecimiento();
-            }).catch(error => {
-                console.error("Error al enviar datos:", error);
-                // Mostrar pantalla de todas formas para no bloquear al estudiante
-                mostrarAgradecimiento();
-            });
-        }
-
-        // Muestra la pantalla de diploma con los datos personalizados
-        function mostrarAgradecimiento() {
-            // Guardar registro en sesión local para el panel admin
-            registrosLocales.push({...usuario});
-
-            document.getElementById("diploma-nombre").innerText = usuario.nombre;
-            document.getElementById("diploma-fecha").innerText = new Date().toLocaleDateString('es-MX');
-
-            document.getElementById("paso-posttest").classList.add("hidden-section");
-            document.getElementById("pantalla-agradecimiento").classList.remove("hidden-section");
-            window.scrollTo(0, 0);
-        }
-
-        // Acceso al Panel Admin Oculto
-        function solicitarAccesoAdmin() {
-            const clave = prompt("Ingresa la clave de administrador:");
-            if (clave === "admin123" || clave === "1234") {
-                actualizarTablaAdmin();
-                document.getElementById("panel-admin").classList.remove("hidden-section");
-                document.getElementById("panel-admin").scrollIntoView({ behavior: 'smooth' });
-            } else if (clave !== null) {
-                alert("Clave incorrecta.");
-            }
-        }
-
-        function cerrarAdmin() {
-            document.getElementById("panel-admin").classList.add("hidden-section");
-        }
-
-        function actualizarTablaAdmin() {
-            const tbody = document.getElementById("tabla-registros-admin");
-            if (registrosLocales.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">No hay registros capturados en esta sesión local.</td></tr>';
-                return;
-            }
-
-            let html = "";
-            registrosLocales.forEach(reg => {
-                html += `<tr>
-                    <td>${reg.fecha}</td>
-                    <td><strong>${reg.nombre}</strong></td>
-                    <td>${reg.escuela}</td>
-                    <td>${reg.nivel}</td>
-                    <td><span class="badge bg-secondary">${reg.puntajePre}%</span></td>
-                    <td><span class="badge bg-success">${reg.puntajePost}%</span></td>
-                    <td>${reg.satisfaccion}</td>
-                </tr>`;
-            });
-            tbody.innerHTML = html;
-        }
-    </script>
+    // Renderizado de la aplicación
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
 </body>
 </html>
