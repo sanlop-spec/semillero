@@ -1,342 +1,734 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plataforma Educativa</title>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- React y ReactDOM -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <!-- jsPDF y html2canvas para la descarga directa de PDF sin abrir la ventana de impresión -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Evaluación y Contenidos - Semillero STEM Apizaco</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --accent-color: #d97706;
+            --bg-light: #f8fafc;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #334155;
+        }
+
+        .header-banner {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: white;
+            padding: 2.5rem 1rem;
+            border-bottom: 4px solid var(--accent-color);
+            position: relative;
+        }
+
+        .admin-trigger-dot {
+            position: absolute;
+            top: 5px;
+            left: 8px;
+            color: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            font-size: 14px;
+            user-select: none;
+        }
+
+        .admin-trigger-dot:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .card-custom {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            background: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .hidden-section {
+            display: none !important;
+        }
+
+        .topic-number {
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-right: 10px;
+        }
+
+        /* ESTILOS DEL DIPLOMA / RECONOCIMIENTO */
+        .diploma-container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 4px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 850px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .diploma-border-outer {
+            border: 3px solid #1e293b;
+            padding: 10px;
+            position: relative;
+        }
+
+        .diploma-border-inner {
+            border: 1px solid #cbd5e1;
+            padding: 35px 25px;
+            position: relative;
+        }
+
+        .corner-decoration {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-color: #d97706;
+            border-style: solid;
+        }
+        .top-left { top: 4px; left: 4px; border-width: 2px 0 0 2px; }
+        .top-right { top: 4px; right: 4px; border-width: 2px 2px 0 0; }
+        .bottom-left { bottom: 4px; left: 4px; border-width: 0 0 2px 2px; }
+        .bottom-right { bottom: 4px; right: 4px; border-width: 0 2px 2px 0; }
+
+        .header-title {
+            letter-spacing: 3px;
+            font-weight: 700;
+            color: #475569;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .main-title {
+            font-family: 'Georgia', serif;
+            font-weight: 800;
+            color: #b45309;
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            margin: 8px 0;
+        }
+
+        .student-name {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-size: 1.8rem;
+            color: #0f172a;
+            border-bottom: 2px solid #cbd5e1;
+            display: inline-block;
+            padding: 0 25px 5px 25px;
+            margin: 15px 0;
+        }
+
+        .badge-seal {
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle, #f59e0b 0%, #b45309 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            border: 2px dashed #fef3c7;
+        }
+
+        .badge-seal-text {
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            text-align: center;
+            line-height: 1.1;
+        }
+
+        @media print {
+            body * { visibility: hidden; }
+            #area-diploma, #area-diploma * { visibility: visible; }
+            #area-diploma { position: absolute; left: 0; top: 0; width: 100%; }
+            .no-print { display: none !important; }
+        }
+    </style>
 </head>
-<body class="bg-slate-100 font-sans text-slate-800 min-h-screen">
+<body>
 
-  <div id="root"></div>
-
-  <script type="text/babel">
-    const { useState } = React;
-
-    // --- DATOS DE LOS 15 SUBCURSOS Y SUS PREGUNTAS FINALES EXCLUSIVAS ---
-    const SUBCURSOS_DATA = [
-      { id: 1, titulo: "1. Introducción y Fundamentos", contenido: "Bienvenido al Subcurso 1. En este módulo aprenderás los pilares esenciales y la terminología base para comenzar la formación.", pregFinal: { q: "¿Cuál es el objetivo principal planteado en la introducción del curso?", ops: ["Establecer los pilares y conceptos base", "Diseñar bases de datos avanzadas", "Saltar directamente a la práctica"], ans: 0 } },
-      { id: 2, titulo: "2. Principios Teóricos", contenido: "En el Subcurso 2 exploramos el marco teórico que respalda las metodologías modernas.", pregFinal: { q: "¿Qué sostiene la estructura del marco teórico visto en el Subcurso 2?", ops: ["La improvisación constante", "Los principios de modelado teórico", "El uso de herramientas externas exclusivamente"], ans: 1 } },
-      { id: 3, titulo: "3. Herramientas de Entorno", contenido: "Configuración del entorno de trabajo e instalación de dependencias principales.", pregFinal: { q: "¿Por qué es crucial la configuración inicial del entorno según el Subcurso 3?", ops: ["No es relevante", "Garantiza estabilidad e interoperabilidad", "Solo sirve para fines estéticos"], ans: 1 } },
-      { id: 4, titulo: "4. Metodología y Flujo", contenido: "Análisis de las mejores metodologías paso a paso para organizar tareas de forma óptima.", pregFinal: { q: "¿Cuál es el beneficio de aplicar las metodologías de flujo del Subcurso 4?", ops: ["Incrementar la duplicidad de tareas", "Optimizar la organización de proyectos", "Reducir el enfoque en los resultados"], ans: 1 } },
-      { id: 5, titulo: "5. Diagnóstico de Datos", contenido: "Técnicas iniciales para la recolección e interpretación correcta de datos.", pregFinal: { q: "¿Qué paso antecede a la interpretación según el Subcurso 5?", ops: ["La recolección sistemática de datos", "La entrega final del reporte", "La eliminación de los insumos"], ans: 0 } },
-      { id: 6, titulo: "6. Estrategia de Arquitectura", contenido: "Definición y estructura estratégica para asegurar la escalabilidad.", pregFinal: { q: "¿Cuál es el propósito de la estrategia de arquitectura expuesta en el Subcurso 6?", ops: ["Evitar el uso de estándares", "Garantizar la escalabilidad a largo plazo", "Reemplazar los diagnósticos prevíos"], ans: 1 } },
-      { id: 7, titulo: "7. Aplicación Práctica I", contenido: "Primeros ejercicios prácticos guiados para afianzar el conocimiento teórico.", pregFinal: { q: "¿Qué se busca en la primera fase de aplicación práctica del Subcurso 7?", ops: ["Memorizar conceptos sin aplicar", "Afianzar la teoría mediante ejercicios guiados", "Crear exámenes de prueba"], ans: 1 } },
-      { id: 8, titulo: "8. Aplicación Práctica II", contenido: "Desarrollo de casos prácticos intermedios y resolución de escenarios complejos.", pregFinal: { q: "En la práctica del Subcurso 8, ¿cómo se abordan los escenarios complejos?", ops: ["Ignorando los errores", "Mediante análisis y resolución progresiva", "Reduciendo el tamaño del proyecto"], ans: 1 } },
-      { id: 9, titulo: "9. Optimización de Procesos", contenido: "Técnicas avanzadas para mejorar la velocidad, eficiencia y rendimiento.", pregFinal: { q: "¿Qué métrica prioriza la optimización estudiada en el Subcurso 9?", ops: ["Rendimiento y velocidad de ejecución", "Aumento del código redundante", "Mayor consumo de recursos"], ans: 0 } },
-      { id: 10, titulo: "10. Depuración y Control de Errores", contenido: "Identificación, aislamiento y resolución sistemática de fallos o inconsistencias.", pregFinal: { q: "¿Cuál es el primer paso ante un fallo según el Subcurso 10?", ops: ["Reescribir todo el sistema", "Aislar e identificar la causa raíz del problema", "Desactivar las alertas"], ans: 1 } },
-      { id: 11, titulo: "11. Integración de Componentes", contenido: "Conexión y comunicación fluida entre diferentes módulos o sistemas.", pregFinal: { q: "¿Qué asegura una buena integración de componentes en el Subcurso 11?", ops: ["La independencia total sin comunicación", "La fluidez e intercambio correcto de datos entre módulos", "La duplicación de módulos"], ans: 1 } },
-      { id: 12, titulo: "12. Métricas y Control de Calidad", contenido: "Establecimiento de indicadores de desempeño y estándares de evaluación.", pregFinal: { q: "¿Qué permiten los indicadores de desempeño del Subcurso 12?", ops: ["Evaluar la calidad de forma objetiva", "Aumentar el margen de error", "Omitir la revisión final"], ans: 0 } },
-      { id: 13, titulo: "13. Patrones Avanzados", contenido: "Implementación de modelos avanzados para escenarios de alto nivel.", pregFinal: { q: "¿Cuándo se recomienda aplicar patrones avanzados según el Subcurso 13?", ops: ["En la fase inicial sin requerimientos", "En escenarios de alta complejidad que lo requieran", "Nunca se deben utilizar"], ans: 1 } },
-      { id: 14, titulo: "14. Tendencias e Innovación", contenido: "Revisión de tecnologías emergentes e innovación aplicada.", pregFinal: { q: "¿Cuál es el objetivo de monitorear tendencias en el Subcurso 14?", ops: ["Mantener la solución actualizada e innovadora", "Sustituir bases sólidas por modas", "Abandonar metodologías vigentes"], ans: 0 } },
-      { id: 15, titulo: "15. Cierre y Plan de Acción", contenido: "Consolidación de competencias, conclusiones y hoja de ruta profesional.", pregFinal: { q: "¿Qué se define en el módulo de cierre del Subcurso 15?", ops: ["Reiniciar todo el programa", "Una hoja de ruta y consolidación de competencias", "Un resumen exclusivo del diagnóstico"], ans: 1 } }
-    ];
-
-    // --- PREGUNTAS DEL DIAGNÓSTICO (DIFERENTES A LA EVALUACIÓN FINAL) ---
-    const DIAGNOSTICO_PREGUNTAS = [
-      { q: "1. Diagnóstico Inicial: ¿Cuál es tu experiencia previa en esta área?", ops: ["Principiante completo", "Nivel Intermedio", "Avanzado / Profesional"], ans: 0 },
-      { q: "2. Diagnóstico Inicial: ¿Qué método prefieres para absorber contenidos?", ops: ["Lectura estructurada", "Ejercicios prácticos directos", "Evaluación continua"], ans: 1 },
-      { q: "3. Diagnóstico Inicial: ¿Cuál es tu objetivo principal con este curso?", ops: ["Aprender desde cero", "Reforzar mis competencias", "Obtener el certificado de aprobación"], ans: 2 }
-    ];
-
-    function App() {
-      // Estados de Navegación: 'registro' | 'diagnostico' | 'subcursos' | 'evaluacion' | 'resultado'
-      const [pantalla, setPantalla] = useState('registro');
-      
-      // Usuario
-      const [usuario, setUsuario] = useState({ nombre: '', correo: '' });
-      
-      // Avance de Subcursos
-      const [subcursoActual, setSubcursoActual] = useState(0);
-
-      // Respuestas
-      const [respuestasDiag, setRespuestasDiag] = useState({});
-      const [respuestasFinal, setRespuestasFinal] = useState({});
-      const [puntajeFinal, setPuntajeFinal] = useState(0);
-
-      // Manejadores
-      const handleRegistro = (e) => {
-        e.preventDefault();
-        if (usuario.nombre && usuario.correo) {
-          setPantalla('diagnostico');
-        }
-      };
-
-      const handleDiagnostico = () => {
-        setPantalla('subcursos');
-      };
-
-      const handleSiguienteSubcurso = () => {
-        if (subcursoActual < SUBCURSOS_DATA.length - 1) {
-          setSubcursoActual(subcursoActual + 1);
-        } else {
-          setPantalla('evaluacion');
-        }
-      };
-
-      const handleAnteriorSubcurso = () => {
-        if (subcursoActual > 0) {
-          setSubcursoActual(subcursoActual - 1);
-        }
-      };
-
-      const handleCalcularResultado = () => {
-        let correctas = 0;
-        SUBCURSOS_DATA.forEach((sc, idx) => {
-          if (respuestasFinal[idx] === sc.pregFinal.ans) {
-            correctas++;
-          }
-        });
-        setPuntajeFinal(correctas);
-        setPantalla('resultado');
-      };
-
-      // Función de Descarga PDF nativa optimizada para Laptop y Teléfono
-      const descargarPDF = async () => {
-        const { jsPDF } = window.jspdf;
-        const certificadoElem = document.getElementById('certificado');
-
-        if (!certificadoElem) return;
-
-        // Convierte la vista HTML a un Canvas
-        const canvas = await html2canvas(certificadoElem, { scale: 2 });
-        const imgData = canvas.toDataURL('image/png');
-
-        // Crea el PDF en A4
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-        // Añade la imagen y descarga automáticamente sin abrir diálogo de impresión
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save(`Certificado_${usuario.nombre.replace(/\s+/g, '_')}.pdf`);
-      };
-
-      return (
-        <div class="py-8">
-          
-          {/* HEADER / BARRA DE NAVEGACIÓN */}
-          <header class="bg-white rounded-xl shadow-md p-6 mb-6 flex flex-col md:flex-row justify-between items-center border-b-4 border-indigo-600">
-            <div>
-              <h1 class="text-2xl font-bold text-slate-800">Plataforma de Capacitación</h1>
-              <p class="text-sm text-slate-500">Programa Completo de 15 Módulos</p>
-            </div>
-            {usuario.nombre && (
-              <div class="mt-4 md:mt-0 text-right">
-                <span class="text-xs text-slate-400 block">Estudiante:</span>
-                <span class="font-semibold text-indigo-700">{usuario.nombre}</span>
-              </div>
-            )}
-          </header>
-
-          {/* 1. COMPONENTE: REGISTRO */}
-          {pantalla === 'registro' && (
-            <div class="bg-white p-8 rounded-xl shadow-md max-w-md mx-auto">
-              <h2 class="text-xl font-bold text-slate-800 mb-2">Registro de Estudiante</h2>
-              <p class="text-sm text-slate-600 mb-6">Ingresa tus datos para comenzar el trayecto formativo.</p>
-              <form onSubmit={handleRegistro} class="space-y-4">
-                <div>
-                  <label class="block text-sm font-medium text-slate-700 mb-1">Nombre Completo</label>
-                  <input 
-                    type="text" 
-                    required 
-                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" 
-                    value={usuario.nombre}
-                    onChange={(e) => setUsuario({...usuario, nombre: e.target.value})}
-                    placeholder="Ej. Juan Pérez"
-                  />
-                </div>
-                <div>
-                  <label class="block text-sm font-medium text-slate-700 mb-1">Correo Electrónico</label>
-                  <input 
-                    type="email" 
-                    required 
-                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" 
-                    value={usuario.correo}
-                    onChange={(e) => setUsuario({...usuario, correo: e.target.value})}
-                    placeholder="ejemplo@correo.com"
-                  />
-                </div>
-                <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-200">
-                  Iniciar Curso
-                </button>
-              </form>
-            </div>
-          )}
-
-          {/* 2. COMPONENTE: DIAGNÓSTICO */}
-          {pantalla === 'diagnostico' && (
-            <div class="bg-white p-8 rounded-xl shadow-md">
-              <h2 class="text-xl font-bold text-slate-800 mb-2">Diagnóstico Inicial</h2>
-              <p class="text-sm text-slate-600 mb-6">Responde a este cuestionario de inicio para personalizar tu experiencia.</p>
-              
-              <div class="space-y-6">
-                {DIAGNOSTICO_PREGUNTAS.map((item, idx) => (
-                  <div key={idx} class="p-4 bg-slate-50 rounded-lg border border-slate-200">
-                    <p class="font-medium text-slate-800 mb-3">{item.q}</p>
-                    <div class="space-y-2">
-                      {item.ops.map((op, opIdx) => (
-                        <label key={opIdx} class="flex items-center space-x-3 p-2 bg-white rounded border hover:bg-slate-100 cursor-pointer">
-                          <input 
-                            type="radio" 
-                            name={`diag_${idx}`} 
-                            checked={respuestasDiag[idx] === opIdx}
-                            onChange={() => setRespuestasDiag({...respuestasDiag, [idx]: opIdx})}
-                            class="text-indigo-600"
-                          />
-                          <span class="text-sm text-slate-700">{op}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <button 
-                onClick={handleDiagnostico} 
-                class="mt-6 w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition"
-              >
-                Guardar Diagnóstico y Continuar a los Subcursos
-              </button>
-            </div>
-          )}
-
-          {/* 3. COMPONENTE: 15 SUBCURSOS */}
-          {pantalla === 'subcursos' && (
-            <div class="bg-white p-8 rounded-xl shadow-md">
-              <div class="flex justify-between items-center mb-6 border-b pb-4">
-                <span class="text-xs font-semibold uppercase tracking-wider bg-indigo-100 text-indigo-800 py-1 px-3 rounded-full">
-                  Subcurso {subcursoActual + 1} de {SUBCURSOS_DATA.length}
-                </span>
-                <span class="text-sm text-slate-500">Progreso: {Math.round(((subcursoActual + 1) / 15) * 100)}%</span>
-              </div>
-
-              <h2 class="text-2xl font-bold text-slate-800 mb-4">{SUBCURSOS_DATA[subcursoActual].titulo}</h2>
-              <div class="p-6 bg-slate-50 rounded-lg border border-slate-200 mb-8 min-h-[150px] text-slate-700 leading-relaxed">
-                {SUBCURSOS_DATA[subcursoActual].contenido}
-              </div>
-
-              <div class="flex justify-between items-center pt-4 border-t">
-                <button 
-                  onClick={handleAnteriorSubcurso}
-                  disabled={subcursoActual === 0}
-                  class={`px-5 py-2.5 rounded-lg font-medium border ${subcursoActual === 0 ? 'opacity-50 cursor-not-allowed bg-slate-100' : 'hover:bg-slate-100 bg-white'}`}
-                >
-                  Anterior
-                </button>
-                
-                <button 
-                  onClick={handleSiguienteSubcurso}
-                  class="bg-indigo-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-indigo-700 transition"
-                >
-                  {subcursoActual === SUBCURSOS_DATA.length - 1 ? "Ir a la Evaluación Final (15 Preguntas)" : "Siguiente Subcurso"}
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* 4. COMPONENTE: EVALUACIÓN FINAL DE 15 PREGUNTAS (1 POR SUBCURSO) */}
-          {pantalla === 'evaluacion' && (
-            <div class="bg-white p-8 rounded-xl shadow-md">
-              <h2 class="text-2xl font-bold text-slate-800 mb-2">Evaluación Final de Conocimientos</h2>
-              <p class="text-sm text-slate-600 mb-6">
-                A continuación se presentan 15 preguntas (exactamente 1 por cada subcurso completado).
-              </p>
-
-              <div class="space-y-6">
-                {SUBCURSOS_DATA.map((sc, idx) => (
-                  <div key={sc.id} class="p-5 bg-slate-50 rounded-lg border border-slate-200">
-                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Módulo {sc.id}</span>
-                    <p class="font-semibold text-slate-800 mt-1 mb-3">{sc.pregFinal.q}</p>
-                    <div class="space-y-2">
-                      {sc.pregFinal.ops.map((opcion, opIdx) => (
-                        <label key={opIdx} class="flex items-center space-x-3 p-2.5 bg-white rounded-lg border hover:bg-slate-100 cursor-pointer">
-                          <input 
-                            type="radio" 
-                            name={`final_q_${idx}`} 
-                            checked={respuestasFinal[idx] === opIdx}
-                            onChange={() => setRespuestasFinal({...respuestasFinal, [idx]: opIdx})}
-                            class="text-indigo-600"
-                          />
-                          <span class="text-sm text-slate-700">{opcion}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <button 
-                onClick={handleCalcularResultado}
-                class="mt-8 w-full bg-emerald-600 text-white py-3.5 rounded-lg font-bold text-lg hover:bg-emerald-700 transition shadow-lg"
-              >
-                Finalizar y Obtener Resultados
-              </button>
-            </div>
-          )}
-
-          {/* 5. COMPONENTE: RESULTADO Y DESCARGA NATIVA DE PDF */}
-          {pantalla === 'resultado' && (
-            <div class="space-y-6">
-              
-              {/* VISTA DEL CERTIFICADO (AQUÍ SE GENERA EL CANVAS/PDF) */}
-              <div id="certificado" class="bg-white p-10 rounded-2xl shadow-xl border-8 border-indigo-50 text-center max-w-2xl mx-auto">
-                <div class="border-2 border-indigo-600 p-8 rounded-xl">
-                  <span class="text-indigo-600 text-sm font-bold tracking-widest uppercase">Certificado de Aprobación</span>
-                  <h2 class="text-3xl font-extrabold text-slate-800 mt-4 mb-2">¡Felicitaciones!</h2>
-                  <p class="text-slate-600 mb-6">Otorgado a:</p>
-                  
-                  <h3 class="text-2xl font-bold text-indigo-700 underline decoration-indigo-300 mb-6">{usuario.nombre}</h3>
-                  
-                  <p class="text-sm text-slate-600 max-w-md mx-auto mb-6">
-                    Por haber completado satisfactoriamente el programa de 15 subcursos y aprobado la Evaluación Final.
-                  </p>
-
-                  <div class="inline-block bg-slate-100 px-6 py-3 rounded-lg border border-slate-200 mb-6">
-                    <span class="text-xs text-slate-500 block uppercase font-semibold">Calificación Obtenida</span>
-                    <span class="text-2xl font-black text-slate-800">{puntajeFinal} / 15 Aciertos</span>
-                  </div>
-
-                  <div class="text-xs text-slate-400 mt-4">
-                    Fecha de emisión: {new Date().toLocaleDateString('es-ES')}
-                  </div>
-                </div>
-              </div>
-
-              {/* BOTÓN DE DESCARGA DIRECTA */}
-              <div class="text-center max-w-md mx-auto">
-                <button 
-                  onClick={descargarPDF}
-                  class="w-full bg-indigo-600 text-white py-3.5 px-6 rounded-xl font-bold shadow-md hover:bg-indigo-700 transition flex items-center justify-center space-x-2"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                  <span>Descargar Certificado en PDF</span>
-                </button>
-                <p class="text-xs text-slate-500 mt-2">
-                  Guarda el archivo directamente en tu equipo (laptop o teléfono) sin abrir el cuadro de diálogo de impresión.
-                </p>
-              </div>
-
-            </div>
-          )}
-
+    <!-- BANNER DE ENCABEZADO CON EL PUNTO OCULTO -->
+    <header class="header-banner text-center mb-4">
+        <span class="admin-trigger-dot" onclick="abrirPanelAdmin()" title="Acceso Administrativo">•</span>
+        <div class="container">
+            <h1 class="fw-bold mb-1">Semillero STEM Apizaco</h1>
+            <p class="lead mb-0 fs-6">Taller Intensivo de Razonamiento Lógico-Matemático</p>
         </div>
-      );
-    }
+    </header>
 
-    // Renderizado de la aplicación
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
-  </script>
+    <div class="container pb-5">
+
+        <!-- PASO 1: REGISTRO DEL ESTUDIANTE -->
+        <section id="paso-registro" class="card-custom p-4">
+            <h3 class="fw-bold text-primary mb-3">Paso 1: Datos Generales</h3>
+            <form id="form-registro" onsubmit="guardarPaso1(event)">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Nombre Completo del Alumno:</label>
+                        <input type="text" id="reg-nombre" class="form-control" placeholder="Ej. Emiliano Sánchez López" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Escuela / Institución de Procedencia:</label>
+                        <input type="text" id="reg-escuela" class="form-control" placeholder="Ej. Instituto Fray Pedro de Gante A.C." required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Nivel Escolar:</label>
+                        <select id="reg-nivel" class="form-select" onchange="actualizarCursos()" required>
+                            <option value="">-- Seleccionar Nivel --</option>
+                            <option value="primaria">Primaria</option>
+                            <option value="secundaria">Secundaria</option>
+                            <option value="preparatoria">Preparatoria / Bachillerato</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Curso Asignado:</label>
+                        <input type="text" id="reg-curso-mostrar" class="form-control" value="Razonamiento Lógico-Matemático" readonly>
+                    </div>
+                    <div class="col-12 text-end mt-4">
+                        <button type="submit" class="btn btn-primary fw-bold px-4 py-2">Comenzar Evaluación Diagnóstica (Pre-Test) &rarr;</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- PASO 2: PRE-TEST (EVALUACIÓN DIAGNÓSTICA) -->
+        <section id="paso-pretest" class="card-custom p-4 hidden-section">
+            <h3 class="fw-bold text-primary mb-2">Paso 2: Evaluación Diagnóstica (Pre-Test)</h3>
+            <p class="text-muted small mb-4">Responde con la mejor opción antes de iniciar la revisión de los módulos.</p>
+            <form id="form-pretest" onsubmit="guardarPaso2(event)">
+                <div class="mb-4 border-bottom pb-3">
+                    <label class="fw-bold mb-2">1. ¿Qué número sigue en la secuencia: 2, 5, 10, 17, 26, ...?</label>
+                    <div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="pre_1" value="a" required><label class="form-check-label">37</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="pre_1" value="b"><label class="form-check-label">35</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="pre_1" value="c"><label class="form-check-label">36</label></div>
+                    </div>
+                </div>
+                <div class="mb-4 border-bottom pb-3">
+                    <label class="fw-bold mb-2">2. Si todos los perros son leales y algún perro es cazador, ¿cuál es verdadera?</label>
+                    <div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="pre_2" value="a" required><label class="form-check-label">Al menos un ser leal es cazador</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="pre_2" value="b"><label class="form-check-label">Todos los cazadores son leales</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="pre_2" value="c"><label class="form-check-label">Ningún cazador es leal</label></div>
+                    </div>
+                </div>
+                <div class="mb-4 border-bottom pb-3">
+                    <label class="fw-bold mb-2">3. Si 4 impresoras imprimen un lote en 6 horas, ¿cuánto tardan 8 impresoras al mismo ritmo?</label>
+                    <div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="pre_3" value="a" required><label class="form-check-label">3 horas</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="pre_3" value="b"><label class="form-check-label">12 horas</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="pre_3" value="c"><label class="form-check-label">4 horas</label></div>
+                    </div>
+                </div>
+                <div class="text-end mt-4">
+                    <button type="submit" class="btn btn-primary fw-bold px-4 py-2">Guardar Pre-Test e ir al Temario &rarr;</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- PASO 3: MÓDULOS DE ESTUDIO (15 TEMAS) -->
+        <section id="paso-temario" class="card-custom p-4 hidden-section">
+            <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+                <h3 class="fw-bold text-primary mb-0">Paso 3: Módulos de Estudio (15 Temas)</h3>
+                <span class="badge bg-primary px-3 py-2" id="badge-estudiante">--</span>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="border rounded p-3 bg-light">
+                        <h5 class="fw-bold text-dark"><span class="topic-number">1</span> Sucesiones Numéricas</h5>
+                        <p class="small text-muted mb-0">Patrones aritméticos y geométricos. Reglas de formación.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="border rounded p-3 bg-light">
+                        <h5 class="fw-bold text-dark"><span class="topic-number">2</span> Lógica Proposicional</h5>
+                        <p class="small text-muted mb-0">Tablas de verdad, implicaciones y contrarrecíproca.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="border rounded p-3 bg-light">
+                        <h5 class="fw-bold text-dark"><span class="topic-number">3</span> Principio Fundamental de Conteo</h5>
+                        <p class="small text-muted mb-0">Multiplicación de opciones independientes. Combinaciones y permutaciones básicas.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="border rounded p-3 bg-light">
+                        <h5 class="fw-bold text-dark"><span class="topic-number">4</span> Diagramas de Venn y Conjuntos</h5>
+                        <p class="small text-muted mb-0">Unión, intersección y complemento en la resolución de problemas.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="border rounded p-3 bg-light">
+                        <h5 class="fw-bold text-dark"><span class="topic-number">5</span> Razones y Proporciones</h5>
+                        <p class="small text-muted mb-0">Regla de tres directa e inversa. Repartos proporcionales.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="border rounded p-3 bg-light">
+                        <h5 class="fw-bold text-dark"><span class="topic-number">6</span> Ecuaciones y Planteamiento</h5>
+                        <p class="small text-muted mb-0">Traducción del lenguaje verbal al lenguaje algebraico para modelar problemas.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="border rounded p-3 bg-light">
+                        <h5 class="fw-bold text-dark"><span class="topic-number">7</span> Geometría Plana y Perímetros</h5>
+                        <p class="small text-muted mb-0">Propiedades de triángulos, rectángulos y polígonos. Cálculo de áreas.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="border rounded p-3 bg-light">
+                        <h5 class="fw-bold text-dark"><span class="topic-number">8</span> Teorema de Pitágoras</h5>
+                        <p class="small text-muted mb-0">Aplicación en triángulos rectángulos y distancias en el plano.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="border rounded p-3 bg-light">
+                        <h5 class="fw-bold text-dark"><span class="topic-number">9</span> Fracciones y Porcentajes</h5>
+                        <p class="small text-muted mb-0">Descuentos sucesivos, aumentos y proporciones sobre cantidades totales.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="border rounded p-3 bg-light">
+                        <h5 class="fw-bold text-dark"><span class="topic-number">10</span> Principio de las Casillas (Dirichlet)</h5>
+                        <p class="small text-muted mb-0">Distribución de elementos en contenedores y certezas matemáticas.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="border rounded p-3 bg-light">
+                        <h5 class="fw-bold text-dark"><span class="topic-number">11</span> Razonamiento Espacial</h5>
+                        <p class="small text-muted mb-0">Rotación de figuras 3D, desarrollo plano de sólidos e inspección de vistas.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="border rounded p-3 bg-light">
+                        <h5 class="fw-bold text-dark"><span class="topic-number">12</span> Probabilidad Clásica</h5>
+                        <p class="small text-muted mb-0">Regla de Laplace: Casos favorables entre casos posibles.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="border rounded p-3 bg-light">
+                        <h5 class="fw-bold text-dark"><span class="topic-number">13</span> Criptoaritmética y Acertijos</h5>
+                        <p class="small text-muted mb-0">Deducción de dígitos ocultos representados por letras mediante propiedades aritméticas.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="border rounded p-3 bg-light">
+                        <h5 class="fw-bold text-dark"><span class="topic-number">14</span> Promedios y Estadística</h5>
+                        <p class="small text-muted mb-0">Cálculo de media, mediana, moda y su impacto al modificar valores.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="border rounded p-3 bg-light">
+                        <h5 class="fw-bold text-dark"><span class="topic-number">15</span> Optimización y Logística</h5>
+                        <p class="small text-muted mb-0">Rutas mínimas, tiempo óptimo de ejecución y maximización de recursos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4 pt-3 border-top">
+                <button onclick="irAlPostTest()" class="btn btn-warning btn-lg fw-bold px-5">Ir al Examen Final (Post-Test 15 Preguntas) &rarr;</button>
+            </div>
+        </section>
+
+        <!-- PASO 4: POST-TEST (EVALUACIÓN FINAL DE 15 PREGUNTAS) -->
+        <section id="paso-posttest" class="card-custom p-4 hidden-section">
+            <h3 class="fw-bold text-primary mb-2">Paso 4: Examen Final (Post-Test)</h3>
+            <p class="text-muted small mb-4">Evaluación de los 15 temas vistos en el taller.</p>
+
+            <form id="form-posttest" onsubmit="guardarPaso4(event)">
+
+                <div class="mb-4 border-bottom pb-3">
+                    <label class="fw-bold mb-2">1. (Sucesiones) ¿Cuál es el siguiente término en la secuencia: 3, 7, 15, 31, 63, ...?</label>
+                    <div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p1" value="a" required><label class="form-check-label">127</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p1" value="b"><label class="form-check-label">125</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p1" value="c"><label class="form-check-label">95</label></div>
+                    </div>
+                </div>
+
+                <div class="mb-4 border-bottom pb-3">
+                    <label class="fw-bold mb-2">2. (Lógica Proposicional) Si la afirmación "Si llueve, la calle se moja" es verdadera, ¿cuál conclusión es necesariamente cierta?</label>
+                    <div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p2" value="a" required><label class="form-check-label">Si la calle no está mojada, no llovió.</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p2" value="b"><label class="form-check-label">Si no llueve, la calle no se moja.</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p2" value="c"><label class="form-check-label">Si la calle está mojada, seguro llovió.</label></div>
+                    </div>
+                </div>
+
+                <div class="mb-4 border-bottom pb-3">
+                    <label class="fw-bold mb-2">3. (Conteo) ¿Cuántas contraseñas distintas de 3 dígitos se pueden formar usando los números 1, 2, 3 y 4 sin repetir dígitos?</label>
+                    <div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p3" value="a" required><label class="form-check-label">24</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p3" value="b"><label class="form-check-label">64</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p3" value="c"><label class="form-check-label">12</label></div>
+                    </div>
+                </div>
+
+                <div class="mb-4 border-bottom pb-3">
+                    <label class="fw-bold mb-2">4. (Conjuntos) En un grupo de 30 estudiantes, 18 estudian Matemáticas, 15 estudian Física y 8 estudian ambas. ¿Cuántos no estudian ninguna?</label>
+                    <div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p4" value="a" required><label class="form-check-label">5</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p4" value="b"><label class="form-check-label">7</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p4" value="c"><label class="form-check-label">3</label></div>
+                    </div>
+                </div>
+
+                <div class="mb-4 border-bottom pb-3">
+                    <label class="fw-bold mb-2">5. (Proporciones) Si 6 trabajadores construyen una barda en 10 horas, ¿cuántas horas tardarán 4 trabajadores al mismo ritmo?</label>
+                    <div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p5" value="a" required><label class="form-check-label">15 horas</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p5" value="b"><label class="form-check-label">12 horas</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p5" value="c"><label class="form-check-label">8 horas</label></div>
+                    </div>
+                </div>
+
+                <div class="mb-4 border-bottom pb-3">
+                    <label class="fw-bold mb-2">6. (Ecuaciones) El triple de un número aumentado en 8 es igual a 35. ¿Cuál es ese número?</label>
+                    <div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p6" value="a" required><label class="form-check-label">9</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p6" value="b"><label class="form-check-label">11</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p6" value="c"><label class="form-check-label">7</label></div>
+                    </div>
+                </div>
+
+                <div class="mb-4 border-bottom pb-3">
+                    <label class="fw-bold mb-2">7. (Geometría) ¿Cuál es el área de un triángulo cuya base mide 12 cm y su altura mide 8 cm?</label>
+                    <div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p7" value="a" required><label class="form-check-label">48 cm²</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p7" value="b"><label class="form-check-label">96 cm²</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p7" value="c"><label class="form-check-label">24 cm²</label></div>
+                    </div>
+                </div>
+
+                <div class="mb-4 border-bottom pb-3">
+                    <label class="fw-bold mb-2">8. (Pitágoras) Un poste vertical de 6 metros proyecta una sombra en el suelo. La distancia desde la punta superior del poste hasta el extremo de la sombra mide 10 metros. ¿Cuánto mide la sombra?</label>
+                    <div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p8" value="a" required><label class="form-check-label">8 metros</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p8" value="b"><label class="form-check-label">7 metros</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p8" value="c"><label class="form-check-label">4 metros</label></div>
+                    </div>
+                </div>
+
+                <div class="mb-4 border-bottom pb-3">
+                    <label class="fw-bold mb-2">9. (Porcentajes) Un artículo de $800 tiene un 25% de descuento. ¿Cuál es su precio final?</label>
+                    <div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p9" value="a" required><label class="form-check-label">$600</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p9" value="b"><label class="form-check-label">$650</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p9" value="c"><label class="form-check-label">$700</label></div>
+                    </div>
+                </div>
+
+                <div class="mb-4 border-bottom pb-3">
+                    <label class="fw-bold mb-2">10. (Principio de las Casillas) ¿Cuántas personas debe haber en una habitación como mínimo para garantizar que al menos dos hayan nacido en el mismo mes?</label>
+                    <div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p10" value="a" required><label class="form-check-label">13 personas</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p10" value="b"><label class="form-check-label">12 personas</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p10" value="c"><label class="form-check-label">24 personas</label></div>
+                    </div>
+                </div>
+
+                <div class="mb-4 border-bottom pb-3">
+                    <label class="fw-bold mb-2">11. (Razonamiento Espacial) ¿Cuántas caras planas tiene un cubo de madera al que se le corta una esquina mediante un plano recto?</label>
+                    <div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p11" value="a" required><label class="form-check-label">7 caras</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p11" value="b"><label class="form-check-label">6 caras</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p11" value="c"><label class="form-check-label">8 caras</label></div>
+                    </div>
+                </div>
+
+                <div class="mb-4 border-bottom pb-3">
+                    <label class="fw-bold mb-2">12. (Probabilidad) Al lanzar dos dados comunes de 6 caras, ¿cuál es la probabilidad de que la suma sea igual a 12?</label>
+                    <div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p12" value="a" required><label class="form-check-label">1 / 36</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p12" value="b"><label class="form-check-label">1 / 12</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p12" value="c"><label class="form-check-label">2 / 36</label></div>
+                    </div>
+                </div>
+
+                <div class="mb-4 border-bottom pb-3">
+                    <label class="fw-bold mb-2">13. (Criptoaritmética) Si A + A + A = BA (donde A y B son dígitos distintos), ¿cuál es el valor del dígito A?</label>
+                    <div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p13" value="a" required><label class="form-check-label">5</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p13" value="b"><label class="form-check-label">4</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p13" value="c"><label class="form-check-label">6</label></div>
+                    </div>
+                </div>
+
+                <div class="mb-4 border-bottom pb-3">
+                    <label class="fw-bold mb-2">14. (Estadística) El promedio de 4 calificaciones es 8. Si agregamos una quinta calificación de 10, ¿cuál es el nuevo promedio?</label>
+                    <div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p14" value="a" required><label class="form-check-label">8.4</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p14" value="b"><label class="form-check-label">8.5</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p14" value="c"><label class="form-check-label">9.0</label></div>
+                    </div>
+                </div>
+
+                <div class="mb-4 border-bottom pb-3">
+                    <label class="fw-bold mb-2">15. (Optimización) Una tubería se llena en 3 horas con una bomba y en 6 horas con otra. ¿En cuántas horas se llenará si se usan ambas bombas simultáneamente?</label>
+                    <div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p15" value="a" required><label class="form-check-label">2 horas</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p15" value="b"><label class="form-check-label">4.5 horas</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="p15" value="c"><label class="form-check-label">1.5 horas</label></div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Evaluación de Satisfacción del Taller:</label>
+                    <select id="satisfaccion" class="form-select" required>
+                        <option value="">-- ¿Qué te pareció el curso? --</option>
+                        <option value="Excelente">Excelente</option>
+                        <option value="Bueno">Bueno</option>
+                        <option value="Regular">Regular</option>
+                    </select>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success btn-lg fw-bold px-5">Finalizar y Generar Reconocimiento</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- PANTALLA DE AGRADECIMIENTO Y DIPLOMA GENERADO -->
+        <section id="pantalla-agradecimiento" class="hidden-section">
+            <div class="no-print card-custom p-4 text-center mb-4">
+                <h2 class="text-success fw-bold">¡Felicidades por completar el taller!</h2>
+                <p class="fs-5 mb-1">Tu evaluación diagnóstica (Pre-Test) y tu examen final (Post-Test) han sido registrados.</p>
+                <button onclick="window.print()" class="btn btn-outline-dark fw-bold mt-2">🖨️ Imprimir / Guardar en PDF</button>
+            </div>
+
+            <!-- RECONOCIMIENTO GENERADO -->
+            <div id="area-diploma" class="diploma-container">
+                <div class="diploma-border-outer">
+                    <div class="corner-decoration top-left"></div>
+                    <div class="corner-decoration top-right"></div>
+                    <div class="corner-decoration bottom-left"></div>
+                    <div class="corner-decoration bottom-right"></div>
+
+                    <div class="diploma-border-inner text-center">
+                        <div class="header-title">Semillero STEM Apizaco</div>
+                        <div class="main-title">RECONOCIMIENTO</div>
+                        <div class="text-muted small text-uppercase mt-1 mb-2">OTORGADO CON ORGULLO A:</div>
+
+                        <div class="student-name" id="cert-nombre">--</div>
+
+                        <p class="small text-secondary my-3 px-4">
+                            Procedente de <strong id="cert-escuela" class="text-dark">--</strong>, por haber completado exitosamente las actividades y evaluaciones del taller intensivo de
+                            <strong id="cert-curso">Razonamiento Lógico-Matemático</strong>,
+                            fortaleciendo el pensamiento analítico en la comunidad juvenil de Apizaco, Tlaxcala.
+                        </p>
+
+                        <div class="row align-items-end mt-4 pt-2">
+                            <div class="col-6 text-center">
+                                <div class="badge-seal" style="margin: 0 auto;">
+                                    <div class="badge-seal-text">Iniciativa<br>STEM<br>2026</div>
+                                </div>
+                            </div>
+                            <div class="col-6 text-center">
+                                <div style="border-top: 1.5px solid #334155; width: 180px; margin: 0 auto 4px auto;"></div>
+                                <div class="fw-bold small text-dark">Coordinación del Taller</div>
+                                <div class="text-muted" style="font-size: 0.65rem;">Semillero STEM Apizaco</div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between text-muted mt-4" style="font-size: 0.65rem;">
+                            <span>Apizaco, Tlaxcala</span>
+                            <span>Fecha: <strong id="cert-fecha">--</strong></span>
+                            <span>Folio: <strong id="cert-folio">--</strong></span>
+                        </div>
+                        <div class="text-center text-muted opacity-50 mt-1" style="font-size: 0.55rem;">
+                            Documento de participación emitido por iniciativa juvenil independiente sin validez curricular oficial (RVOE).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL DE ADMINISTRACIÓN (CARGA DESDE GOOGLE SHEETS) -->
+        <section id="panel-admin" class="card-custom p-4 mt-5 hidden-section no-print border-danger border-top border-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="fw-bold text-danger mb-0">Panel Administrativo (Nube Google Sheets)</h4>
+                <button onclick="cerrarPanelAdmin()" class="btn btn-sm btn-outline-secondary">Cerrar Panel</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle small">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Alumno</th>
+                            <th>Escuela</th>
+                            <th>Nivel</th>
+                            <th>Pre-Test</th>
+                            <th>Post-Test</th>
+                            <th>Satisfacción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-registros-body">
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">Cargando datos de la nube...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+       
+        const URL_GOOGLE_SCRIPT = "https://script.google.com/macros/s/AKfycbx0q-6u2Sek7pnXBH-vssgZJ2cXS9gArcmazUBTC-DTpXIK0ztxcuQKuTEB2GA_Xmpn/exec";
+
+        let alumnoActual = {
+            nombre: "",
+            escuela: "",
+            nivel: "",
+            puntajePre: 0,
+            puntajePost: 0,
+            satisfaccion: ""
+        };
+
+        const respuestasPost = {
+            p1: 'a', p2: 'a', p3: 'a', p4: 'a', p5: 'a',
+            p6: 'a', p7: 'a', p8: 'a', p9: 'a', p10: 'a',
+            p11: 'a', p12: 'a', p13: 'a', p14: 'a', p15: 'a'
+        };
+
+        function actualizarCursos() {
+            let nivel = document.getElementById('reg-nivel').value;
+            let cursoInput = document.getElementById('reg-curso-mostrar');
+            if (nivel === 'primaria') {
+                cursoInput.value = "Razonamiento Lógico-Matemático (Primaria)";
+            } else if (nivel === 'secundaria') {
+                cursoInput.value = "Razonamiento Lógico-Matemático (Secundaria)";
+            } else if (nivel === 'preparatoria') {
+                cursoInput.value = "Razonamiento Lógico-Matemático (Preparatoria)";
+            } else {
+                cursoInput.value = "Razonamiento Lógico-Matemático";
+            }
+        }
+
+        function guardarPaso1(e) {
+            e.preventDefault();
+            alumnoActual.nombre = document.getElementById('reg-nombre').value.trim();
+            alumnoActual.escuela = document.getElementById('reg-escuela').value.trim();
+            alumnoActual.nivel = document.getElementById('reg-nivel').value;
+
+            document.getElementById('badge-estudiante').innerText = `${alumnoActual.nombre} (${alumnoActual.nivel.toUpperCase()})`;
+
+            document.getElementById('paso-registro').classList.add('hidden-section');
+            document.getElementById('paso-pretest').classList.remove('hidden-section');
+            window.scrollTo(0, 0);
+        }
+
+        function guardarPaso2(e) {
+            e.preventDefault();
+            let scorePre = 0;
+            if (document.querySelector('input[name="pre_1"]:checked')?.value === 'a') scorePre++;
+            if (document.querySelector('input[name="pre_2"]:checked')?.value === 'a') scorePre++;
+            if (document.querySelector('input[name="pre_3"]:checked')?.value === 'a') scorePre++;
+
+            alumnoActual.puntajePre = scorePre;
+
+            document.getElementById('paso-pretest').classList.add('hidden-section');
+            document.getElementById('paso-temario').classList.remove('hidden-section');
+            window.scrollTo(0, 0);
+        }
+
+        function irAlPostTest() {
+            document.getElementById('paso-temario').classList.add('hidden-section');
+            document.getElementById('paso-posttest').classList.remove('hidden-section');
+            window.scrollTo(0, 0);
+        }
+
+        async function guardarPaso4(e) {
+            e.preventDefault();
+            let scorePost = 0;
+
+            for (let i = 1; i <= 15; i++) {
+                if (document.querySelector(`input[name="p${i}"]:checked`)?.value === respuestasPost[`p${i}`]) {
+                    scorePost++;
+                }
+            }
+
+            alumnoActual.puntajePost = scorePost;
+            alumnoActual.satisfaccion = document.getElementById('satisfaccion').value;
+
+            // ENVIAR REGISTRO A LA HOJA DE GOOGLE EN LA NUBE
+            try {
+                await fetch(URL_GOOGLE_SCRIPT, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(alumnoActual)
+                });
+            } catch (error) {
+                console.error("Error al guardar en la nube:", error);
+            }
+
+            // Rellenar Reconocimiento
+            document.getElementById('cert-nombre').innerText = alumnoActual.nombre;
+            document.getElementById('cert-escuela').innerText = alumnoActual.escuela || "Comunidad Apizaco";
+            document.getElementById('cert-curso').innerText = `Razonamiento Lógico-Matemático (${alumnoActual.nivel.toUpperCase()})`;
+            
+            let hoy = new Date();
+            document.getElementById('cert-fecha').innerText = hoy.toLocaleDateString('es-MX', { day: '2-digit', month: 'long', year: 'numeric' });
+            document.getElementById('cert-folio').innerText = 'APZ-' + Math.floor(100000 + Math.random() * 900000);
+
+            document.getElementById('paso-posttest').classList.add('hidden-section');
+            document.getElementById('pantalla-agradecimiento').classList.remove('hidden-section');
+            window.scrollTo(0, 0);
+        }
+
+        async function abrirPanelAdmin() {
+            let pwd = prompt("Introduce el código de acceso de administrador:");
+            if (pwd === "stem2026") {
+                let tbody = document.getElementById('tabla-registros-body');
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">Cargando registros desde Google Sheets...</td></tr>`;
+                document.getElementById('panel-admin').classList.remove('hidden-section');
+                document.getElementById('panel-admin').scrollIntoView({ behavior: 'smooth' });
+
+                try {
+                    let res = await fetch(URL_GOOGLE_SCRIPT);
+                    let registros = await res.json();
+
+                    if (registros.length === 0) {
+                        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">No hay registros almacenados en la nube.</td></tr>`;
+                    } else {
+                        tbody.innerHTML = registros.map(r => `
+                            <tr>
+                                <td><strong>${r.Nombre || r.nombre}</strong></td>
+                                <td>${r.Escuela || r.escuela}</td>
+                                <td>${r.Nivel || r.nivel}</td>
+                                <td>${r.PuntajePre || r.puntajePre} / 3</td>
+                                <td>${r.PuntajePost || r.puntajePost} / 15</td>
+                                <td>${r.Satisfaccion || r.satisfaccion}</td>
+                            </tr>
+                        `).join('');
+                    }
+                } catch (error) {
+                    tbody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Error al consultar datos remotos. Revisa tu Excel de Google directamente.</td></tr>`;
+                }
+            } else if (pwd !== null) {
+                alert("Código de acceso incorrecto.");
+            }
+        }
+
+        function cerrarPanelAdmin() {
+            document.getElementById('panel-admin').classList.add('hidden-section');
+        }
+    </script>
 </body>
 </html>
