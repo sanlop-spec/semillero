@@ -511,7 +511,7 @@
                 <button onclick="window.print()" class="btn btn-outline-dark fw-bold mt-2">🖨️ Imprimir / Guardar en PDF</button>
             </div>
 
-            <!-- RECONOCIMIENTO GENERADO CON LOS CAMBIOS SOLICITADOS -->
+            <!-- RECONOCIMIENTO GENERADO -->
             <div id="area-diploma" class="diploma-container">
                 <div class="diploma-border-outer">
                     <div class="corner-decoration top-left"></div>
@@ -558,11 +558,14 @@
             </div>
         </section>
 
-        <!-- PANEL DE ADMINISTRACIÓN OCULTO -->
+        <!-- PANEL DE ADMINISTRACIÓN OCULTO CON BOTÓN DE BORRADO -->
         <section id="panel-admin" class="card-custom p-4 mt-5 hidden-section no-print border-danger border-top border-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="fw-bold text-danger mb-0">Panel Administrativo de Registros</h4>
-                <button onclick="cerrarPanelAdmin()" class="btn btn-sm btn-outline-secondary">Cerrar Panel</button>
+                <div>
+                    <button onclick="borrarBaseDatos()" class="btn btn-sm btn-outline-danger me-2">🗑️ Vaciar Base de Datos</button>
+                    <button onclick="cerrarPanelAdmin()" class="btn btn-sm btn-outline-secondary">Cerrar Panel</button>
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table table-striped table-hover align-middle small">
@@ -668,7 +671,7 @@
             registrosGlobales.push(alumnoActual);
             localStorage.setItem('semillero_math_registros', JSON.stringify(registrosGlobales));
 
-            // Rellenar Reconocimiento con la nueva estructura
+            // Rellenar Reconocimiento
             document.getElementById('cert-nombre').innerText = alumnoActual.nombre;
             document.getElementById('cert-escuela').innerText = alumnoActual.escuela || "Comunidad Apizaco";
             document.getElementById('cert-curso').innerText = `Razonamiento Lógico-Matemático (${alumnoActual.nivel.toUpperCase()})`;
@@ -709,6 +712,19 @@
 
         function cerrarPanelAdmin() {
             document.getElementById('panel-admin').classList.add('hidden-section');
+        }
+
+        function borrarBaseDatos() {
+            if (confirm("¿Estás seguro de que deseas eliminar TODOS los registros guardados? Esta acción no se puede deshacer.")) {
+                localStorage.removeItem('semillero_math_registros');
+                registrosGlobales = [];
+                document.getElementById('tabla-registros-body').innerHTML = `
+                    <tr>
+                        <td colspan="6" class="text-center text-muted">No hay registros almacenados.</td>
+                    </tr>
+                `;
+                alert("La base de datos ha sido eliminada correctamente.");
+            }
         }
     </script>
 </body>
