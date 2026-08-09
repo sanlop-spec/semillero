@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plataforma de Evaluación y Contenidos - Semillero STEM Apizaco</title>
+    <title>Taller Interactivo de Matemáticas y Lógica</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
             --primary-color: #1e3a8a;
+            --secondary-color: #0d9488;
             --accent-color: #d97706;
             --bg-light: #f8fafc;
         }
@@ -17,6 +20,7 @@
             background-color: var(--bg-light);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #334155;
+            padding-bottom: 50px;
         }
 
         .header-banner {
@@ -29,8 +33,8 @@
 
         .admin-trigger-dot {
             position: absolute;
-            top: 5px;
-            left: 8px;
+            top: 10px;
+            left: 10px;
             color: rgba(255, 255, 255, 0.2);
             cursor: pointer;
             font-size: 14px;
@@ -44,7 +48,7 @@
         .card-custom {
             border: none;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
             background: white;
             margin-bottom: 1.5rem;
         }
@@ -54,8 +58,8 @@
         }
 
         .topic-number {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             background-color: var(--primary-color);
             color: white;
             border-radius: 50%;
@@ -63,50 +67,52 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 0.9rem;
-            margin-right: 10px;
+            font-size: 1rem;
+            margin-right: 12px;
         }
 
-        /* ESTILOS DEL DIPLOMA / RECONOCIMIENTO */
+        /* ESTILOS DEL RECONOCIMIENTO / DIPLOMA */
         .diploma-container {
             background: #ffffff;
-            padding: 30px;
-            border-radius: 4px;
+            padding: 35px;
+            border-radius: 6px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             max-width: 850px;
             margin: 0 auto;
             position: relative;
+            background-color: #fffdfa;
         }
 
         .diploma-border-outer {
-            border: 3px solid #1e293b;
-            padding: 10px;
+            border: 4px solid #1e293b;
+            padding: 12px;
             position: relative;
         }
 
         .diploma-border-inner {
             border: 1px solid #cbd5e1;
-            padding: 35px 25px;
+            padding: 40px 30px;
             position: relative;
+            text-align: center;
         }
 
         .corner-decoration {
             position: absolute;
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
             border-color: #d97706;
             border-style: solid;
         }
-        .top-left { top: 4px; left: 4px; border-width: 2px 0 0 2px; }
-        .top-right { top: 4px; right: 4px; border-width: 2px 2px 0 0; }
-        .bottom-left { bottom: 4px; left: 4px; border-width: 0 0 2px 2px; }
-        .bottom-right { bottom: 4px; right: 4px; border-width: 0 2px 2px 0; }
+        .top-left { top: 6px; left: 6px; border-width: 3px 0 0 3px; }
+        .top-right { top: 6px; right: 6px; border-width: 3px 3px 0 0; }
+        .bottom-left { bottom: 6px; left: 6px; border-width: 0 0 3px 3px; }
+        .bottom-right { bottom: 6px; right: 6px; border-width: 0 3px 3px 0; }
 
         .header-title {
             letter-spacing: 3px;
             font-weight: 700;
             color: #475569;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
         }
 
@@ -114,461 +120,296 @@
             font-family: 'Georgia', serif;
             font-weight: 800;
             color: #b45309;
-            font-size: 2.2rem;
+            font-size: 2.3rem;
             letter-spacing: 2px;
-            margin: 8px 0;
+            margin: 12px 0;
         }
 
         .student-name {
             font-family: 'Georgia', serif;
             font-style: italic;
-            font-size: 1.8rem;
+            font-size: 2rem;
             color: #0f172a;
             border-bottom: 2px solid #cbd5e1;
             display: inline-block;
-            padding: 0 25px 5px 25px;
-            margin: 15px 0;
+            padding: 0 30px 5px 30px;
+            margin: 20px 0;
+            font-weight: bold;
         }
 
         .badge-seal {
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             background: radial-gradient(circle, #f59e0b 0%, #b45309 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            border: 2px dashed #fef3c7;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            border: 3px dashed #fef3c7;
+            margin: 0 auto;
         }
 
         .badge-seal-text {
-            font-size: 0.55rem;
+            font-size: 0.6rem;
             text-transform: uppercase;
             font-weight: bold;
             text-align: center;
-            line-height: 1.1;
+            line-height: 1.2;
         }
 
+        /* REGLAS EXCLUSIVAS PARA IMPRESIÓN Y GUARDADO EN PDF */
         @media print {
-            body * { visibility: hidden; }
-            #area-diploma, #area-diploma * { visibility: visible; }
-            #area-diploma { position: absolute; left: 0; top: 0; width: 100%; }
-            .no-print { display: none !important; }
+            @page {
+                size: letter portrait;
+                margin: 10mm;
+            }
+            body {
+                background-color: #ffffff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            /* Oculta todos los elementos sobrantes de la página */
+            header, .no-print, nav, footer, #paso-registro, #paso-pretest, #paso-temario, #paso-posttest, #panel-admin {
+                display: none !important;
+            }
+            #pantalla-agradecimiento {
+                display: block !important;
+            }
+            .diploma-container {
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin: 0 auto !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                background: #ffffff !important;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- BANNER DE ENCABEZADO CON EL PUNTO OCULTO -->
+    <!-- ENCABEZADO DE LA PLATAFORMA -->
     <header class="header-banner text-center mb-4">
-        <span class="admin-trigger-dot" onclick="abrirPanelAdmin()" title="Acceso Administrativo">•</span>
+        <span class="admin-trigger-dot" onclick="solicitarAccesoAdmin()" title="Acceso Administrador">•</span>
         <div class="container">
-            <h1 class="fw-bold mb-1">Semillero STEM Apizaco</h1>
-            <p class="lead mb-0 fs-6">Taller Intensivo de Razonamiento Lógico-Matemático</p>
+            <h1 class="fw-bold mb-1"><i class="fa-solid fa-graduation-cap me-2"></i>Taller Interactivo de Lógica y Matemáticas</h1>
+            <p class="mb-0 opacity-75">Evaluación, Formación y Certificación de Competencias</p>
         </div>
     </header>
 
-    <div class="container pb-5">
+    <div class="container">
 
         <!-- PASO 1: REGISTRO DEL ESTUDIANTE -->
         <section id="paso-registro" class="card-custom p-4">
-            <h3 class="fw-bold text-primary mb-3">Paso 1: Datos Generales</h3>
-            <form id="form-registro" onsubmit="guardarPaso1(event)">
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Nombre Completo del Alumno:</label>
-                        <input type="text" id="reg-nombre" class="form-control" placeholder="Ej. Emiliano Sánchez López" required>
+            <h3 class="fw-bold text-primary mb-3"><i class="fa-solid fa-user-pen me-2"></i>Paso 1: Registro de Datos</h3>
+            <form id="form-registro" onsubmit="event.preventDefault(); guardarPaso1();">
+                <div class="mb-3">
+                    <label for="nombre" class="form-label fw-semibold">Nombre Completo:</label>
+                    <input type="text" id="nombre" class="form-control form-control-lg" placeholder="Ej. Emiliano Sánchez" required>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="escuela" class="form-label fw-semibold">Escuela / Institución:</label>
+                        <input type="text" id="escuela" class="form-control" placeholder="Ej. Instituto Fray Pedro" required>
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Escuela / Institución de Procedencia:</label>
-                        <input type="text" id="reg-escuela" class="form-control" placeholder="Ej. Instituto Fray Pedro de Gante A.C." required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Nivel Escolar:</label>
-                        <select id="reg-nivel" class="form-select" onchange="actualizarCursos()" required>
-                            <option value="">-- Seleccionar Nivel --</option>
-                            <option value="primaria">Primaria</option>
-                            <option value="secundaria">Secundaria</option>
-                            <option value="preparatoria">Preparatoria / Bachillerato</option>
+                    <div class="col-md-6 mb-3">
+                        <label for="nivel" class="form-label fw-semibold">Nivel Educativo / Grado:</label>
+                        <select id="nivel" class="form-select" required>
+                            <option value="">Selecciona una opción...</option>
+                            <option value="Secundaria">Secundaria</option>
+                            <option value="Bachillerato / Preparatoria">Bachillerato / Preparatoria</option>
+                            <option value="Universidad">Universidad</option>
+                            <option value="Otro">Otro</option>
                         </select>
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Curso Asignado:</label>
-                        <input type="text" id="reg-curso-mostrar" class="form-control" value="Razonamiento Lógico-Matemático" readonly>
-                    </div>
-                    <div class="col-12 text-end mt-4">
-                        <button type="submit" class="btn btn-primary fw-bold px-4 py-2">Comenzar Evaluación Diagnóstica (Pre-Test) &rarr;</button>
-                    </div>
                 </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold shadow-sm">
+                    Continuar al Pre-Test <i class="fa-solid fa-arrow-right ms-2"></i>
+                </button>
             </form>
         </section>
 
-        <!-- PASO 2: PRE-TEST (EVALUACIÓN DIAGNÓSTICA) -->
+        <!-- PASO 2: PRE-TEST -->
         <section id="paso-pretest" class="card-custom p-4 hidden-section">
-            <h3 class="fw-bold text-primary mb-2">Paso 2: Evaluación Diagnóstica (Pre-Test)</h3>
-            <p class="text-muted small mb-4">Responde con la mejor opción antes de iniciar la revisión de los módulos.</p>
-            <form id="form-pretest" onsubmit="guardarPaso2(event)">
-                <div class="mb-4 border-bottom pb-3">
-                    <label class="fw-bold mb-2">1. ¿Qué número sigue en la secuencia: 2, 5, 10, 17, 26, ...?</label>
-                    <div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="pre_1" value="a" required><label class="form-check-label">37</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="pre_1" value="b"><label class="form-check-label">35</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="pre_1" value="c"><label class="form-check-label">36</label></div>
-                    </div>
-                </div>
-                <div class="mb-4 border-bottom pb-3">
-                    <label class="fw-bold mb-2">2. Si todos los perros son leales y algún perro es cazador, ¿cuál es verdadera?</label>
-                    <div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="pre_2" value="a" required><label class="form-check-label">Al menos un ser leal es cazador</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="pre_2" value="b"><label class="form-check-label">Todos los cazadores son leales</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="pre_2" value="c"><label class="form-check-label">Ningún cazador es leal</label></div>
-                    </div>
-                </div>
-                <div class="mb-4 border-bottom pb-3">
-                    <label class="fw-bold mb-2">3. Si 4 impresoras imprimen un lote en 6 horas, ¿cuánto tardan 8 impresoras al mismo ritmo?</label>
-                    <div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="pre_3" value="a" required><label class="form-check-label">3 horas</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="pre_3" value="b"><label class="form-check-label">12 horas</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="pre_3" value="c"><label class="form-check-label">4 horas</label></div>
-                    </div>
-                </div>
-                <div class="text-end mt-4">
-                    <button type="submit" class="btn btn-primary fw-bold px-4 py-2">Guardar Pre-Test e ir al Temario &rarr;</button>
-                </div>
-            </form>
-        </section>
-
-        <!-- PASO 3: MÓDULOS DE ESTUDIO (15 TEMAS) -->
-        <section id="paso-temario" class="card-custom p-4 hidden-section">
-            <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
-                <h3 class="fw-bold text-primary mb-0">Paso 3: Módulos de Estudio (15 Temas)</h3>
-                <span class="badge bg-primary px-3 py-2" id="badge-estudiante">--</span>
-            </div>
-
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <div class="border rounded p-3 bg-light">
-                        <h5 class="fw-bold text-dark"><span class="topic-number">1</span> Sucesiones Numéricas</h5>
-                        <p class="small text-muted mb-0">Patrones aritméticos y geométricos. Reglas de formación.</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="border rounded p-3 bg-light">
-                        <h5 class="fw-bold text-dark"><span class="topic-number">2</span> Lógica Proposicional</h5>
-                        <p class="small text-muted mb-0">Tablas de verdad, implicaciones y contrarrecíproca.</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="border rounded p-3 bg-light">
-                        <h5 class="fw-bold text-dark"><span class="topic-number">3</span> Principio Fundamental de Conteo</h5>
-                        <p class="small text-muted mb-0">Multiplicación de opciones independientes. Combinaciones y permutaciones básicas.</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="border rounded p-3 bg-light">
-                        <h5 class="fw-bold text-dark"><span class="topic-number">4</span> Diagramas de Venn y Conjuntos</h5>
-                        <p class="small text-muted mb-0">Unión, intersección y complemento en la resolución de problemas.</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="border rounded p-3 bg-light">
-                        <h5 class="fw-bold text-dark"><span class="topic-number">5</span> Razones y Proporciones</h5>
-                        <p class="small text-muted mb-0">Regla de tres directa e inversa. Repartos proporcionales.</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="border rounded p-3 bg-light">
-                        <h5 class="fw-bold text-dark"><span class="topic-number">6</span> Ecuaciones y Planteamiento</h5>
-                        <p class="small text-muted mb-0">Traducción del lenguaje verbal al lenguaje algebraico para modelar problemas.</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="border rounded p-3 bg-light">
-                        <h5 class="fw-bold text-dark"><span class="topic-number">7</span> Geometría Plana y Perímetros</h5>
-                        <p class="small text-muted mb-0">Propiedades de triángulos, rectángulos y polígonos. Cálculo de áreas.</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="border rounded p-3 bg-light">
-                        <h5 class="fw-bold text-dark"><span class="topic-number">8</span> Teorema de Pitágoras</h5>
-                        <p class="small text-muted mb-0">Aplicación en triángulos rectángulos y distancias en el plano.</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="border rounded p-3 bg-light">
-                        <h5 class="fw-bold text-dark"><span class="topic-number">9</span> Fracciones y Porcentajes</h5>
-                        <p class="small text-muted mb-0">Descuentos sucesivos, aumentos y proporciones sobre cantidades totales.</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="border rounded p-3 bg-light">
-                        <h5 class="fw-bold text-dark"><span class="topic-number">10</span> Principio de las Casillas (Dirichlet)</h5>
-                        <p class="small text-muted mb-0">Distribución de elementos en contenedores y certezas matemáticas.</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="border rounded p-3 bg-light">
-                        <h5 class="fw-bold text-dark"><span class="topic-number">11</span> Razonamiento Espacial</h5>
-                        <p class="small text-muted mb-0">Rotación de figuras 3D, desarrollo plano de sólidos e inspección de vistas.</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="border rounded p-3 bg-light">
-                        <h5 class="fw-bold text-dark"><span class="topic-number">12</span> Probabilidad Clásica</h5>
-                        <p class="small text-muted mb-0">Regla de Laplace: Casos favorables entre casos posibles.</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="border rounded p-3 bg-light">
-                        <h5 class="fw-bold text-dark"><span class="topic-number">13</span> Criptoaritmética y Acertijos</h5>
-                        <p class="small text-muted mb-0">Deducción de dígitos ocultos representados por letras mediante propiedades aritméticas.</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="border rounded p-3 bg-light">
-                        <h5 class="fw-bold text-dark"><span class="topic-number">14</span> Promedios y Estadística</h5>
-                        <p class="small text-muted mb-0">Cálculo de media, mediana, moda y su impacto al modificar valores.</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="border rounded p-3 bg-light">
-                        <h5 class="fw-bold text-dark"><span class="topic-number">15</span> Optimización y Logística</h5>
-                        <p class="small text-muted mb-0">Rutas mínimas, tiempo óptimo de ejecución y maximización de recursos.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="text-center mt-4 pt-3 border-top">
-                <button onclick="irAlPostTest()" class="btn btn-warning btn-lg fw-bold px-5">Ir al Examen Final (Post-Test 15 Preguntas) &rarr;</button>
-            </div>
-        </section>
-
-        <!-- PASO 4: POST-TEST (EVALUACIÓN FINAL DE 15 PREGUNTAS) -->
-        <section id="paso-posttest" class="card-custom p-4 hidden-section">
-            <h3 class="fw-bold text-primary mb-2">Paso 4: Examen Final (Post-Test)</h3>
-            <p class="text-muted small mb-4">Evaluación de los 15 temas vistos en el taller.</p>
-
-            <form id="form-posttest" onsubmit="guardarPaso4(event)">
-
-                <div class="mb-4 border-bottom pb-3">
-                    <label class="fw-bold mb-2">1. (Sucesiones) ¿Cuál es el siguiente término en la secuencia: 3, 7, 15, 31, 63, ...?</label>
-                    <div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p1" value="a" required><label class="form-check-label">127</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p1" value="b"><label class="form-check-label">125</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p1" value="c"><label class="form-check-label">95</label></div>
-                    </div>
-                </div>
-
-                <div class="mb-4 border-bottom pb-3">
-                    <label class="fw-bold mb-2">2. (Lógica Proposicional) Si la afirmación "Si llueve, la calle se moja" es verdadera, ¿cuál conclusión es necesariamente cierta?</label>
-                    <div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p2" value="a" required><label class="form-check-label">Si la calle no está mojada, no llovió.</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p2" value="b"><label class="form-check-label">Si no llueve, la calle no se moja.</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p2" value="c"><label class="form-check-label">Si la calle está mojada, seguro llovió.</label></div>
-                    </div>
-                </div>
-
-                <div class="mb-4 border-bottom pb-3">
-                    <label class="fw-bold mb-2">3. (Conteo) ¿Cuántas contraseñas distintas de 3 dígitos se pueden formar usando los números 1, 2, 3 y 4 sin repetir dígitos?</label>
-                    <div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p3" value="a" required><label class="form-check-label">24</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p3" value="b"><label class="form-check-label">64</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p3" value="c"><label class="form-check-label">12</label></div>
-                    </div>
-                </div>
-
-                <div class="mb-4 border-bottom pb-3">
-                    <label class="fw-bold mb-2">4. (Conjuntos) En un grupo de 30 estudiantes, 18 estudian Matemáticas, 15 estudian Física y 8 estudian ambas. ¿Cuántos no estudian ninguna?</label>
-                    <div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p4" value="a" required><label class="form-check-label">5</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p4" value="b"><label class="form-check-label">7</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p4" value="c"><label class="form-check-label">3</label></div>
-                    </div>
-                </div>
-
-                <div class="mb-4 border-bottom pb-3">
-                    <label class="fw-bold mb-2">5. (Proporciones) Si 6 trabajadores construyen una barda en 10 horas, ¿cuántas horas tardarán 4 trabajadores al mismo ritmo?</label>
-                    <div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p5" value="a" required><label class="form-check-label">15 horas</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p5" value="b"><label class="form-check-label">12 horas</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p5" value="c"><label class="form-check-label">8 horas</label></div>
-                    </div>
-                </div>
-
-                <div class="mb-4 border-bottom pb-3">
-                    <label class="fw-bold mb-2">6. (Ecuaciones) El triple de un número aumentado en 8 es igual a 35. ¿Cuál es ese número?</label>
-                    <div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p6" value="a" required><label class="form-check-label">9</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p6" value="b"><label class="form-check-label">11</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p6" value="c"><label class="form-check-label">7</label></div>
-                    </div>
-                </div>
-
-                <div class="mb-4 border-bottom pb-3">
-                    <label class="fw-bold mb-2">7. (Geometría) ¿Cuál es el área de un triángulo cuya base mide 12 cm y su altura mide 8 cm?</label>
-                    <div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p7" value="a" required><label class="form-check-label">48 cm²</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p7" value="b"><label class="form-check-label">96 cm²</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p7" value="c"><label class="form-check-label">24 cm²</label></div>
-                    </div>
-                </div>
-
-                <div class="mb-4 border-bottom pb-3">
-                    <label class="fw-bold mb-2">8. (Pitágoras) Un poste vertical de 6 metros proyecta una sombra en el suelo. La distancia desde la punta superior del poste hasta el extremo de la sombra mide 10 metros. ¿Cuánto mide la sombra?</label>
-                    <div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p8" value="a" required><label class="form-check-label">8 metros</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p8" value="b"><label class="form-check-label">7 metros</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p8" value="c"><label class="form-check-label">4 metros</label></div>
-                    </div>
-                </div>
-
-                <div class="mb-4 border-bottom pb-3">
-                    <label class="fw-bold mb-2">9. (Porcentajes) Un artículo de $800 tiene un 25% de descuento. ¿Cuál es su precio final?</label>
-                    <div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p9" value="a" required><label class="form-check-label">$600</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p9" value="b"><label class="form-check-label">$650</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p9" value="c"><label class="form-check-label">$700</label></div>
-                    </div>
-                </div>
-
-                <div class="mb-4 border-bottom pb-3">
-                    <label class="fw-bold mb-2">10. (Principio de las Casillas) ¿Cuántas personas debe haber en una habitación como mínimo para garantizar que al menos dos hayan nacido en el mismo mes?</label>
-                    <div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p10" value="a" required><label class="form-check-label">13 personas</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p10" value="b"><label class="form-check-label">12 personas</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p10" value="c"><label class="form-check-label">24 personas</label></div>
-                    </div>
-                </div>
-
-                <div class="mb-4 border-bottom pb-3">
-                    <label class="fw-bold mb-2">11. (Razonamiento Espacial) ¿Cuántas caras planas tiene un cubo de madera al que se le corta una esquina mediante un plano recto?</label>
-                    <div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p11" value="a" required><label class="form-check-label">7 caras</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p11" value="b"><label class="form-check-label">6 caras</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p11" value="c"><label class="form-check-label">8 caras</label></div>
-                    </div>
-                </div>
-
-                <div class="mb-4 border-bottom pb-3">
-                    <label class="fw-bold mb-2">12. (Probabilidad) Al lanzar dos dados comunes de 6 caras, ¿cuál es la probabilidad de que la suma sea igual a 12?</label>
-                    <div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p12" value="a" required><label class="form-check-label">1 / 36</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p12" value="b"><label class="form-check-label">1 / 12</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p12" value="c"><label class="form-check-label">2 / 36</label></div>
-                    </div>
-                </div>
-
-                <div class="mb-4 border-bottom pb-3">
-                    <label class="fw-bold mb-2">13. (Criptoaritmética) Si A + A + A = BA (donde A y B son dígitos distintos), ¿cuál es el valor del dígito A?</label>
-                    <div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p13" value="a" required><label class="form-check-label">5</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p13" value="b"><label class="form-check-label">4</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p13" value="c"><label class="form-check-label">6</label></div>
-                    </div>
-                </div>
-
-                <div class="mb-4 border-bottom pb-3">
-                    <label class="fw-bold mb-2">14. (Estadística) El promedio de 4 calificaciones es 8. Si agregamos una quinta calificación de 10, ¿cuál es el nuevo promedio?</label>
-                    <div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p14" value="a" required><label class="form-check-label">8.4</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p14" value="b"><label class="form-check-label">8.5</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p14" value="c"><label class="form-check-label">9.0</label></div>
-                    </div>
-                </div>
-
-                <div class="mb-4 border-bottom pb-3">
-                    <label class="fw-bold mb-2">15. (Optimización) Una tubería se llena en 3 horas con una bomba y en 6 horas con otra. ¿En cuántas horas se llenará si se usan ambas bombas simultáneamente?</label>
-                    <div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p15" value="a" required><label class="form-check-label">2 horas</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p15" value="b"><label class="form-check-label">4.5 horas</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="p15" value="c"><label class="form-check-label">1.5 horas</label></div>
-                    </div>
+            <h3 class="fw-bold text-primary mb-2"><i class="fa-solid fa-clipboard-question me-2"></i>Paso 2: Evaluación Diagnóstica (Pre-Test)</h3>
+            <p class="text-muted mb-4">Responde estas preguntas según tus conocimientos actuales. No te preocupes si no sabes alguna respuesta.</p>
+            
+            <form id="form-pretest" onsubmit="event.preventDefault(); guardarPaso2();">
+                <div class="mb-4">
+                    <label class="fw-semibold d-block mb-2">1. ¿Cuál es el siguiente número en la secuencia lógica: 2, 6, 12, 20, 30, ...?</label>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="pre1" value="A" required id="pre1_a"><label class="form-check-label" for="pre1_a">36</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="pre1" value="B" id="pre1_b"><label class="form-check-label" for="pre1_b">40</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="pre1" value="C" id="pre1_c"><label class="form-check-label" for="pre1_c">42</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="pre1" value="D" id="pre1_d"><label class="form-check-label" for="pre1_d">48</label></div>
                 </div>
 
                 <div class="mb-4">
-                    <label class="form-label fw-bold">Evaluación de Satisfacción del Taller:</label>
+                    <label class="fw-semibold d-block mb-2">2. Si 3 gatos cazan 3 ratones en 3 minutos, ¿cuántos gatos se necesitan para cazar 100 ratones en 100 minutos?</label>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="pre2" value="A" required id="pre2_a"><label class="form-check-label" for="pre2_a">100 gatos</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="pre2" value="B" id="pre2_b"><label class="form-check-label" for="pre2_b">3 gatos</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="pre2" value="C" id="pre2_c"><label class="form-check-label" for="pre2_c">30 gatos</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="pre2" value="D" id="pre2_d"><label class="form-check-label" for="pre2_d">1 gato</label></div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="fw-semibold d-block mb-2">3. ¿Cuál es el área de un triángulo con base 10 cm y altura 6 cm?</label>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="pre3" value="A" required id="pre3_a"><label class="form-check-label" for="pre3_a">60 cm²</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="pre3" value="B" id="pre3_b"><label class="form-check-label" for="pre3_b">30 cm²</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="pre3" value="C" id="pre3_c"><label class="form-check-label" for="pre3_c">15 cm²</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="pre3" value="D" id="pre3_d"><label class="form-check-label" for="pre3_d">20 cm²</label></div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold shadow-sm">
+                    Enviar Pre-Test y Ver Temario <i class="fa-solid fa-arrow-right ms-2"></i>
+                </button>
+            </form>
+        </section>
+
+        <!-- PASO 3: TEMARIO Y CONTENIDOS DEL TALLER -->
+        <section id="paso-temario" class="card-custom p-4 hidden-section">
+            <h3 class="fw-bold text-primary mb-3"><i class="fa-solid fa-book-open me-2"></i>Paso 3: Módulos de Aprendizaje</h3>
+            <p class="text-muted mb-4">Revisa con atención los siguientes conceptos clave presentados en el taller:</p>
+
+            <div class="mb-4 p-3 border rounded bg-light">
+                <h5 class="fw-bold text-dark d-flex align-items-center mb-2">
+                    <span class="topic-number">1</span> Sucesiones y Patrones Numéricos
+                </h5>
+                <p class="mb-1 text-secondary">Las sucesiones cuadráticas siguen la forma <em>n(n + 1)</em>. Por ejemplo: 1×2=2, 2×3=6, 3×4=12, 4×5=20, 5×6=30, 6×7=42.</p>
+            </div>
+
+            <div class="mb-4 p-3 border rounded bg-light">
+                <h5 class="fw-bold text-dark d-flex align-items-center mb-2">
+                    <span class="topic-number">2</span> Razonamiento Proporcional y Razas de Trabajo
+                </h5>
+                <p class="mb-1 text-secondary">Si la tasa de trabajo es constante (1 gato caza 1 ratón en 3 minutos), entonces 3 gatos seguirán cazando ratones a razón de 1 ratón por minuto en total, logrando 100 ratones en 100 minutos.</p>
+            </div>
+
+            <div class="mb-4 p-3 border rounded bg-light">
+                <h5 class="fw-bold text-dark d-flex align-items-center mb-2">
+                    <span class="topic-number">3</span> Geometría Fundamental
+                </h5>
+                <p class="mb-1 text-secondary">El área de cualquier triángulo se calcula mediante la fórmula universal: <strong>Área = (Base × Altura) / 2</strong>. Para base 10 y altura 6: (10 × 6) / 2 = 30 cm².</p>
+            </div>
+
+            <button onclick="irAPostTest()" class="btn btn-success btn-lg w-100 fw-bold shadow-sm mt-2">
+                Ir a la Evaluación Final (Post-Test) <i class="fa-solid fa-clipboard-check ms-2"></i>
+            </button>
+        </section>
+
+        <!-- PASO 4: POST-TEST -->
+        <section id="paso-posttest" class="card-custom p-4 hidden-section">
+            <h3 class="fw-bold text-primary mb-2"><i class="fa-solid fa-square-check me-2"></i>Paso 4: Evaluación de Conocimientos (Post-Test)</h3>
+            <p class="text-muted mb-4">Aplica lo aprendido durante el taller para responder estas preguntas finales.</p>
+
+            <form id="form-posttest" onsubmit="event.preventDefault(); guardarPaso4();">
+                <div class="mb-4">
+                    <label class="fw-semibold d-block mb-2">1. ¿Cuál es el número que sigue en la serie: 2, 6, 12, 20, 30, ...?</label>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="post1" value="A" required id="post1_a"><label class="form-check-label" for="post1_a">36</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="post1" value="B" id="post1_b"><label class="form-check-label" for="post1_b">40</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="post1" value="C" id="post1_c"><label class="form-check-label" for="post1_c">42</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="post1" value="D" id="post1_d"><label class="form-check-label" for="post1_d">48</label></div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="fw-semibold d-block mb-2">2. Si 3 gatos cazan 3 ratones en 3 minutos, ¿cuántos gatos se requieren para cazar 100 ratones en 100 minutos?</label>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="post2" value="A" required id="post2_a"><label class="form-check-label" for="post2_a">100 gatos</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="post2" value="B" id="post2_b"><label class="form-check-label" for="post2_b">3 gatos</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="post2" value="C" id="post2_c"><label class="form-check-label" for="post2_c">30 gatos</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="post2" value="D" id="post2_d"><label class="form-check-label" for="post2_d">1 gato</label></div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="fw-semibold d-block mb-2">3. ¿Cuál es el área de un triángulo de base 10 cm y altura 6 cm?</label>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="post3" value="A" required id="post3_a"><label class="form-check-label" for="post3_a">60 cm²</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="post3" value="B" id="post3_b"><label class="form-check-label" for="post3_b">30 cm²</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="post3" value="C" id="post3_c"><label class="form-check-label" for="post3_c">15 cm²</label></div>
+                    <div class="form-check"><input class="form-check-input" type="radio" name="post3" value="D" id="post3_d"><label class="form-check-label" for="post3_d">20 cm²</label></div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="satisfaccion" class="fw-semibold form-label">¿Qué tan satisfecho(a) estás con el taller realizado?</label>
                     <select id="satisfaccion" class="form-select" required>
-                        <option value="">-- ¿Qué te pareció el curso? --</option>
+                        <option value="">Selecciona tu nivel de satisfacción...</option>
                         <option value="Excelente">Excelente</option>
+                        <option value="Muy Bueno">Muy Bueno</option>
                         <option value="Bueno">Bueno</option>
                         <option value="Regular">Regular</option>
                     </select>
                 </div>
 
-                <div class="text-center mt-4">
-                    <button type="submit" class="btn btn-success btn-lg fw-bold px-5">Finalizar y Generar Reconocimiento</button>
-                </div>
+                <button id="btn-finalizar" type="submit" class="btn btn-warning btn-lg w-100 fw-bold text-dark shadow-sm">
+                    Finalizar y Generar Reconocimiento <i class="fa-solid fa-award ms-2"></i>
+                </button>
             </form>
         </section>
 
-        <!-- PANTALLA DE AGRADECIMIENTO Y DIPLOMA GENERADO -->
+        <!-- PANTALLA DE AGRADECIMIENTO Y DESCARGA DE RECONOCIMIENTO -->
         <section id="pantalla-agradecimiento" class="hidden-section">
             <div class="no-print card-custom p-4 text-center mb-4">
+                <div class="text-success display-4 mb-2"><i class="fa-solid fa-circle-check"></i></div>
                 <h2 class="text-success fw-bold">¡Felicidades por completar el taller!</h2>
-                <p class="fs-5 mb-1">Tu evaluación diagnóstica (Pre-Test) y tu examen final (Post-Test) han sido registrados.</p>
-                <button onclick="window.print()" class="btn btn-outline-dark fw-bold mt-2">🖨️ Imprimir / Guardar en PDF</button>
+                <p class="fs-5 mb-1">Tu evaluación ha sido registrada exitosamente en nuestra base de datos.</p>
+                <p class="small text-muted mb-3">Haz clic en el siguiente botón para guardar o imprimir tu reconocimiento en formato PDF.</p>
+                <button onclick="window.print()" class="btn btn-warning btn-lg fw-bold text-dark shadow-sm px-4">
+                    <i class="fa-solid fa-file-pdf me-2"></i>Guardar Reconocimiento en PDF
+                </button>
             </div>
 
-            <!-- RECONOCIMIENTO GENERADO -->
+            <!-- DIPLOMA / RECONOCIMIENTO -->
             <div id="area-diploma" class="diploma-container">
                 <div class="diploma-border-outer">
                     <div class="corner-decoration top-left"></div>
                     <div class="corner-decoration top-right"></div>
                     <div class="corner-decoration bottom-left"></div>
                     <div class="corner-decoration bottom-right"></div>
-
-                    <div class="diploma-border-inner text-center">
-                        <div class="header-title">Semillero STEM Apizaco</div>
+                    
+                    <div class="diploma-border-inner">
+                        <div class="header-title mb-1">Constancia de Participación</div>
                         <div class="main-title">RECONOCIMIENTO</div>
-                        <div class="text-muted small text-uppercase mt-1 mb-2">OTORGADO CON ORGULLO A:</div>
-
-                        <div class="student-name" id="cert-nombre">--</div>
-
-                        <p class="small text-secondary my-3 px-4">
-                            Procedente de <strong id="cert-escuela" class="text-dark">--</strong>, por haber completado exitosamente las actividades y evaluaciones del taller intensivo de
-                            <strong id="cert-curso">Razonamiento Lógico-Matemático</strong>,
-                            fortaleciendo el pensamiento analítico en la comunidad juvenil de Apizaco, Tlaxcala.
+                        <p class="text-muted small uppercase tracking-wider mb-3">Otorgado con orgullo a:</p>
+                        
+                        <div id="diploma-nombre" class="student-name">Nombre del Alumno</div>
+                        
+                        <p class="mt-3 fs-6 text-secondary px-3">
+                            Por haber concluido satisfactoriamente las actividades académicas y evaluaciones del
+                            <br><strong class="text-dark">"Taller Interactivo de Lógica y Matemáticas"</strong>.
                         </p>
 
-                        <div class="row align-items-end mt-4 pt-2">
-                            <div class="col-6 text-center">
-                                <div class="badge-seal" style="margin: 0 auto;">
-                                    <div class="badge-seal-text">Iniciativa<br>STEM<br>2026</div>
+                        <div class="row align-items-center mt-5 pt-3">
+                            <div class="col-4 text-center">
+                                <div id="diploma-fecha" class="fw-bold text-dark small">09/08/2026</div>
+                                <div class="text-muted border-top border-secondary pt-1 mt-1 small">Fecha de Emisión</div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div class="badge-seal">
+                                    <div class="badge-seal-text">Excelencia<br>Académica</div>
                                 </div>
                             </div>
-                            <div class="col-6 text-center">
-                                <div style="border-top: 1.5px solid #334155; width: 180px; margin: 0 auto 4px auto;"></div>
-                                <div class="fw-bold small text-dark">Coordinación del Taller</div>
-                                <div class="text-muted" style="font-size: 0.65rem;">Semillero STEM Apizaco</div>
+                            <div class="col-4 text-center">
+                                <div class="fw-bold text-dark small">Comité Organizador</div>
+                                <div class="text-muted border-top border-secondary pt-1 mt-1 small">Firma Autorizada</div>
                             </div>
-                        </div>
-
-                        <div class="d-flex justify-content-between text-muted mt-4" style="font-size: 0.65rem;">
-                            <span>Apizaco, Tlaxcala</span>
-                            <span>Fecha: <strong id="cert-fecha">--</strong></span>
-                            <span>Folio: <strong id="cert-folio">--</strong></span>
-                        </div>
-                        <div class="text-center text-muted opacity-50 mt-1" style="font-size: 0.55rem;">
-                            Documento de participación emitido por iniciativa juvenil independiente sin validez curricular oficial (RVOE).
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- PANEL DE ADMINISTRACIÓN (CARGA DESDE GOOGLE SHEETS) -->
-        <section id="panel-admin" class="card-custom p-4 mt-5 hidden-section no-print border-danger border-top border-4">
+        <!-- PANEL DE ADMINISTRADOR OCULTO -->
+        <section id="panel-admin" class="card-custom p-4 hidden-section border border-warning">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4 class="fw-bold text-danger mb-0">Panel Administrativo (Nube Google Sheets)</h4>
-                <button onclick="cerrarPanelAdmin()" class="btn btn-sm btn-outline-secondary">Cerrar Panel</button>
+                <h3 class="fw-bold text-dark mb-0"><i class="fa-solid fa-user-shield me-2"></i>Panel de Administración</h3>
+                <button onclick="cerrarAdmin()" class="btn btn-sm btn-outline-danger">Cerrar Panel</button>
             </div>
+            <p class="small text-muted">A continuación se muestran los registros almacenados en la sesión actual:</p>
             <div class="table-responsive">
-                <table class="table table-striped table-hover align-middle small">
+                <table class="table table-bordered table-striped align-middle small">
                     <thead class="table-dark">
                         <tr>
-                            <th>Alumno</th>
+                            <th>Fecha</th>
+                            <th>Nombre</th>
                             <th>Escuela</th>
                             <th>Nivel</th>
                             <th>Pre-Test</th>
@@ -576,9 +417,9 @@
                             <th>Satisfacción</th>
                         </tr>
                     </thead>
-                    <tbody id="tabla-registros-body">
+                    <tbody id="tabla-registros-admin">
                         <tr>
-                            <td colspan="6" class="text-center text-muted">Cargando datos de la nube...</td>
+                            <td colspan="7" class="text-center text-muted">No hay registros cargados localmente en esta sesión.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -587,11 +428,14 @@
 
     </div>
 
+    <!-- SCRIPT DE FUNCIONALIDAD COMPLETO -->
     <script>
-        // PEGA AQUÍ LA URL QUE OBTUVISTE AL DESPLEGAR EN GOOGLE APPS SCRIPT
+        // URL de tu ejecutable de Google Apps Script
         const URL_GOOGLE_SCRIPT = "https://script.google.com/macros/s/AKfycbx0q-6u2Sek7pnXBH-vssgZJ2cXS9gArcmazUBTC-DTpXIK0ztxcuQKuTEB2GA_Xmpn/exec";
 
-        let alumnoActual = {
+        // Objeto global para mantener los datos del participante
+        let usuario = {
+            fecha: "",
             nombre: "",
             escuela: "",
             nivel: "",
@@ -600,134 +444,156 @@
             satisfaccion: ""
         };
 
-        const respuestasPost = {
-            p1: 'a', p2: 'a', p3: 'a', p4: 'a', p5: 'a',
-            p6: 'a', p7: 'a', p8: 'a', p9: 'a', p10: 'a',
-            p11: 'a', p12: 'a', p13: 'a', p14: 'a', p15: 'a'
+        // Almacén local de respaldo para el panel admin
+        let registrosLocales = [];
+
+        // Respuestas correctas del Test (Pre y Post)
+        const respuestasCorrectas = {
+            p1: "C", // 42
+            p2: "B", // 3 gatos
+            p3: "B"  // 30 cm²
         };
 
-        function actualizarCursos() {
-            let nivel = document.getElementById('reg-nivel').value;
-            let cursoInput = document.getElementById('reg-curso-mostrar');
-            if (nivel === 'primaria') {
-                cursoInput.value = "Razonamiento Lógico-Matemático (Primaria)";
-            } else if (nivel === 'secundaria') {
-                cursoInput.value = "Razonamiento Lógico-Matemático (Secundaria)";
-            } else if (nivel === 'preparatoria') {
-                cursoInput.value = "Razonamiento Lógico-Matemático (Preparatoria)";
-            } else {
-                cursoInput.value = "Razonamiento Lógico-Matemático";
+        // PASO 1: Guardar Datos de Registro
+        function guardarPaso1() {
+            usuario.nombre = document.getElementById("nombre").value.trim();
+            usuario.escuela = document.getElementById("escuela").value.trim();
+            usuario.nivel = document.getElementById("nivel").value;
+
+            if (!usuario.nombre || !usuario.escuela || !usuario.nivel) {
+                alert("Por favor completa todos los campos.");
+                return;
             }
-        }
 
-        function guardarPaso1(e) {
-            e.preventDefault();
-            alumnoActual.nombre = document.getElementById('reg-nombre').value.trim();
-            alumnoActual.escuela = document.getElementById('reg-escuela').value.trim();
-            alumnoActual.nivel = document.getElementById('reg-nivel').value;
-
-            document.getElementById('badge-estudiante').innerText = `${alumnoActual.nombre} (${alumnoActual.nivel.toUpperCase()})`;
-
-            document.getElementById('paso-registro').classList.add('hidden-section');
-            document.getElementById('paso-pretest').classList.remove('hidden-section');
+            document.getElementById("paso-registro").classList.add("hidden-section");
+            document.getElementById("paso-pretest").classList.remove("hidden-section");
             window.scrollTo(0, 0);
         }
 
-        function guardarPaso2(e) {
-            e.preventDefault();
-            let scorePre = 0;
-            if (document.querySelector('input[name="pre_1"]:checked')?.value === 'a') scorePre++;
-            if (document.querySelector('input[name="pre_2"]:checked')?.value === 'a') scorePre++;
-            if (document.querySelector('input[name="pre_3"]:checked')?.value === 'a') scorePre++;
+        // PASO 2: Guardar y Calcular Pre-Test
+        function guardarPaso2() {
+            const form = document.getElementById("form-pretest");
+            const r1 = form.elements["pre1"].value;
+            const r2 = form.elements["pre2"].value;
+            const r3 = form.elements["pre3"].value;
 
-            alumnoActual.puntajePre = scorePre;
+            let aciertos = 0;
+            if (r1 === respuestasCorrectas.p1) aciertos++;
+            if (r2 === respuestasCorrectas.p2) aciertos++;
+            if (r3 === respuestasCorrectas.p3) aciertos++;
 
-            document.getElementById('paso-pretest').classList.add('hidden-section');
-            document.getElementById('paso-temario').classList.remove('hidden-section');
+            usuario.puntajePre = Math.round((aciertos / 3) * 100);
+
+            document.getElementById("paso-pretest").classList.add("hidden-section");
+            document.getElementById("paso-temario").classList.remove("hidden-section");
             window.scrollTo(0, 0);
         }
 
-        function irAlPostTest() {
-            document.getElementById('paso-temario').classList.add('hidden-section');
-            document.getElementById('paso-posttest').classList.remove('hidden-section');
+        // Navegación al Post-Test
+        function irAPostTest() {
+            document.getElementById("paso-temario").classList.add("hidden-section");
+            document.getElementById("paso-posttest").classList.remove("hidden-section");
             window.scrollTo(0, 0);
         }
 
-        async function guardarPaso4(e) {
-            e.preventDefault();
-            let scorePost = 0;
+        // PASO 4: Guardar y Enviar a Google Sheets
+        function guardarPaso4() {
+            const btnFinalizar = document.getElementById("btn-finalizar");
+            btnFinalizar.disabled = true;
+            btnFinalizar.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i>Guardando datos...';
 
-            for (let i = 1; i <= 15; i++) {
-                if (document.querySelector(`input[name="p${i}"]:checked`)?.value === respuestasPost[`p${i}`]) {
-                    scorePost++;
-                }
-            }
+            const form = document.getElementById("form-posttest");
+            const r1 = form.elements["post1"].value;
+            const r2 = form.elements["post2"].value;
+            const r3 = form.elements["post3"].value;
 
-            alumnoActual.puntajePost = scorePost;
-            alumnoActual.satisfaccion = document.getElementById('satisfaccion').value;
+            let aciertos = 0;
+            if (r1 === respuestasCorrectas.p1) aciertos++;
+            if (r2 === respuestasCorrectas.p2) aciertos++;
+            if (r3 === respuestasCorrectas.p3) aciertos++;
 
-            // ENVIAR REGISTRO A LA HOJA DE GOOGLE EN LA NUBE
-            try {
-                await fetch(URL_GOOGLE_SCRIPT, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(alumnoActual)
-                });
-            } catch (error) {
-                console.error("Error al guardar en la nube:", error);
-            }
-
-            // Rellenar Reconocimiento
-            document.getElementById('cert-nombre').innerText = alumnoActual.nombre;
-            document.getElementById('cert-escuela').innerText = alumnoActual.escuela || "Comunidad Apizaco";
-            document.getElementById('cert-curso').innerText = `Razonamiento Lógico-Matemático (${alumnoActual.nivel.toUpperCase()})`;
+            usuario.puntajePost = Math.round((aciertos / 3) * 100);
+            usuario.satisfaccion = document.getElementById("satisfaccion").value;
             
-            let hoy = new Date();
-            document.getElementById('cert-fecha').innerText = hoy.toLocaleDateString('es-MX', { day: '2-digit', month: 'long', year: 'numeric' });
-            document.getElementById('cert-folio').innerText = 'APZ-' + Math.floor(100000 + Math.random() * 900000);
+            const hoy = new Date();
+            usuario.fecha = hoy.toLocaleDateString('es-MX') + ' ' + hoy.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
 
-            document.getElementById('paso-posttest').classList.add('hidden-section');
-            document.getElementById('pantalla-agradecimiento').classList.remove('hidden-section');
+            // Enviar a Google Sheets usando fetch / no-cors
+            const payload = {
+                fecha: usuario.fecha,
+                nombre: usuario.nombre,
+                escuela: usuario.escuela,
+                nivel: usuario.nivel,
+                puntajePre: usuario.puntajePre + "%",
+                puntajePost: usuario.puntajePost + "%",
+                satisfaccion: usuario.satisfaccion
+            };
+
+            fetch(URL_GOOGLE_SCRIPT, {
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            }).then(() => {
+                mostrarAgradecimiento();
+            }).catch(error => {
+                console.error("Error al enviar datos:", error);
+                // Mostrar pantalla de todas formas para no bloquear al estudiante
+                mostrarAgradecimiento();
+            });
+        }
+
+        // Muestra la pantalla de diploma con los datos personalizados
+        function mostrarAgradecimiento() {
+            // Guardar registro en sesión local para el panel admin
+            registrosLocales.push({...usuario});
+
+            document.getElementById("diploma-nombre").innerText = usuario.nombre;
+            document.getElementById("diploma-fecha").innerText = new Date().toLocaleDateString('es-MX');
+
+            document.getElementById("paso-posttest").classList.add("hidden-section");
+            document.getElementById("pantalla-agradecimiento").classList.remove("hidden-section");
             window.scrollTo(0, 0);
         }
 
-        async function abrirPanelAdmin() {
-            let pwd = prompt("Introduce el código de acceso de administrador:");
-            if (pwd === "stem2026") {
-                let tbody = document.getElementById('tabla-registros-body');
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">Cargando registros desde Google Sheets...</td></tr>`;
-                document.getElementById('panel-admin').classList.remove('hidden-section');
-                document.getElementById('panel-admin').scrollIntoView({ behavior: 'smooth' });
-
-                try {
-                    let res = await fetch(URL_GOOGLE_SCRIPT);
-                    let registros = await res.json();
-
-                    if (registros.length === 0) {
-                        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">No hay registros almacenados en la nube.</td></tr>`;
-                    } else {
-                        tbody.innerHTML = registros.map(r => `
-                            <tr>
-                                <td><strong>${r.Nombre || r.nombre}</strong></td>
-                                <td>${r.Escuela || r.escuela}</td>
-                                <td>${r.Nivel || r.nivel}</td>
-                                <td>${r.PuntajePre || r.puntajePre} / 3</td>
-                                <td>${r.PuntajePost || r.puntajePost} / 15</td>
-                                <td>${r.Satisfaccion || r.satisfaccion}</td>
-                            </tr>
-                        `).join('');
-                    }
-                } catch (error) {
-                    tbody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Error al consultar datos remotos. Revisa tu Excel de Google directamente.</td></tr>`;
-                }
-            } else if (pwd !== null) {
-                alert("Código de acceso incorrecto.");
+        // Acceso al Panel Admin Oculto
+        function solicitarAccesoAdmin() {
+            const clave = prompt("Ingresa la clave de administrador:");
+            if (clave === "admin123" || clave === "1234") {
+                actualizarTablaAdmin();
+                document.getElementById("panel-admin").classList.remove("hidden-section");
+                document.getElementById("panel-admin").scrollIntoView({ behavior: 'smooth' });
+            } else if (clave !== null) {
+                alert("Clave incorrecta.");
             }
         }
 
-        function cerrarPanelAdmin() {
-            document.getElementById('panel-admin').classList.add('hidden-section');
+        function cerrarAdmin() {
+            document.getElementById("panel-admin").classList.add("hidden-section");
+        }
+
+        function actualizarTablaAdmin() {
+            const tbody = document.getElementById("tabla-registros-admin");
+            if (registrosLocales.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">No hay registros capturados en esta sesión local.</td></tr>';
+                return;
+            }
+
+            let html = "";
+            registrosLocales.forEach(reg => {
+                html += `<tr>
+                    <td>${reg.fecha}</td>
+                    <td><strong>${reg.nombre}</strong></td>
+                    <td>${reg.escuela}</td>
+                    <td>${reg.nivel}</td>
+                    <td><span class="badge bg-secondary">${reg.puntajePre}%</span></td>
+                    <td><span class="badge bg-success">${reg.puntajePost}%</span></td>
+                    <td>${reg.satisfaccion}</td>
+                </tr>`;
+            });
+            tbody.innerHTML = html;
         }
     </script>
 </body>
